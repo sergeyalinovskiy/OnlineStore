@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore_Epam2018", "OnlineStore_Epam2018\OnlineStore_Epam2018.csproj", "{66FCCAE2-C7F5-4507-AB1B-3E00CAFE09C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66FCCAE2-C7F5-4507-AB1B-3E00CAFE09C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66FCCAE2-C7F5-4507-AB1B-3E00CAFE09C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66FCCAE2-C7F5-4507-AB1B-3E00CAFE09C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66FCCAE2-C7F5-4507-AB1B-3E00CAFE09C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {891BC25B-E654-42C7-ACA6-493CB00A09DB}
+	EndGlobalSection
+EndGlobal

@@ -29,7 +29,6 @@ namespace OnlineStore_Epam2018.DependencyResolution {
                     scan.WithDefaultConventions();
 					scan.With(new ControllerConvention());
                 });
-            //For<IExample>().Use<Example>();
         }
 
         #endregion

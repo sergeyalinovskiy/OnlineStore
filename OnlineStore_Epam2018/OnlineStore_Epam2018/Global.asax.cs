@@ -13,6 +13,10 @@ namespace OnlineStore_Epam2018
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            log4net.Config.XmlConfigurator.Configure();
+            //readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            //  log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

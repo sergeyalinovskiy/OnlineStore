@@ -11,6 +11,7 @@ namespace SA.OnlineStore.Bussines.Service
     {
         void DeleteOrderByOrderId(int Id);
         void SaveOrder(Order model);
+        void EditOrder(Order model);
         Order GetOrder(int Id);
         IEnumerable<Order> GetOrderList();
     }

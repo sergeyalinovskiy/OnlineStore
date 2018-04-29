@@ -8,6 +8,7 @@ namespace SA.OnlineStore.Bussines.Service
     {
         void DeleteProductByProductId(int Id);
         void SaveProduct(Product model);
+        void EditProduct(Product model);
         Product GetProduct(int Id);
         IEnumerable<Product> GetProductLIst();
     }

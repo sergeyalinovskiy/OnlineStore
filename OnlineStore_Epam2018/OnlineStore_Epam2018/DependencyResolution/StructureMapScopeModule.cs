@@ -6,7 +6,7 @@ namespace OnlineStore_Epam2018.DependencyResolution {
     using StructureMap.Web.Pipeline;
 
     public class StructureMapScopeModule : IHttpModule {
-        #region Public Methods and Operators
+        #region Public Methods and OperatorsD:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\Log.config.xml
 
         public void Dispose() {
         }

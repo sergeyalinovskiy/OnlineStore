@@ -2,6 +2,7 @@
 using SA.OnlineStore.Bussines.Entity;
 using SA.OnlineStore.Bussines.Service;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -25,6 +26,7 @@ namespace OnlineStore_Epam2018.Controllers
             var ordersList = this._orderService.GetOrderList().Select(o => this.ConvertToViewModel(o));
             return View(ordersList);
         }
+        
 
         public ActionResult Details(int Id)
         {
@@ -69,7 +71,7 @@ namespace OnlineStore_Epam2018.Controllers
                 try
                 {
                     var order = this.ConvertToBusinesModel(model);
-                    this._orderService.SaveOrder(order);
+                    this._orderService.EditOrder(order);
                     return RedirectToAction("Detail", new { Id = model.Id });
                 }
                 catch(Exception)

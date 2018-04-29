@@ -68,6 +68,10 @@
       <Project>{852EB40F-16CA-4923-AC80-9A0B0F920CCF}</Project>
       <Name>SA.OnlineStore.Bussines</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SA.OnlineStore.Common\SA.OnlineStore.Common.csproj">
+      <Project>{64E83599-BDF1-4B67-AD17-3ECE731D70C6}</Project>
+      <Name>SA.OnlineStore.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

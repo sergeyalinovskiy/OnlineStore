@@ -19,13 +19,11 @@ D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\M
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\Microsoft.VisualBasic.Core.targets
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\Microsoft.Win32.Primitives.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.AppContext.dll
-D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Collections.Immutable.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Console.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Diagnostics.Process.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Diagnostics.StackTrace.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.Compression.dll
-D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.Primitives.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.Pipes.dll
@@ -85,3 +83,10 @@ D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Structur
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\StructureMap.Net4.pdb
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\StructureMap.Web.pdb
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\StructureMap.Web.xml
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\log4net.dll
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\log4net.xml
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.Common.dll
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.Common.pdb
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Collections.Immutable.dll
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.dll
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Log.config

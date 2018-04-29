@@ -2,6 +2,7 @@
 using SA.OnlineStore.Bussines.Entity;
 using SA.OnlineStore.Bussines.Service;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -15,12 +16,38 @@ namespace OnlineStore_Epam2018.Controllers
         {
             _productService = productService;
         }
+
+        public ProductController()
+        {
+
+        }
         // GET: Product
         public ActionResult Index()
         {
-            this._productService.GetProductLIst().Select(product => this.ConvertToViewModel(product));
-            return View();
+            var productList=this._productService.GetProductLIst().Select(product => this.ConvertToViewModel(product));
+            return View(productList);
         }
+
+        [HttpPost]
+        public ActionResult Index(string Id)
+        {
+            return View("Index", (object)Id);
+        }
+
+        //public ActionResult OrdersData(string Category, string Season)
+        //{
+        //    IEnumerable<Product> data = _productService.GetProductLIst();
+
+        //    if (!string.IsNullOrEmpty(Category) && Category != "All")
+        //    {
+        //        data = data.Where(e => Convert.ToString(e.CategoryId)== Category);
+        //    }
+        //    if (!string.IsNullOrEmpty(Season) && Season != "All")
+        //    {
+        //        data = data.Where(e => Convert.ToString(e.SeasonId) == Season);
+        //    }
+        //    return PartialView(data);
+        //}
 
         public ActionResult Details(int Id)
         {

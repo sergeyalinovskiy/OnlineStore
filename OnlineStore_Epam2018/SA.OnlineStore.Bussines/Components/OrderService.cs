@@ -40,12 +40,21 @@ namespace SA.OnlineStore.Bussines.Components
             _orders.Add(new Order
             {
                 Id = model.Id,
+                UserId=model.UserId,
+                StatusId=model.StatusId,
+                ProductListId=model.ProductListId,
+                Address=model.Address,
+                DateOrder=model.DateOrder
             });
         }
 
         public void EditOrder(Order model)
         {
             _orders[model.Id].StatusId = model.StatusId;
+            _orders[model.Id].ProductListId = model.ProductListId;
+            _orders[model.Id].Address = model.Address;
+            _orders[model.Id].DateOrder = model.DateOrder;
+            _orders[model.Id].UserId = model.UserId;
         }
     }
 }

@@ -11,10 +11,14 @@ namespace OnlineStore_Epam2018.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
+        private readonly ISeasonService _seasonService;
 
-            public ProductController(IProductService productService)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService)
         {
             _productService = productService;
+            _categoryService = categoryService;
+            _seasonService = seasonService;
         }
 
         public ProductController()
@@ -22,41 +26,47 @@ namespace OnlineStore_Epam2018.Controllers
 
         }
         // GET: Product
-        public ActionResult Index()
-        {
-            var productList=this._productService.GetProductLIst().Select(product => this.ConvertToViewModel(product));
-            return View(productList);
-        }
-
-        [HttpPost]
-        public ActionResult Index(string Id)
-        {
-            return View("Index", (object)Id);
-        }
-
-        //public ActionResult OrdersData(string Category, string Season)
+        //public ActionResult Index()
         //{
-        //    IEnumerable<Product> data = _productService.GetProductLIst();
-
-        //    if (!string.IsNullOrEmpty(Category) && Category != "All")
-        //    {
-        //        data = data.Where(e => Convert.ToString(e.CategoryId)== Category);
-        //    }
-        //    if (!string.IsNullOrEmpty(Season) && Season != "All")
-        //    {
-        //        data = data.Where(e => Convert.ToString(e.SeasonId) == Season);
-        //    }
-        //    return PartialView(data);
+        //    var productList=this._productService.GetProductLIst().Select(product => this.ConvertToViewModel(product));
+        //    return View(productList);
         //}
 
-        public ActionResult Details(int Id)
+        //[HttpPost]
+        //public ActionResult Index(string Id)
+        //{
+        //    return View("Index", (object)Id);
+        //}
+        //public PartialViewResult PartialMetod()
+        //{
+        //    return PartialView();
+        //}
+
+        
+        public ActionResult Index(string category)
         {
-            var product = ConvertToViewModel(this._productService.GetProduct(Id));
+            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+
+            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
+
+            if (category != null)
+            {
+                var newProductList = products.Where(p => p.CategoryName == category);
+                return View(newProductList);
+            }
+            return View(products); 
+        }
+
+        public ActionResult Details(int id)
+        {
+            var product = ConvertToViewModel(this._productService.GetProduct(id));
             return View(product);
         }
 
         public ActionResult Create()
         {
+            ViewBag.ListSeasonName = _seasonService.SeasonNameList();
+            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
             return View();
         }
 
@@ -81,6 +91,8 @@ namespace OnlineStore_Epam2018.Controllers
 
         public ActionResult Edit(int Id)
         {
+            ViewBag.ListSeasonName = _seasonService.SeasonNameList();
+            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
             var product = this.ConvertToViewModel(this._productService.GetProduct(Id));
             return View(product);
         }
@@ -109,14 +121,27 @@ namespace OnlineStore_Epam2018.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<Product> modelList)
+        {
+            List<ProductViewModel> convertProductList = new List<ProductViewModel>();
+
+            foreach(var item in modelList)
+            {
+                convertProductList.Add(ConvertToViewModel(item));
+            }
+            return convertProductList;
+        }
+
+
         public ProductViewModel ConvertToViewModel(Product model)
         {
             return new ProductViewModel()
             {
                 Id=model.Id,
                 Name=model.Name,
-                CategoryId= model.CategoryId,
-                SeasonId= model.SeasonId,
+                CategoryName=model.CategoryName,
+                SeasonName= model.SeasonName,
                 Count=model.Count,
                 Picture= model.Picture,
                 Price= model.Price,
@@ -130,8 +155,8 @@ namespace OnlineStore_Epam2018.Controllers
             {
                 Id = model.Id,
                 Name = model.Name,
-                CategoryId = model.CategoryId,
-                SeasonId = model.SeasonId,
+                CategoryName= model.CategoryName,
+                SeasonName = model.SeasonName,
                 Count = model.Count,
                 Picture = model.Picture,
                 Price = model.Price,

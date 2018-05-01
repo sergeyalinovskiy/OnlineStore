@@ -11,5 +11,6 @@ namespace SA.OnlineStore.Bussines.Service
         void EditProduct(Product model);
         Product GetProduct(int Id);
         IEnumerable<Product> GetProductLIst();
+        IEnumerable<Product> GetProductLIstByCategory(string category);
     }
 }

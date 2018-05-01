@@ -12,17 +12,12 @@
     {
         public MyDefaultRegistry()
         {
-            //Scan(
-            //    scan =>
-            //    {
-            //        scan.TheCallingAssembly();
-            //        scan.WithDefaultConventions();
-            //        scan.With(new MyControllerConvention());
-            //    });
             ForSingletonOf<IProductService>().Use<ProductService>();
             ForSingletonOf<IOrderService>().Use<OrderService>();
             ForSingletonOf<ICommonLogger>().Use<CommonLogger>();
-            
+            ForSingletonOf<ICategoryService>().Use<CategoryService>();
+            ForSingletonOf<ISeasonService>().Use<SeasonService>();
+            ForSingletonOf<ISearchService>().Use<SearchSeervice>();
         }
     }
 }

@@ -1,35 +1,44 @@
 ﻿@model IEnumerable<OnlineStore_Epam2018.Models.ProductViewModel>
 
-@{
-    ViewBag.Title = "Index";
-}
-
 <h2>Index</h2>
-
 <navigation_Board style="float:left;">
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Go back", "Index","Product")
     </p>
-    @Html.ActionLink("All", "Index", "Product");
+    <table class="table">
+        <tr>
+            @Html.ActionLink("All", "Index", "Search");
 
-    @foreach (string item in ViewBag.ListCategoryName)
-    {
-        <p>
-            @Html.ActionLink(item, "Index", new { category = item });
-        </p>
-    }
-    <p>
-        @Html.ActionLink("Go to the search page", "Index", "Search")
-    </p>
+            @foreach (string item in ViewBag.ListCategoryName)
+        {
+        <th>
+            <p>
+                @Html.ActionLink(item, "Index", new { category = item });
+            </p>
+        </th>
+}
+
+            </tr>
+            @Html.ActionLink("All", "Index", "Search");
+            <tr>
+                @foreach (string item in ViewBag.ListSeasonName)
+            {
+                <th>
+                    <p>
+                        @Html.ActionLink(item, "Index", new { season = item });
+                    </p>
+                </th>
+        }
+            <tr>
+        </table>
 </navigation_Board>
 
-<List_Board style="float:right;">
+<list_Board style="float:right;">
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            
             <th>
                 @Html.DisplayNameFor(model => model.CategoryName)
             </th>
@@ -57,7 +66,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-               
                 <td>
                     @Html.DisplayFor(modelItem => item.CategoryName)
                 </td>
@@ -77,13 +85,11 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.RouteLink("Details", new { controller="Product", action="Details",id=item.Id})
+                    @*@Html.ActionLink("Details","Redirect", new { value = item.Id })*@
                 </td>
             </tr>
         }
+
     </table>
-</List_Board>
-
-
+</list_Board>

@@ -16,8 +16,8 @@ namespace SA.OnlineStore.Bussines.Components
             {
                 Id=1,
                 Name="product",
-                CategoryId=1,
-                SeasonId=1,
+                CategoryName="Яблоня",
+                SeasonName="лето",
                 Picture="pic",
                 Description="desc",
                 Count=1,
@@ -27,24 +27,45 @@ namespace SA.OnlineStore.Bussines.Components
             {
                 Id=2,
                 Name="product2",
-                CategoryId=2,
-                SeasonId=2,
+                CategoryName="Груша",
+                SeasonName="осень",
                 Picture="pic2",
                 Description="desc2",
                 Count=2,
                 Price=2
+            },
+            new Product()
+            {
+                Id=3,
+                Name="product3",
+                CategoryName="Вишня",
+                SeasonName="зима",
+                Picture="pic3",
+                Description="desc3",
+                Count=3,
+                Price=3
             }
         };
-        public void DeleteProductByProductId(int Id)
+        public void DeleteProductByProductId(int Id)   //переделать!!!! 
         {
-            _products.RemoveAt(Id);
+            Product p = new Product();
+            //_products.RemoveAt(Id);
+            foreach(var item in _products)
+            {
+                if (item.Id == Id)
+                {
+                    p = item;
+                }
+            }
+            _products.Remove(p);
+
         }
 
         public void EditProduct(Product model)
         {
             _products[model.Id].Name = model.Name;
-            _products[model.Id].CategoryId = model.CategoryId;
-            _products[model.Id].SeasonId = model.SeasonId;
+            _products[model.Id].CategoryName = model.CategoryName;
+            _products[model.Id].SeasonName = model.SeasonName;
             _products[model.Id].Picture = model.Picture;
             _products[model.Id].Description = model.Description;
             _products[model.Id].Count = model.Count;
@@ -62,13 +83,18 @@ namespace SA.OnlineStore.Bussines.Components
             return _products;
         }
 
+        public IEnumerable<Product> GetProductLIstByCategory(string category)
+        {
+            return _products.Where(x => x.CategoryName == category);
+        }
+
         public void SaveProduct(Product model)
         {
             _products.Add(new Product
             {
-                Name = model.Name,
-                CategoryId = model.CategoryId,
-                SeasonId = model.SeasonId,
+                Name = model.Name,                
+                CategoryName=model.CategoryName,
+                SeasonName = model.SeasonName,
                 Picture = model.Picture,
                 Description = model.Description,
                 Count = model.Count,

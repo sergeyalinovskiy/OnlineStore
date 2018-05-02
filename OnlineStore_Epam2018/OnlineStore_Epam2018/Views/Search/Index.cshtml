@@ -1,37 +1,42 @@
 ﻿@model IEnumerable<OnlineStore_Epam2018.Models.ProductViewModel>
 
-<h2>Index</h2>
+<h2>Поиск</h2>
 <navigation_Board style="float:left;">
-    <p>
-        @Html.ActionLink("Go back", "Index","Product")
-    </p>
-    <table class="table">
-        <tr>
-            @Html.ActionLink("All", "Index", "Search");
+    
 
-            @foreach (string item in ViewBag.ListCategoryName)
+    <p>
+        @using (Html.BeginForm())
         {
-        <th>
-            <p>
-                @Html.ActionLink(item, "Index", new { category = item });
-            </p>
-        </th>
-}
+        <table>
+            <tr>
+                <th>
+                    Продукты
+                </th>
+                <th>
+                    Сезон
+                </th>
+                <th>
+                    Цена
+                </th>
 
             </tr>
-            @Html.ActionLink("All", "Index", "Search");
             <tr>
-                @foreach (string item in ViewBag.ListSeasonName)
-            {
                 <th>
-                    <p>
-                        @Html.ActionLink(item, "Index", new { season = item });
-                    </p>
+                    @Html.DropDownList("category", new SelectList(ViewBag.ListCategoryName), "Все", htmlAttributes: new { @class = "form-control" })
                 </th>
-        }
-            <tr>
+                <th>
+                    @Html.DropDownList("season", new SelectList(ViewBag.ListSeasonName), "Все", htmlAttributes: new { @class = "form-control" })
+                </th>
+                <th>
+                    @Html.DropDownList("sort", new SelectList ( new[] { "цена по убыванию","цена по возрастанию" } ), "Все", htmlAttributes: new { @class = "form-control" })
+                </th>
+                <th>
+                    <input type="submit" value="Подобрать" />
+                </th>
+            </tr>
         </table>
-</navigation_Board>
+        }
+    </p>
 
 <list_Board style="float:right;">
     <table class="table">
@@ -61,35 +66,38 @@
         </tr>
 
         @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SeasonName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Picture)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Count)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.RouteLink("Details", new { controller="Product", action="Details",id=item.Id})
-                    @*@Html.ActionLink("Details","Redirect", new { value = item.Id })*@
-                </td>
-            </tr>
-        }
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeasonName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Picture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.RouteLink("Details", new { controller = "Product", action = "Details", id = item.Id })
+            </td>
+        </tr>
+}
+        <p>
+            @Html.ActionLink("Go back", "Index", "Product")
+        </p>
+
 
     </table>
 </list_Board>

@@ -25,14 +25,16 @@ namespace SA.OnlineStore.Bussines.Components
             return _productService.GetProductLIstByCategory(category);
         }
 
-        public IEnumerable<Product> ProductByPriceDown()
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Product> ProductByPriceUp()
         {
-            throw new NotImplementedException();
+            var productPriceDown = _productService.GetProductLIst().OrderBy(p => p.Price);
+            return productPriceDown;
+        }
+
+        public IEnumerable<Product> ProductByPriceDown()
+        {
+            var productPriceDown = _productService.GetProductLIst().OrderByDescending(p => p.Price);
+            return productPriceDown;
         }
 
         public IEnumerable<Product> ProductByProductName()

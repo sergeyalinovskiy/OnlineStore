@@ -21,7 +21,7 @@ namespace SA.OnlineStore.Bussines.Components
                 Picture="pic",
                 Description="desc",
                 Count=1,
-                Price=1
+                Price=12
             },
             new Product()
             {
@@ -32,7 +32,7 @@ namespace SA.OnlineStore.Bussines.Components
                 Picture="pic2",
                 Description="desc2",
                 Count=2,
-                Price=2
+                Price=23
             },
             new Product()
             {
@@ -43,8 +43,51 @@ namespace SA.OnlineStore.Bussines.Components
                 Picture="pic3",
                 Description="desc3",
                 Count=3,
-                Price=3
-            }
+                Price=31
+            },
+            new Product()
+            {
+                Id=4,
+                Name="product",
+                CategoryName="Яблоня",
+                SeasonName="лето",
+                Picture="pic",
+                Description="desc",
+                Count=1,
+                Price=14
+            },
+            new Product()
+            {
+                Id=5,
+                Name="product2",
+                CategoryName="Груша",
+                SeasonName="осень",
+                Picture="pic2",
+                Description="desc2",
+                Count=2,
+                Price=21
+            },
+            new Product()
+            {
+                Id=6,
+                Name="product3",
+                CategoryName="Вишня",
+                SeasonName="зима",
+                Picture="pic3",
+                Description="desc3",
+                Count=3,
+                Price=33
+            },
+                new Product(){
+                Id=1,
+                Name="product",
+                CategoryName="Яблоня",
+                SeasonName="осень",
+                Picture="pic",
+                Description="desc",
+                Count=1,
+                Price=14
+            },
         };
         public void DeleteProductByProductId(int Id)   //переделать!!!! 
         {

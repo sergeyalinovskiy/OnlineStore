@@ -14,36 +14,74 @@ namespace OnlineStore_Epam2018.Controllers
         private readonly IProductService _productService;
         private readonly ISeasonService _seasonService;
         private readonly ICategoryService _categoryService;
-        public SearchController(IProductService productService, ISeasonService seasonService, ICategoryService categoryService)
+        private readonly ISearchService _searchService;
+        public SearchController(IProductService productService, ISeasonService seasonService, ICategoryService categoryService,ISearchService searchService)
         {
             _productService = productService;
             _seasonService = seasonService;
             _categoryService = categoryService;
+            _searchService = searchService;
         }
-        public ActionResult Index(string category, string season)
+
+        [HttpGet]
+        public ActionResult Index()
         {
             IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
 
+            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
+            ViewBag.ListSeasonName = _seasonService.SeasonNameList();
+            return View(products);
+        }
+
+        [HttpPost]
+        public ActionResult Index(string category, string season, string sort)
+        {
+            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+           
             ViewBag.ListCategoryName = _categoryService.CategoryNameList();
             ViewBag.ListSeasonName = _seasonService.SeasonNameList();
 
             if (!string.IsNullOrEmpty(category) && category != null)
             {
                  products = products.Where(p => p.CategoryName == category);
-                return View(products);
             }
+
             if (!string.IsNullOrEmpty(season) && season != null)
             {
                  products = products.Where(p => p.SeasonName == season);
-                return View(products);
             }
 
+            if (!string.IsNullOrEmpty(sort) && sort != null)
+            {
+                if(sort=="цена по убыванию")
+                {
+                    products =products.OrderByDescending(p=>p.Price);
+                }
+                if (sort == "цена по возрастанию")
+                {
+                    products = products.OrderBy(p => p.Price);
+                }
+            }
             return View(products); 
         }
-        public ActionResult Redirect(int value)
-        {
-            return RedirectToAction("Details", "Product", value);
-        }
+
+         //public ActionResult OrdersData(string category, string season)
+        //{
+        //    IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+        //    if (!string.IsNullOrEmpty(category) && category != null)
+        //    {
+        //        products = products.Where(p => p.CategoryName == category);
+        //        return View(products);
+        //    }
+        //    if (!string.IsNullOrEmpty(season) && season != null)
+        //    {
+        //        products = products.Where(p => p.SeasonName == season);
+        //        return View(products);
+        //    }
+        //    return PartialView(products);
+        //}
+
+
 
         public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<Product> modelList)
         {
@@ -55,7 +93,6 @@ namespace OnlineStore_Epam2018.Controllers
             }
             return convertProductList;
         }
-
 
         public ProductViewModel ConvertToViewModel(Product model)
         {
@@ -71,6 +108,5 @@ namespace OnlineStore_Epam2018.Controllers
                 Description = model.Description
             };
         }
-
     }
 }

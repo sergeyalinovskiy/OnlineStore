@@ -57,6 +57,8 @@ namespace OnlineStore_Epam2018.Controllers
             return View(products); 
         }
 
+
+
         public ActionResult Details(int id)
         {
             var product = ConvertToViewModel(this._productService.GetProduct(id));

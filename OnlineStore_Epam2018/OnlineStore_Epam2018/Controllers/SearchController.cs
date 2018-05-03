@@ -23,49 +23,49 @@ namespace OnlineStore_Epam2018.Controllers
             _searchService = searchService;
         }
 
-        [HttpGet]
-        public ActionResult Index()
-        {
-            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
 
+
+        public ActionResult Index(string category)
+        {
             ViewBag.ListCategoryName = _categoryService.CategoryNameList();
             ViewBag.ListSeasonName = _seasonService.SeasonNameList();
-            return View(products);
+            return View("Index", (object)category);
         }
 
-        [HttpPost]
-        public ActionResult Index(string category, string season, string sort)
+        public ActionResult OrdersData(string category, string season, string sort, string searchName)
         {
             IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
-           
-            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
-            ViewBag.ListSeasonName = _seasonService.SeasonNameList();
-
-            if (!string.IsNullOrEmpty(category) && category != null)
+            if (!string.IsNullOrEmpty(category))
             {
-                 products = products.Where(p => p.CategoryName == category);
+                products = products.Where(p => p.CategoryName == category);
             }
 
-            if (!string.IsNullOrEmpty(season) && season != null)
+            if (!string.IsNullOrEmpty(season))
             {
-                 products = products.Where(p => p.SeasonName == season);
+                products = products.Where(p => p.SeasonName == season);
             }
 
-            if (!string.IsNullOrEmpty(sort) && sort != null)
+            if (!string.IsNullOrEmpty(sort))
             {
-                if(sort=="цена по убыванию")
+                if (sort == "цена по убыванию")
                 {
-                    products =products.OrderByDescending(p=>p.Price);
+                    products = products.OrderByDescending(p => p.Price);
                 }
                 if (sort == "цена по возрастанию")
                 {
                     products = products.OrderBy(p => p.Price);
                 }
             }
-            return View(products); 
+
+            if (!String.IsNullOrEmpty(searchName))
+            {
+                products = products.Where(p => p.Name == searchName);
+            }
+            return PartialView(products);
         }
 
-         //public ActionResult OrdersData(string category, string season)
+
+        //public ActionResult OrdersData(string category, string season)
         //{
         //    IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
         //    if (!string.IsNullOrEmpty(category) && category != null)
@@ -80,6 +80,59 @@ namespace OnlineStore_Epam2018.Controllers
         //    }
         //    return PartialView(products);
         //}
+
+
+
+        //[HttpGet]
+        //public ActionResult Index()
+        //{
+        //    IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+
+        //    ViewBag.ListCategoryName = _categoryService.CategoryNameList();
+        //    ViewBag.ListSeasonName = _seasonService.SeasonNameList();
+        //    return View(products);
+        //}
+
+        //[HttpPost]
+        //public ActionResult Index(string category, string season, string sort, string searchName)
+        //{
+        //    IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+
+        //    ViewBag.ListCategoryName = _categoryService.CategoryNameList();
+        //    ViewBag.ListSeasonName = _seasonService.SeasonNameList();
+
+        //    if (!string.IsNullOrEmpty(category))
+        //    {
+        //         products = products.Where(p => p.CategoryName == category);
+        //    }
+
+        //    if (!string.IsNullOrEmpty(season))
+        //    {
+        //         products = products.Where(p => p.SeasonName == season);
+        //    }
+
+        //    if (!string.IsNullOrEmpty(sort))
+        //    {
+        //        if(sort=="цена по убыванию")
+        //        {
+        //            products =products.OrderByDescending(p=>p.Price);
+        //        }
+        //        if (sort == "цена по возрастанию")
+        //        {
+        //            products = products.OrderBy(p => p.Price);
+        //        }
+        //    }
+
+        //    if (!String.IsNullOrEmpty(searchName))
+        //    {
+        //        products = products.Where(p => p.Name == searchName);
+        //    }
+        //    return View(products); 
+        //}
+
+
+
+
 
 
 

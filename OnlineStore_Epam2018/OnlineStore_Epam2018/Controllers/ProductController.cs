@@ -25,36 +25,37 @@ namespace OnlineStore_Epam2018.Controllers
         {
 
         }
-        // GET: Product
+        
         //public ActionResult Index()
         //{
-        //    var productList=this._productService.GetProductLIst().Select(product => this.ConvertToViewModel(product));
-        //    return View(productList);
+        //    //IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+
+        //    ViewBag.ListCategoryName = _categoryService.CategoryNameList();
+
+        //    //if (category != null)
+        //    //{
+        //    //    var newProductList = products.Where(p => p.CategoryName == category);
+        //    //    return View(newProductList);
+        //    //}
+        //    return View("IndexTest");
         //}
 
         //[HttpPost]
-        //public ActionResult Index(string Id)
-        //{
-        //    return View("Index", (object)Id);
-        //}
-        //public PartialViewResult PartialMetod()
-        //{
-        //    return PartialView();
-        //}
-
-        
         public ActionResult Index(string category)
         {
-            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
-
             ViewBag.ListCategoryName = _categoryService.CategoryNameList();
+            return View("Index", (object)category);
+        }
 
-            if (category != null)
+        public ActionResult OrdersData(string category)
+        {
+            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+            if (!string.IsNullOrEmpty(category) && category != "Все")
             {
                 var newProductList = products.Where(p => p.CategoryName == category);
-                return View(newProductList);
+                return PartialView(newProductList);
             }
-            return View(products); 
+            return PartialView(products);
         }
 
 

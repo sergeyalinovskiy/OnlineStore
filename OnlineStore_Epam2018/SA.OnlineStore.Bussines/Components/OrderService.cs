@@ -18,7 +18,21 @@ namespace SA.OnlineStore.Bussines.Components
                          StatusId=1,
                          Address="qe",
                          DateOrder=DateTime.Now.Date
-            } };
+            } ,
+            new Order() {Id=1,
+                         UserId =2,
+                         ProductListId=3,
+                         StatusId=1,
+                         Address="qe",
+                         DateOrder=DateTime.Now.Date
+            } ,
+            new Order() {Id=1,
+                         UserId =3,
+                         ProductListId=2,
+                         StatusId=1,
+                         Address="qe",
+                         DateOrder=DateTime.Now.Date
+            }};
 
         public void DeleteOrderByOrderId(int Id)
         {

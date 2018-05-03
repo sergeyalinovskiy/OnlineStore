@@ -1,103 +1,180 @@
-﻿@model IEnumerable<OnlineStore_Epam2018.Models.ProductViewModel>
+﻿@{
+   
+    AjaxOptions options = new AjaxOptions()
+    {
+        UpdateTargetId = "tabledata",
+        Url = Url.Action("OrdersData")
+    };
+}
+<body>
+</body>
+@using (Ajax.BeginForm("Index", "Search", options, htmlAttributes: new { @id = "id" }))
+{
+    <table>
+        <tr>
+            <th>
+                Имя
+            </th>
+            <th>
+                Продукты
+            </th>
+            <th>
+                Сезон
+            </th>
+            <th>
+                Цена
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.TextBox("searchName")
+            </th>
+            <th>
+                @Html.DropDownList("category", new SelectList(ViewBag.ListCategoryName), "Все", htmlAttributes: new { @class = "form-control selectlist" })
+            </th>
+            <th>
+                @Html.DropDownList("season", new SelectList(ViewBag.ListSeasonName), "Все", htmlAttributes: new { @class = "form-control selectlist" })
+            </th>
+            <th>
+                @Html.DropDownList("sort", new SelectList(new[] { "цена по убыванию", "цена по возрастанию" }), "Все", htmlAttributes: new { @class = "form-control selectlist" })
+            </th>
+            <th>
+                <input type="submit" value="Подобрать" />
+            </th>
+        </tr>
+    </table>
 
-<h2>Поиск</h2>
-<navigation_Board style="float:left;">
-    
+    <table cellpadding="6">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>CategoryName</th>
+                <th>SeasonName</th>
+                <th>Picture</th>
+                <th>Description</th>
+                <th>Count</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="tabledata">
+            @Html.Action("OrdersData","Product" ,new { category = Model, season = Model, sort = Model, searchName = Model })
+        </tbody>
+    </table>
+    <button>
+        @Html.ActionLink("Go back", "Index", "Product")
+    </button>
+}
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
 
     <p>
-        @using (Html.BeginForm())
-        {
-        <table>
-            <tr>
-                <th>
-                    Продукты
-                </th>
-                <th>
-                    Сезон
-                </th>
-                <th>
-                    Цена
-                </th>
+        @*@model IEnumerable<OnlineStore_Epam2018.Models.ProductViewModel>
 
-            </tr>
-            <tr>
-                <th>
-                    @Html.DropDownList("category", new SelectList(ViewBag.ListCategoryName), "Все", htmlAttributes: new { @class = "form-control" })
-                </th>
-                <th>
-                    @Html.DropDownList("season", new SelectList(ViewBag.ListSeasonName), "Все", htmlAttributes: new { @class = "form-control" })
-                </th>
-                <th>
-                    @Html.DropDownList("sort", new SelectList ( new[] { "цена по убыванию","цена по возрастанию" } ), "Все", htmlAttributes: new { @class = "form-control" })
-                </th>
-                <th>
-                    <input type="submit" value="Подобрать" />
-                </th>
-            </tr>
-        </table>
-        }
+        <h2>Поиск</h2>
+        <navigation_Board style="float:left;">
+
+
+            <p>
+                @using (Html.BeginForm())
+                {
+                    <table>
+                        <tr>
+                            <th>
+                                Имя
+                            </th>
+                            <th>
+                                Продукты
+                            </th>
+                            <th>
+                                Сезон
+                            </th>
+                            <th>
+                                Цена
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.TextBox("searchName")
+                            </th>
+                            <th>
+                                @Html.DropDownList("category", new SelectList(ViewBag.ListCategoryName), "Все", htmlAttributes: new { @class = "form-control" })
+                            </th>
+                            <th>
+                                @Html.DropDownList("season", new SelectList(ViewBag.ListSeasonName), "Все", htmlAttributes: new { @class = "form-control" })
+                            </th>
+                            <th>
+                                @Html.DropDownList("sort", new SelectList(new[] { "цена по убыванию", "цена по возрастанию" }), "Все", htmlAttributes: new { @class = "form-control" })
+                            </th>
+                            <th>
+                                <input type="submit" value="Подобрать" />
+                            </th>
+                        </tr>
+                    </table>
+                }
+            </p>
+
+            <list_Board style="float:right;">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CategoryName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SeasonName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Picture)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Count)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Price)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SeasonName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Picture)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Count)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.RouteLink("Details", new { controller = "Product", action = "Details", id = item.Id })
+                        </td>
+                    </tr>
+                    }
+
+                </table>
+                <button>
+                    @Html.ActionLink("Go back", "Index", "Product")
+                </button>
+
+            </list_Board>*@
     </p>
-
-<list_Board style="float:right;">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SeasonName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Picture)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Count)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SeasonName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Picture)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.RouteLink("Details", new { controller = "Product", action = "Details", id = item.Id })
-            </td>
-        </tr>
-}
-        <p>
-            @Html.ActionLink("Go back", "Index", "Product")
-        </p>
-
-
-    </table>
-</list_Board>

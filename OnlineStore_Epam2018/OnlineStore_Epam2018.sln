@@ -4,14 +4,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore_Epam2018", "OnlineStore_Epam2018\OnlineStore_Epam2018.csproj", "{66FCCAE2-C7F5-4507-AB1B-3E00CAFE09C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB449077-BC72-4594-A548-3F5E519B5A1D} = {AB449077-BC72-4594-A548-3F5E519B5A1D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SA.OnlineStore.DataAccess", "SA.OnlineStore.DataAccess\SA.OnlineStore.DataAccess.csproj", "{14C02E43-5E18-4702-AF88-C28D013A4FC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB449077-BC72-4594-A548-3F5E519B5A1D} = {AB449077-BC72-4594-A548-3F5E519B5A1D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SA.OnlineStore.Bussines", "SA.OnlineStore.Bussines\SA.OnlineStore.Bussines.csproj", "{852EB40F-16CA-4923-AC80-9A0B0F920CCF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SA.OnlineStore.Common", "SA.OnlineStore.Common\SA.OnlineStore.Common.csproj", "{64E83599-BDF1-4B67-AD17-3ECE731D70C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SA.OnlineStore.Dependency", "SA.OnlineStore.Dependency\SA.OnlineStore.Dependency.csproj", "{A8BE7E9F-2E62-4DF0-9C79-E1CBB608CC88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SA.OnlineStore.WCF", "SA.OnlineStore.WCF\SA.OnlineStore.WCF.csproj", "{AB449077-BC72-4594-A548-3F5E519B5A1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +47,10 @@ Global
 		{A8BE7E9F-2E62-4DF0-9C79-E1CBB608CC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8BE7E9F-2E62-4DF0-9C79-E1CBB608CC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8BE7E9F-2E62-4DF0-9C79-E1CBB608CC88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB449077-BC72-4594-A548-3F5E519B5A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB449077-BC72-4594-A548-3F5E519B5A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB449077-BC72-4594-A548-3F5E519B5A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB449077-BC72-4594-A548-3F5E519B5A1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

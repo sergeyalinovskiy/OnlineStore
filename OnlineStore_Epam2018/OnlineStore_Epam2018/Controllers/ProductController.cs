@@ -13,12 +13,14 @@ namespace OnlineStore_Epam2018.Controllers
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ISeasonService _seasonService;
+        private readonly IProductListService _productListService;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IProductListService productListService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _seasonService = seasonService;
+            _productListService = productListService;
         }
 
         public ProductController()
@@ -26,21 +28,6 @@ namespace OnlineStore_Epam2018.Controllers
 
         }
         
-        //public ActionResult Index()
-        //{
-        //    //IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
-
-        //    ViewBag.ListCategoryName = _categoryService.CategoryNameList();
-
-        //    //if (category != null)
-        //    //{
-        //    //    var newProductList = products.Where(p => p.CategoryName == category);
-        //    //    return View(newProductList);
-        //    //}
-        //    return View("IndexTest");
-        //}
-
-        //[HttpPost]
         public ActionResult Index(string category)
         {
             ViewBag.ListCategoryName = _categoryService.CategoryNameList();
@@ -56,9 +43,27 @@ namespace OnlineStore_Epam2018.Controllers
                 return PartialView(newProductList);
             }
             return PartialView(products);
+        } 
+
+        public ActionResult AddInBox(int id)
+        {
+            Product prod = new Product();
+            foreach(Product item in _productService.GetProductLIst())
+            {
+                if (item.Id == id)
+                {
+                    prod = item;
+                }
+            }
+            ProductList product = new ProductList()
+            {
+                ProductId = prod.Id,
+                ProductName = prod.Name,
+                Count = 1
+            };
+             _productListService.AddNewItemInBox(product);
+            return View();
         }
-
-
 
         public ActionResult Details(int id)
         {
@@ -135,7 +140,6 @@ namespace OnlineStore_Epam2018.Controllers
             }
             return convertProductList;
         }
-
 
         public ProductViewModel ConvertToViewModel(Product model)
         {

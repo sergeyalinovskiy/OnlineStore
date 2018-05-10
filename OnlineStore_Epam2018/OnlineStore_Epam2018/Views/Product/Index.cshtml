@@ -23,9 +23,7 @@
             </tr>
             <tr>
                 <td>
-                    <button>
-                        @Html.ActionLink("Go to the search page", "Index", "Search")
-                    </button>
+                        @Html.RouteLink("Go to the search page", new { controller="Search",action="Index"}, new { @class = "btn btn-default"})
                 </td>
             </tr>
         </table>
@@ -49,7 +47,6 @@
             </tbody>
         </table>
     </List_Board>
-
 }
 @section scripts{
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>

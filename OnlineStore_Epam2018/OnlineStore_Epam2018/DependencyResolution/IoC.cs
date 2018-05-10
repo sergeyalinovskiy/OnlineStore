@@ -17,11 +17,13 @@
 
 
 namespace OnlineStore_Epam2018.DependencyResolution {
+    using SA.OnlineStore.Bussines;
     using StructureMap;
 	
     public static class IoC {
         public static IContainer Initialize() {
-            return new Container(c => { c.AddRegistry<DefaultRegistry>(); c.AddRegistry<MyDefaultRegistry>(); });
+            return new Container(c => { c.AddRegistry<DefaultRegistry>();
+                                        c.AddRegistry<MyDefaultRegistry>();});
         }
     }
 }

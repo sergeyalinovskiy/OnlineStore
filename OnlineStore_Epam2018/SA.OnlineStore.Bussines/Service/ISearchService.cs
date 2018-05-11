@@ -1,4 +1,5 @@
-﻿using SA.OnlineStore.Bussines.Entity;
+﻿
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace SA.OnlineStore.Bussines.Service
 {
     public interface ISearchService
     {
-        IEnumerable<Product> ProductByCategory(string category);
-        IEnumerable<Product> ProductBySeason(string category);
-        IEnumerable<Product> ProductByPriceUp();
-        IEnumerable<Product> ProductByPriceDown();
-        IEnumerable<Product> ProductByProductName();
+        IEnumerable<ProductModel> ProductByCategory(string category);
+        IEnumerable<ProductModel> ProductBySeason(string category);
+        IEnumerable<ProductModel> ProductByPriceUp();
+        IEnumerable<ProductModel> ProductByPriceDown();
+        IEnumerable<ProductModel> ProductByProductName();
     }
 }

@@ -1,6 +1,6 @@
-﻿using SA.OnlineStore.Bussines.Entity;
+﻿
 using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.DataAccess.Entity;
+using SA.OnlineStore.Common.Entity;
 using SA.OnlineStore.DataAccess.Service;
 using System;
 using System.Collections.Generic;
@@ -19,39 +19,17 @@ namespace SA.OnlineStore.Bussines.Components
             _publicityRepository = publicityRepository;
         }
 
-        public Publicity GetPublicity()
+        public PublicityModel GetPublicity()
         {
-            Publicity publicity = ConvetToBussines(_publicityRepository.GetPublicity());
+            PublicityModel publicity = _publicityRepository.GetPublicity();
             return publicity;
         }       
 
-        public IEnumerable<Publicity> GetPublicityList()
+        public IEnumerable<PublicityModel> GetPublicityList()
         {
-            IEnumerable<Publicity> resultList = ConvertToPublicityList(_publicityRepository.GetPublicityList());
+            IEnumerable<PublicityModel> resultList = _publicityRepository.GetPublicityList();
             return resultList;
         }
 
-
-        public IEnumerable<Publicity> ConvertToPublicityList(IEnumerable<PublicityWcf> listModel)
-        {
-            List<Publicity> resultList = new List<Publicity>();
-
-            foreach (PublicityWcf item in listModel)
-            {
-                resultList.Add(ConvetToBussines(item));
-            }
-            return resultList;
-        }
-
-
-        public Publicity ConvetToBussines(PublicityWcf model)
-        {
-            return new Publicity
-            {
-                Id = model.Id,
-                Name = model.Name,
-                Text = model.Text
-            };
-        }
     }
 }

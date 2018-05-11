@@ -1,4 +1,4 @@
-﻿using SA.OnlineStore.DataAccess.Entity;
+﻿using SA.OnlineStore.Common.Entity;
 using SA.OnlineStore.DataAccess.FirstWebServiceReference;
 using SA.OnlineStore.DataAccess.Service;
 using System;
@@ -22,22 +22,21 @@ namespace SA.OnlineStore.DataAccess.Components
             _service = _channel.CreateChannel();
         }
 
-        public PublicityWcf GetPublicity()
+        public PublicityModel GetPublicity()
         {
-            PublicityWcf publicity = ConvertToDataAccessModel(_service.GetPublicity(1));
+            PublicityModel publicity = ConvertToDataAccessModel(_service.GetPublicity(1));
             return publicity;
         }
 
-        public IEnumerable<PublicityWcf> GetPublicityList()
+        public IEnumerable<PublicityModel> GetPublicityList()
         {
-            IEnumerable<PublicityWcf> publicityList = ConvertToPublicityWcfList(_service.GetPublicityList());
+            IEnumerable<PublicityModel> publicityList = ConvertToPublicityWcfList(_service.GetPublicityList());
             return publicityList;
         }
 
-
-        public IEnumerable<PublicityWcf> ConvertToPublicityWcfList(IEnumerable<Publicity> listModel)
+        public IEnumerable<PublicityModel> ConvertToPublicityWcfList(IEnumerable<Publicity> listModel)
         {
-            List<PublicityWcf> resultList = new List<PublicityWcf>();
+            List<PublicityModel> resultList = new List<PublicityModel>();
 
             foreach(Publicity item in listModel)
             {
@@ -46,9 +45,9 @@ namespace SA.OnlineStore.DataAccess.Components
             return resultList;
         }
 
-        public PublicityWcf ConvertToDataAccessModel(Publicity model)
+        public PublicityModel ConvertToDataAccessModel(Publicity model)
         {
-            return new PublicityWcf
+            return new PublicityModel
             {
                 Id=model.Id,
                 Name = model.Name,

@@ -1,5 +1,6 @@
 ﻿
-using SA.OnlineStore.Bussines.Entity;
+
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,11 @@ namespace SA.OnlineStore.Bussines.Service
     public interface IProductListService
     {
         void DeleteProductInBoxById(int Id);
-        void SaveProductListInBox(ProductList model);
-        void EditProductListInBox(ProductList model);
-        ProductList GetProductListInBox(int Id);
-        IEnumerable<ProductList> GetProductListInBox();
-        void AddNewItemInBox(ProductList product);
+        void SaveProductListInBox(ProductListModel model);
+        void EditProductListInBox(ProductListModel model);
+        ProductListModel GetProductListInBox(int Id);
+        IEnumerable<ProductListModel> GetProductListInBox();
+        void AddNewItemInBox(ProductListModel product);
     }
 }
+    

@@ -1,5 +1,6 @@
-﻿using SA.OnlineStore.Bussines.Entity;
+﻿
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +11,39 @@ namespace SA.OnlineStore.Bussines.Components
 {
     public class CategoryService : ICategoryService
     {
-        private List<Category> _category = new List<Category>();
+        private List<CategoryModel> _category = new List<CategoryModel>();
         private List<string> _nameCategory = new List<string>();
 
         public CategoryService()
         {
-            Create(new Category
+            Create(new CategoryModel
             {
                 CategoryName = "Яблоня"
             });
-            Create(new Category
+            Create(new CategoryModel
             {
                 CategoryName = "Груша"
             });
-            Create(new Category
+            Create(new CategoryModel
             {
                 CategoryName = "Вишня"
             });
-            Create(new Category
+            Create(new CategoryModel
             {
                 CategoryName = "Черешня"
             });
-            Create(new Category
+            Create(new CategoryModel
             {
                 CategoryName = "Абрикос"
             });
-            Create(new Category
+            Create(new CategoryModel
             {
                 CategoryName = "Персик"
             });
         }
 
 
-        public void Create(Category model)
+        public void Create(CategoryModel model)
         {
             _category.Add(model);
         }
@@ -64,22 +65,22 @@ namespace SA.OnlineStore.Bussines.Components
             throw new NotImplementedException();
         }
 
-        public void EditCategory(Category model)
+        public void EditCategory(CategoryModel model)
         {
             throw new NotImplementedException();
         }
 
-        public Category GetCategory(int Id)
+        public CategoryModel GetCategory(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Category> GetCategoryList()
+        public IEnumerable<CategoryModel> GetCategoryList()
         {
             throw new NotImplementedException();
         }
 
-        public void SaveCategory(Category model)
+        public void SaveCategory(CategoryModel model)
         {
             throw new NotImplementedException();
         }

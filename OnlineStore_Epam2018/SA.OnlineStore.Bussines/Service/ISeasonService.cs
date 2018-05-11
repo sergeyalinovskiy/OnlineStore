@@ -1,4 +1,5 @@
-﻿using SA.OnlineStore.Bussines.Entity;
+﻿
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace SA.OnlineStore.Bussines.Service
 {
     public interface ISeasonService
     {
-        void Create(Season model);
-        Season GetSeason(int Id);
-        IEnumerable<Season> GetSeasonList();
+        void Create(SeasonModel model);
+        SeasonModel GetSeason(int Id);
+        IEnumerable<SeasonModel> GetSeasonList();
         IEnumerable<string> SeasonNameList();
     }
 }

@@ -1,4 +1,4 @@
-﻿using SA.OnlineStore.DataAccess.Entity;
+﻿using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace SA.OnlineStore.DataAccess.Service
 {
     public interface IPublicityRepository
     {
-          PublicityWcf GetPublicity();
-        IEnumerable<PublicityWcf> GetPublicityList();
+        PublicityModel GetPublicity();
+        IEnumerable<PublicityModel> GetPublicityList();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using OnlineStore_Epam2018.Models;
-using SA.OnlineStore.Bussines.Entity;
+
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,15 +48,15 @@ namespace OnlineStore_Epam2018.Controllers
 
         public ActionResult AddInBox(int id)
         {
-            Product prod = new Product();
-            foreach(Product item in _productService.GetProductLIst())
+            ProductModel prod = new ProductModel();
+            foreach(ProductModel item in _productService.GetProductLIst())
             {
                 if (item.Id == id)
                 {
                     prod = item;
                 }
             }
-            ProductList product = new ProductList()
+            ProductListModel product = new ProductListModel()
             {
                 ProductId = prod.Id,
                 ProductName = prod.Name,
@@ -130,7 +131,7 @@ namespace OnlineStore_Epam2018.Controllers
         }
 
 
-        public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<Product> modelList)
+        public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<ProductModel> modelList)
         {
             List<ProductViewModel> convertProductList = new List<ProductViewModel>();
 
@@ -141,7 +142,7 @@ namespace OnlineStore_Epam2018.Controllers
             return convertProductList;
         }
 
-        public ProductViewModel ConvertToViewModel(Product model)
+        public ProductViewModel ConvertToViewModel(ProductModel model)
         {
             return new ProductViewModel()
             {
@@ -156,9 +157,9 @@ namespace OnlineStore_Epam2018.Controllers
             };
         }
 
-        public Product ConvertToBussinesModel(ProductViewModel model)
+        public ProductModel ConvertToBussinesModel(ProductViewModel model)
         {
-            return new Product()
+            return new ProductModel()
             {
                 Id = model.Id,
                 Name = model.Name,

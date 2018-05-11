@@ -1,4 +1,5 @@
-﻿using SA.OnlineStore.Bussines.Entity;
+﻿
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace SA.OnlineStore.Bussines.Service
 {
     public interface IPublicityService
     {
-        Publicity GetPublicity();
-        IEnumerable<Publicity> GetPublicityList();
+        PublicityModel GetPublicity();
+        IEnumerable<PublicityModel> GetPublicityList();
     }
 }

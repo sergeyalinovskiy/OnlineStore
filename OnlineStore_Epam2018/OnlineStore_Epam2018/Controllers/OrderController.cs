@@ -1,6 +1,7 @@
 ﻿using OnlineStore_Epam2018.Models;
-using SA.OnlineStore.Bussines.Entity;
+
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,26 +89,24 @@ namespace OnlineStore_Epam2018.Controllers
             return RedirectToAction("Index");
         }
 
-        private Order ConvertToBusinesModel(OrderViewModel model)
+        private OrderModel ConvertToBusinesModel(OrderViewModel model)
         {
-            return new Order()
+            return new OrderModel()
             {
                 Id = model.Id,
                 UserId = model.UserId,
-                ProductListId = model.ProductListId,
                 Address = model.Address,
                 StatusId = model.StatusId,
                 DateOrder = model.DateOrder
             };
         }
 
-        private OrderViewModel ConvertToViewModel(Order model)
+        private OrderViewModel ConvertToViewModel(OrderModel model)
         {
             return new OrderViewModel()
             {
                 Id = model.Id,
                 UserId=model.UserId,
-                ProductListId=model.ProductListId,
                 Address=model.Address,
                 StatusId=model.StatusId,
                 DateOrder=model.DateOrder

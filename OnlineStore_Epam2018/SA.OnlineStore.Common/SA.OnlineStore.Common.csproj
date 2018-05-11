@@ -62,6 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDependencyRegistry.cs" />
+    <Compile Include="Entity\CategoryModel.cs" />
+    <Compile Include="Entity\OrderModel.cs" />
+    <Compile Include="Entity\ProductListModel.cs" />
+    <Compile Include="Entity\ProductModel.cs" />
+    <Compile Include="Entity\PublicityModel.cs" />
+    <Compile Include="Entity\SeasonModel.cs" />
     <Compile Include="Logger\CommonLogger.cs" />
     <Compile Include="Logger\ICommonLogger.cs" />
     <Compile Include="Logger\Logger.cs" />

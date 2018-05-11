@@ -1,6 +1,7 @@
 ﻿using OnlineStore_Epam2018.Models;
-using SA.OnlineStore.Bussines.Entity;
+
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace OnlineStore_Epam2018.Controllers
         }
 
 
-        public ProductListViewModel ConvertToProductListViewModel(ProductList model)
+        public ProductListViewModel ConvertToProductListViewModel(ProductListModel model)
         {
             return new ProductListViewModel
             {
@@ -41,7 +42,7 @@ namespace OnlineStore_Epam2018.Controllers
             };
         }
 
-        public IEnumerable<ProductListViewModel> ConvertToProductListViewModelList(IEnumerable<ProductList> modelList)
+        public IEnumerable<ProductListViewModel> ConvertToProductListViewModelList(IEnumerable<ProductListModel> modelList)
         {
             List<ProductListViewModel> convertProductList = new List<ProductListViewModel>();
 
@@ -51,11 +52,5 @@ namespace OnlineStore_Epam2018.Controllers
             }
             return convertProductList;
         }
-
-        //// GET: Basket
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }

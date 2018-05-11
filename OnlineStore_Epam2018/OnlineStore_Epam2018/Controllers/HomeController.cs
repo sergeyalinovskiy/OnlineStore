@@ -1,8 +1,9 @@
 ﻿
 using log4net;
 using OnlineStore_Epam2018.Models;
-using SA.OnlineStore.Bussines.Entity;
+
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Entity;
 using SA.OnlineStore.Common.Logger;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,6 @@ namespace OnlineStore_Epam2018.Controllers
    
     public class HomeController : Controller
     {
-        
         private readonly ICommonLogger _myLoger;
         private readonly IPublicityService _publicityService;
 
@@ -32,24 +32,22 @@ namespace OnlineStore_Epam2018.Controllers
 
         public ActionResult Index()
         {
-         
             _myLoger.Info("Exception message");
             return View(ConvertToProductViewModelList(_publicityService.GetPublicityList()));
         }
 
-
-        public IEnumerable<PublicityViewModel> ConvertToProductViewModelList(IEnumerable<Publicity> modelList)
+        public IEnumerable<PublicityViewModel> ConvertToProductViewModelList(IEnumerable<PublicityModel> modelList)
         {
             List<PublicityViewModel> convertPublicityList = new List<PublicityViewModel>();
 
-            foreach (Publicity item in modelList)
+            foreach (PublicityModel item in modelList)
             {
                 convertPublicityList.Add(ConvertToViewModel(item));
             }
             return convertPublicityList;
         }
 
-        public PublicityViewModel ConvertToViewModel(Publicity model)
+        public PublicityViewModel ConvertToViewModel(PublicityModel model)
         {
             return new PublicityViewModel()
             {

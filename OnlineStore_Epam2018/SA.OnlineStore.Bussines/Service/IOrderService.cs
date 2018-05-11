@@ -1,4 +1,5 @@
-﻿using SA.OnlineStore.Bussines.Entity;
+﻿
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace SA.OnlineStore.Bussines.Service
     public interface IOrderService
     {
         void DeleteOrderByOrderId(int Id);
-        void SaveOrder(Order model);
-        void EditOrder(Order model);
-        Order GetOrder(int Id);
-        IEnumerable<Order> GetOrderList();
+        void SaveOrder(OrderModel model);
+        void EditOrder(OrderModel model);
+        OrderModel GetOrder(int Id);
+        IEnumerable<OrderModel> GetOrderList();
     }
 }

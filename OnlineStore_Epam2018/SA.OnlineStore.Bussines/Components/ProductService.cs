@@ -1,5 +1,6 @@
-﻿using SA.OnlineStore.Bussines.Entity;
+﻿
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace SA.OnlineStore.Bussines.Components
 {
     public class ProductService : IProductService
     {
-        private List<Product> _products = new List<Product>()
+        private List<ProductModel> _products = new List<ProductModel>()
         {
-            new Product()
+            new ProductModel()
             {
                 Id=1,
                 Name="product",
@@ -23,7 +24,7 @@ namespace SA.OnlineStore.Bussines.Components
                 Count=1,
                 Price=12
             },
-            new Product()
+            new ProductModel()
             {
                 Id=2,
                 Name="product2",
@@ -34,7 +35,7 @@ namespace SA.OnlineStore.Bussines.Components
                 Count=2,
                 Price=23
             },
-            new Product()
+            new ProductModel()
             {
                 Id=3,
                 Name="product3",
@@ -45,7 +46,7 @@ namespace SA.OnlineStore.Bussines.Components
                 Count=3,
                 Price=31
             },
-            new Product()
+            new ProductModel()
             {
                 Id=4,
                 Name="product",
@@ -56,7 +57,7 @@ namespace SA.OnlineStore.Bussines.Components
                 Count=1,
                 Price=14
             },
-            new Product()
+            new ProductModel()
             {
                 Id=5,
                 Name="product2",
@@ -67,7 +68,7 @@ namespace SA.OnlineStore.Bussines.Components
                 Count=2,
                 Price=21
             },
-            new Product()
+            new ProductModel()
             {
                 Id=6,
                 Name="product3",
@@ -78,7 +79,7 @@ namespace SA.OnlineStore.Bussines.Components
                 Count=3,
                 Price=33
             },
-                new Product(){
+                new ProductModel(){
                 Id=1,
                 Name="product",
                 CategoryName="Яблоня",
@@ -91,7 +92,7 @@ namespace SA.OnlineStore.Bussines.Components
         };
         public void DeleteProductByProductId(int Id)   //переделать!!!! 
         {
-            Product p = new Product();
+            ProductModel p = new ProductModel();
             //_products.RemoveAt(Id);
             foreach(var item in _products)
             {
@@ -104,7 +105,7 @@ namespace SA.OnlineStore.Bussines.Components
 
         }
 
-        public void EditProduct(Product model)
+        public void EditProduct(ProductModel model)
         {
             _products[model.Id].Name = model.Name;
             _products[model.Id].CategoryName = model.CategoryName;
@@ -116,24 +117,24 @@ namespace SA.OnlineStore.Bussines.Components
         }
 
 
-        public Product GetProduct(int Id)
+        public ProductModel GetProduct(int Id)
         {
             return _products.Where(t => t.Id == Id).FirstOrDefault();
         }
 
-        public IEnumerable<Product> GetProductLIst()
+        public IEnumerable<ProductModel> GetProductLIst()
         {
             return _products;
         }
 
-        public IEnumerable<Product> GetProductLIstByCategory(string category)
+        public IEnumerable<ProductModel> GetProductLIstByCategory(string category)
         {
             return _products.Where(x => x.CategoryName == category);
         }
 
-        public void SaveProduct(Product model)
+        public void SaveProduct(ProductModel model)
         {
-            _products.Add(new Product
+            _products.Add(new ProductModel
             {
                 Name = model.Name,                
                 CategoryName=model.CategoryName,

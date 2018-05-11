@@ -67,7 +67,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="DataAccessDependencyRegistry.cs" />
-    <Compile Include="Entity\PublicityWcf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IPublicityRepository.cs" />
   </ItemGroup>
@@ -109,6 +108,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SA.OnlineStore.Common\SA.OnlineStore.Common.csproj">
+      <Project>{64E83599-BDF1-4B67-AD17-3ECE731D70C6}</Project>
+      <Name>SA.OnlineStore.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

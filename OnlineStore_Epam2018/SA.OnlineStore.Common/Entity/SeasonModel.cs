@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SA.OnlineStore.Bussines.Entity
+namespace SA.OnlineStore.Common.Entity
 {
-    public class Season
+    public class SeasonModel
     {
         public int SeasonId { get; set; }
         public string SeasonName { get; set; }

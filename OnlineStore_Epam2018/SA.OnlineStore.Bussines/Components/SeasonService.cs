@@ -1,5 +1,6 @@
-﻿using SA.OnlineStore.Bussines.Entity;
+﻿
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,36 +12,36 @@ namespace SA.OnlineStore.Bussines.Components
     public class SeasonService : ISeasonService
     {
 
-        public List<Season> _seasons = new List<Season>();
+        public List<SeasonModel> _seasons = new List<SeasonModel>();
         public List<string> _seasonNames = new List<string>();
 
         public SeasonService()
         {
-            Create(new Season
+            Create(new SeasonModel
             {
                 SeasonName = "лето"
             });
-            Create(new Season
+            Create(new SeasonModel
             {
                 SeasonName = "осень"
             });
-            Create(new Season
+            Create(new SeasonModel
             {
                 SeasonName = "зима"
             });
         }
 
-        public void Create(Season model)
+        public void Create(SeasonModel model)
         {
             _seasons.Add(model);
         }
 
-        public Season GetSeason(int Id)
+        public SeasonModel GetSeason(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Season> GetSeasonList()
+        public IEnumerable<SeasonModel> GetSeasonList()
         {
             throw new NotImplementedException();
         }

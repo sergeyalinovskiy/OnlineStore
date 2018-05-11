@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SA.OnlineStore.Bussines.Entity
+namespace SA.OnlineStore.Common.Entity
 {
-    public class ProductList
+   public class ProductListModel
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

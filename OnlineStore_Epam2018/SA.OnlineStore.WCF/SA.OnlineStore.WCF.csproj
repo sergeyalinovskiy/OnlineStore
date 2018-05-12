@@ -69,6 +69,7 @@
       <DependentUpon>FirstWebService.svc</DependentUpon>
     </Compile>
     <Compile Include="IFirstWebService.cs" />
+    <Compile Include="MakingPublicityList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publicity.cs" />
   </ItemGroup>

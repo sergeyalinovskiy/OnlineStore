@@ -49,6 +49,7 @@
       <HintPath>..\packages\structuremap.web.3.1.0.133\lib\net40\StructureMap.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDependencyRegistry.cs" />
+    <Compile Include="Const\DbConstant.cs" />
     <Compile Include="Entity\CategoryModel.cs" />
     <Compile Include="Entity\OrderModel.cs" />
     <Compile Include="Entity\ProductListModel.cs" />

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace SA.OnlineStore.DataAccess.Components
 {
-    public class PublicityService : IPublicityRepository
+    public class PublicityRepository : IPublicityRepository
     {
         private ChannelFactory<FirstWebServiceReference.IFirstWebService> _channel = new 
             ChannelFactory<FirstWebServiceReference.IFirstWebService>(new BasicHttpBinding(), new EndpointAddress("http://localhost:51702/FirstWebService.svc"));
 
         private FirstWebServiceReference.IFirstWebService _service;
 
-        public PublicityService()
+        public PublicityRepository()
         {
             _service = _channel.CreateChannel();
         }

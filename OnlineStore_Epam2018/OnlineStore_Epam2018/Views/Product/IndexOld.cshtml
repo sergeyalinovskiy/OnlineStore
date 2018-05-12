@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Products";
+    AjaxOptions options = new AjaxOptions()
+    {
+        UpdateTargetId = "tabledata",
+        Url = Url.Action("OrdersData")
+    };
+}
+<body>
+</body>
+@using (Ajax.BeginForm("Index", "Product", options, htmlAttributes: new { @category = "category" }))
+{
+    <navigation_Board id="navigationBoard" style="float:left;">
+        <table>
+            <tr>
+                <td><h4>Категория   </h4>  </td>
+            </tr>
+            <tr>
+                <td>@Html.DropDownList("category", new SelectList(ViewBag.ListCategoryName), "Все", htmlAttributes: new { @class = "form-control selectlist" })   </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Search" /></td>
+            </tr>
+            <tr>
+                <td>
+                      
+                </td>
+            </tr>
+        </table>
+    </navigation_Board>
+
+    <List_Board style="float:Left">
+        <table cellpadding="6">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>CategoryName</th>
+                    <th>SeasonName</th>
+                    <th>Picture</th>
+                    <th>Description</th>
+                    <th>Count</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="tabledata">
+                @Html.Action("OrdersData", new { category = Model })
+            </tbody>
+        </table>
+    </List_Board>
+}
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+

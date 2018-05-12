@@ -12,11 +12,6 @@ namespace SA.OnlineStore.WCF
     public interface IFirstWebService
     {
         [OperationContract]
-        string Message();
-        [OperationContract]
-        int add(int x, int y);
-
-        [OperationContract]
        Publicity GetPublicity(int id);
 
         [OperationContract]

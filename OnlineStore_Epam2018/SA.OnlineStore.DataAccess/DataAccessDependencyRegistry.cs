@@ -13,7 +13,10 @@ namespace SA.OnlineStore.DataAccess
     {
         public DataAccessDependencyRegistry()
         {
-            For<IPublicityRepository>().Use<PublicityService>();
+            For<IPublicityRepository>().Use<PublicityRepository>();
+            For<IProductRepository>().Use<ProductRepository>();
+            For<ICategoryRepository>().Use<CategoryRepository>();
+
         }
     }
 }

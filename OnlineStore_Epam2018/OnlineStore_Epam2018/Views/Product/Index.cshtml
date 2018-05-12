@@ -1,54 +1,82 @@
-﻿@{
-    ViewBag.Title = "Products";
-    AjaxOptions options = new AjaxOptions()
-    {
-        UpdateTargetId = "tabledata",
-        Url = Url.Action("OrdersData")
-    };
+﻿@model IEnumerable<OnlineStore_Epam2018.Models.ProductViewModel>
+
+@{
+    ViewBag.Title = "Index";
 }
-<body>
-</body>
-@using (Ajax.BeginForm("Index", "Product", options, htmlAttributes: new { @category = "category" }))
-{
-    <navigation_Board id="navigationBoard" style="float:left;">
-        <table>
-            <tr>
-                <td><h4>Категория </h4>  </td>
-            </tr>
-            <tr>
-                <td>@Html.DropDownList("category", new SelectList(ViewBag.ListCategoryName), "Все", htmlAttributes: new { @class = "form-control selectlist" })   </td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Search" /></td>
-            </tr>
+
+<h2>Index2</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+
+
+<navigation_Board id="navigationBoard" style="float:left;">
+    @Html.Action("CategoryList")
+</navigation_Board>
+
+
+<list_Board id="listBoard" style="float:left;">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeasonId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Count)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
             <tr>
                 <td>
-                        @Html.RouteLink("Go to the search page", new { controller="Search",action="Index"}, new { @class = "btn btn-default"})
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeasonId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Picture)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
-        </table>
-    </navigation_Board>
+        }
 
-    <List_Board style="float:Left">
-        <table cellpadding="6">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>CategoryName</th>
-                    <th>SeasonName</th>
-                    <th>Picture</th>
-                    <th>Description</th>
-                    <th>Count</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody id="tabledata">
-                @Html.Action("OrdersData", new { category = Model })
-            </tbody>
-        </table>
-    </List_Board>
-}
-@section scripts{
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-}
-
+    </table>
+    </list_Board>

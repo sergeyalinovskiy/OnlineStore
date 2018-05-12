@@ -10,8 +10,8 @@ namespace SA.OnlineStore.Bussines.Service
 {
     public interface ISearchService
     {
-        IEnumerable<ProductModel> ProductByCategory(string category);
-        IEnumerable<ProductModel> ProductBySeason(string category);
+        IEnumerable<ProductModel> ProductByCategory(int category);
+        IEnumerable<ProductModel> ProductBySeason(int category);
         IEnumerable<ProductModel> ProductByPriceUp();
         IEnumerable<ProductModel> ProductByPriceDown();
         IEnumerable<ProductModel> ProductByProductName();

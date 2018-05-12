@@ -1,6 +1,7 @@
 ﻿
 using SA.OnlineStore.Bussines.Service;
 using SA.OnlineStore.Common.Entity;
+using SA.OnlineStore.DataAccess.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,53 +12,26 @@ namespace SA.OnlineStore.Bussines.Components
 {
     public class CategoryService : ICategoryService
     {
-        private List<CategoryModel> _category = new List<CategoryModel>();
-        private List<string> _nameCategory = new List<string>();
-
-        public CategoryService()
+        private readonly ICategoryRepository _categoryRepository;
+        
+        public CategoryService(ICategoryRepository categoryRepository)
         {
-            Create(new CategoryModel
-            {
-                CategoryName = "Яблоня"
-            });
-            Create(new CategoryModel
-            {
-                CategoryName = "Груша"
-            });
-            Create(new CategoryModel
-            {
-                CategoryName = "Вишня"
-            });
-            Create(new CategoryModel
-            {
-                CategoryName = "Черешня"
-            });
-            Create(new CategoryModel
-            {
-                CategoryName = "Абрикос"
-            });
-            Create(new CategoryModel
-            {
-                CategoryName = "Персик"
-            });
+            _categoryRepository = categoryRepository;
         }
-
+    
+        public IEnumerable<string> CategoryNameList()
+        {
+            List<string> categoryNames = new List<string>();
+            foreach(CategoryModel item in _categoryRepository.GetCategoryList())
+            {
+                categoryNames.Add(item.CategoryName);
+            }
+            return categoryNames;
+        }
 
         public void Create(CategoryModel model)
         {
-            _category.Add(model);
-        }
-
-        public IEnumerable<string> CategoryNameList()
-        {
-            foreach(var item in _category)
-            {
-                if (_category.Count > _nameCategory.Count)  // УБРАТЬ! (когда будет база...)
-                {
-                    _nameCategory.Add(item.CategoryName);
-                }
-            }
-            return _nameCategory;
+            throw new NotImplementedException();
         }
 
         public void DeleteCategoryByCategoryId(int Id)
@@ -77,12 +51,13 @@ namespace SA.OnlineStore.Bussines.Components
 
         public IEnumerable<CategoryModel> GetCategoryList()
         {
-            throw new NotImplementedException();
+            return _categoryRepository.GetCategoryList();
         }
 
         public void SaveCategory(CategoryModel model)
         {
             throw new NotImplementedException();
         }
+
     }
 }

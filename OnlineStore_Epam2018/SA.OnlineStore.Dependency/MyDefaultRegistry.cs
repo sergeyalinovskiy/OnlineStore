@@ -24,7 +24,6 @@
                 m.AssemblyContainingType<BussinesDependencyRegistry>();
                 m.AssemblyContainingType<CommonDependencyRegistry>();
                 
-
                 m.WithDefaultConventions();
                 m.LookForRegistries();
             });

@@ -21,7 +21,7 @@ namespace SA.OnlineStore.Bussines.Components
             _categoryService = categoryService;
         }
 
-        public IEnumerable<ProductModel> ProductByCategory(string category)
+        public IEnumerable<ProductModel> ProductByCategory(int category)
         {
             return _productService.GetProductLIstByCategory(category);
         }
@@ -43,7 +43,7 @@ namespace SA.OnlineStore.Bussines.Components
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ProductModel> ProductBySeason(string category)
+        public IEnumerable<ProductModel> ProductBySeason(int category)
         {
             throw new NotImplementedException();
         }

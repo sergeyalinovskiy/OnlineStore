@@ -5,9 +5,10 @@ using System.Web;
 
 namespace OnlineStore_Epam2018.Models
 {
-    public class CategoryVievModel
+    public class CategoryViewModel
     {
-        public int CategoryId { get; set; }
+        public int Id { get; set; }
         public string CategoryName { get; set; }
+        public int ParentId { get; set; }
     }
 }

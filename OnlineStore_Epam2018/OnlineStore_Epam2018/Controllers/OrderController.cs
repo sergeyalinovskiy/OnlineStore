@@ -1,13 +1,14 @@
-﻿using OnlineStore_Epam2018.Models;
-using SA.OnlineStore.Bussines.Entity;
-using SA.OnlineStore.Bussines.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+    using OnlineStore_Epam2018.Models;
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System;
+    using System.Linq;
+    using System.Web.Mvc;
+    #endregion
+
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
@@ -16,24 +17,24 @@ namespace OnlineStore_Epam2018.Controllers
         {
             _orderService = orderService;
         }
+
         public OrderController()
         {
            
         }
-        // GET: Order
+     
         public ActionResult Index()
         {
             var ordersList = this._orderService.GetOrderList().Select(o => this.ConvertToViewModel(o));
             return View(ordersList);
         }
         
-
         public ActionResult Details(int Id)
         {
             var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
             return View(order);
         }
-
+        
         public ActionResult Create()
         {
             return View();
@@ -63,6 +64,7 @@ namespace OnlineStore_Epam2018.Controllers
             var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
             return View(order);
         }
+
         [HttpPost]
         public ActionResult Edit(OrderViewModel model)
         {
@@ -88,26 +90,24 @@ namespace OnlineStore_Epam2018.Controllers
             return RedirectToAction("Index");
         }
 
-        private Order ConvertToBusinesModel(OrderViewModel model)
+        private OrderModel ConvertToBusinesModel(OrderViewModel model)
         {
-            return new Order()
+            return new OrderModel()
             {
                 Id = model.Id,
                 UserId = model.UserId,
-                ProductListId = model.ProductListId,
                 Address = model.Address,
                 StatusId = model.StatusId,
                 DateOrder = model.DateOrder
             };
         }
 
-        private OrderViewModel ConvertToViewModel(Order model)
+        private OrderViewModel ConvertToViewModel(OrderModel model)
         {
             return new OrderViewModel()
             {
                 Id = model.Id,
                 UserId=model.UserId,
-                ProductListId=model.ProductListId,
                 Address=model.Address,
                 StatusId=model.StatusId,
                 DateOrder=model.DateOrder

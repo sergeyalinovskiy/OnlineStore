@@ -1,13 +1,11 @@
-﻿using SA.OnlineStore.Bussines.Entity;
-using SA.OnlineStore.Bussines.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Components
+﻿namespace SA.OnlineStore.Bussines.Components
 {
+    #region Usings
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System.Collections.Generic;
+    using System.Linq;
+    #endregion
     public class SearchSeervice : ISearchService
     {
         private readonly IProductService _productService;
@@ -20,31 +18,21 @@ namespace SA.OnlineStore.Bussines.Components
             _categoryService = categoryService;
         }
 
-        public IEnumerable<Product> ProductByCategory(string category)
+        public IEnumerable<ProductModel> ProductByCategory(int category)
         {
             return _productService.GetProductLIstByCategory(category);
         }
 
-        public IEnumerable<Product> ProductByPriceUp()
+        public IEnumerable<ProductModel> ProductByPriceUp()
         {
             var productPriceDown = _productService.GetProductLIst().OrderBy(p => p.Price);
             return productPriceDown;
         }
 
-        public IEnumerable<Product> ProductByPriceDown()
+        public IEnumerable<ProductModel> ProductByPriceDown()
         {
             var productPriceDown = _productService.GetProductLIst().OrderByDescending(p => p.Price);
             return productPriceDown;
-        }
-
-        public IEnumerable<Product> ProductByProductName()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> ProductBySeason(string category)
-        {
-            throw new NotImplementedException();
         }
     }
 }

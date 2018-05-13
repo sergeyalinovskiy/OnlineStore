@@ -1,76 +1,87 @@
-﻿using OnlineStore_Epam2018.Models;
-using SA.OnlineStore.Bussines.Entity;
-using SA.OnlineStore.Bussines.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+    using OnlineStore_Epam2018.Models;
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    #endregion
+
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ISeasonService _seasonService;
+        private readonly IProductListService _productListService;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IProductListService productListService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _seasonService = seasonService;
+            _productListService = productListService;
         }
 
         public ProductController()
         {
 
         }
-        
-        //public ActionResult Index()
-        //{
-        //    //IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
 
-        //    ViewBag.ListCategoryName = _categoryService.CategoryNameList();
-
-        //    //if (category != null)
-        //    //{
-        //    //    var newProductList = products.Where(p => p.CategoryName == category);
-        //    //    return View(newProductList);
-        //    //}
-        //    return View("IndexTest");
-        //}
-
-        //[HttpPost]
-        public ActionResult Index(string category)
+        public ActionResult Index()
         {
-            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
-            return View("Index", (object)category);
+            IEnumerable<ProductViewModel> productList = ConvertListToViewModel(_productService.GetProductLIst());
+            return View("Index",productList);
         }
 
-        public ActionResult OrdersData(string category)
+        public ActionResult AddInBox(int id)
         {
-            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
-            if (!string.IsNullOrEmpty(category) && category != "Все")
+            ProductModel prod = new ProductModel();
+            foreach (ProductModel item in _productService.GetProductLIst())
             {
-                var newProductList = products.Where(p => p.CategoryName == category);
-                return PartialView(newProductList);
+                if (item.Id == id)
+                {
+                    prod = item;
+                }
             }
-            return PartialView(products);
+            ProductListModel product = new ProductListModel()
+            {
+                Id = 3,
+                ProductId = prod.Id,
+                ProductName = prod.Name,
+                Count = 1
+            };
+            _productListService.AddNewItemInBox(product);
+            return View();
         }
 
-
-
-        public ActionResult Details(int id)
+        public ActionResult IndexSearch(int? id)
         {
-            var product = ConvertToViewModel(this._productService.GetProduct(id));
-            return View(product);
+            IEnumerable<ProductModel> productList = _productService.GetProductLIst();
+            if (id!=null)
+            {
+                productList = productList.Where(m => m.CategoryId == id);
+                IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
+                return View("Index", list);
+            }
+            IEnumerable<ProductViewModel> list2 = ConvertListToViewModel(productList);
+            return View("Index", list2);
+        }
+
+        public ActionResult CategoryList()
+        {
+            var categorys = ConvertListToViewModel(_categoryService.GetCategoryList());
+
+            return PartialView(categorys);
         }
 
         public ActionResult Create()
         {
-            ViewBag.ListSeasonName = _seasonService.SeasonNameList();
-            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
-            return View();
+            var viewModel = new ProductViewModel();
+            viewModel = AddAllSelectLists(viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -81,7 +92,7 @@ namespace OnlineStore_Epam2018.Controllers
                 try
                 {
                     var product = this.ConvertToBussinesModel(model);
-                    this._productService.SaveProduct(product);
+                    _productService.SaveProduct(product);
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -89,16 +100,27 @@ namespace OnlineStore_Epam2018.Controllers
                     this.ModelState.AddModelError("", "Internal Exceptions");
                 }
             }
-            return View();
+            return View(model);
+        }
+
+        public ActionResult Details(int id)
+        {
+            ProductViewModel product = ConvertToViewModel(_productService.GetProduct(id));
+            return View(product);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            _productService.DeleteProductByProductId(id);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int Id)
         {
-            ViewBag.ListSeasonName = _seasonService.SeasonNameList();
-            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
             var product = this.ConvertToViewModel(this._productService.GetProduct(Id));
             return View(product);
         }
+
         [HttpPost]
         public ActionResult Edit(ProductViewModel model)
         {
@@ -108,7 +130,7 @@ namespace OnlineStore_Epam2018.Controllers
                 {
                     var product = this.ConvertToBussinesModel(model);
                     this._productService.SaveProduct(product);
-                    return RedirectToAction("Detail", new { Id=model.Id});
+                    return RedirectToAction("Details", new { Id = model.Id });
                 }
                 catch (Exception)
                 {
@@ -118,53 +140,80 @@ namespace OnlineStore_Epam2018.Controllers
             return View();
         }
 
-        public ActionResult Delete(int Id)
+        #region Convertation
+        public List<ProductViewModel> ConvertListToViewModel(IEnumerable<ProductModel> models)
         {
-            this._productService.DeleteProductByProductId(Id);
-            return RedirectToAction("Index");
-        }
-
-
-        public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<Product> modelList)
-        {
-            List<ProductViewModel> convertProductList = new List<ProductViewModel>();
-
-            foreach(var item in modelList)
+            List<ProductViewModel> products = new List<ProductViewModel>();
+            foreach (ProductModel item in models)
             {
-                convertProductList.Add(ConvertToViewModel(item));
+                products.Add(ConvertToViewModel(item));
             }
-            return convertProductList;
+            return products;
         }
 
-
-        public ProductViewModel ConvertToViewModel(Product model)
+        public ProductViewModel AddAllSelectLists(ProductViewModel model)
         {
-            return new ProductViewModel()
+            model.CategoryNameList=_categoryService.CategoryNameList();
+            model.SeasonNameList = _seasonService.SeasonNameList();
+            return model;
+        }
+
+        public List<CategoryViewModel> ConvertListToViewModel(IEnumerable<CategoryModel> models)
+        {
+            List<CategoryViewModel> products = new List<CategoryViewModel>();
+            foreach (CategoryModel item in models)
             {
-                Id=model.Id,
-                Name=model.Name,
-                CategoryName=model.CategoryName,
-                SeasonName= model.SeasonName,
-                Count=model.Count,
-                Picture= model.Picture,
-                Price= model.Price,
-                Description=model.Description
+                products.Add(ConvertToViewModel(item));
+            }
+            return products;
+        }
+
+        public CategoryViewModel ConvertToViewModel(CategoryModel model)
+        {
+            var category = _categoryService.GetCategoryList().Where(c => c.ParentId == model.CategoryId).FirstOrDefault();
+            return new CategoryViewModel()
+            {
+                CategoryId = model.CategoryId,
+                CategoryName = model.CategoryName,
+                ParentId= model.ParentId
             };
         }
 
-        public Product ConvertToBussinesModel(ProductViewModel model)
+        public ProductViewModel ConvertToViewModel(ProductModel model)
         {
-            return new Product()
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.SeasonId).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.CategoryId).FirstOrDefault();
+            return new ProductViewModel()
             {
                 Id = model.Id,
                 Name = model.Name,
-                CategoryName= model.CategoryName,
-                SeasonName = model.SeasonName,
+                CategoryName = category.CategoryName,
+                SeasonName = season.SeasonName,
+                Picture = model.Picture,
+                Description = model.Description,
+                Count = model.Count,
+                Price = model.Price
+            };
+        }
+
+        public ProductModel ConvertToBussinesModel(ProductViewModel model)
+        {
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonName == model.SeasonName).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryName == model.CategoryName).FirstOrDefault();
+            return new ProductModel()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                CategoryId = category.CategoryId,
+                SeasonId = season.SeasonId,
                 Count = model.Count,
                 Picture = model.Picture,
                 Price = model.Price,
                 Description = model.Description
             };
-        }
+           
+
+        } 
+        #endregion
     }
 }

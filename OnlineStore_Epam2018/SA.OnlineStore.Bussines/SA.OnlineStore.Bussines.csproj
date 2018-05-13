@@ -58,24 +58,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BussinesDependencyRegistry.cs" />
     <Compile Include="Components\CategoryService.cs" />
     <Compile Include="Components\OrderService.cs" />
+    <Compile Include="Components\ProductListService.cs" />
     <Compile Include="Components\ProductService.cs" />
+    <Compile Include="Components\PublicityService.cs" />
     <Compile Include="Components\SearchSeervice.cs" />
     <Compile Include="Components\SeasonService.cs" />
-    <Compile Include="Entity\Category.cs" />
-    <Compile Include="Entity\Order.cs" />
-    <Compile Include="Entity\Product.cs" />
-    <Compile Include="Entity\Season.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ICategoryService.cs" />
+    <Compile Include="Service\IProductListService.cs" />
     <Compile Include="Service\IOrderService.cs" />
     <Compile Include="Service\IProductService.cs" />
+    <Compile Include="Service\IPublicityService.cs" />
     <Compile Include="Service\ISearchService.cs" />
     <Compile Include="Service\ISeasonService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SA.OnlineStore.Common\SA.OnlineStore.Common.csproj">
+      <Project>{64E83599-BDF1-4B67-AD17-3ECE731D70C6}</Project>
+      <Name>SA.OnlineStore.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SA.OnlineStore.DataAccess\SA.OnlineStore.DataAccess.csproj">
+      <Project>{14C02E43-5E18-4702-AF88-C28D013A4FC7}</Project>
+      <Name>SA.OnlineStore.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

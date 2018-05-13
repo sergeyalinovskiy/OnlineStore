@@ -1,87 +1,60 @@
-﻿using SA.OnlineStore.Bussines.Entity;
-using SA.OnlineStore.Bussines.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Components
+﻿namespace SA.OnlineStore.Bussines.Components
 {
+    #region Usings
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Service;
+    using System;
+    using System.Collections.Generic;
+    #endregion
     public class CategoryService : ICategoryService
     {
-        private List<Category> _category = new List<Category>();
-        private List<string> _nameCategory = new List<string>();
-
-        public CategoryService()
+        private readonly ICategoryRepository _categoryRepository;
+        
+        public CategoryService(ICategoryRepository categoryRepository)
         {
-            Create(new Category
-            {
-                CategoryName = "Яблоня"
-            });
-            Create(new Category
-            {
-                CategoryName = "Груша"
-            });
-            Create(new Category
-            {
-                CategoryName = "Вишня"
-            });
-            Create(new Category
-            {
-                CategoryName = "Черешня"
-            });
-            Create(new Category
-            {
-                CategoryName = "Абрикос"
-            });
-            Create(new Category
-            {
-                CategoryName = "Персик"
-            });
+            _categoryRepository = categoryRepository;
         }
-
-
-        public void Create(Category model)
-        {
-            _category.Add(model);
-        }
-
+    
         public IEnumerable<string> CategoryNameList()
         {
-            foreach(var item in _category)
+            List<string> categoryNames = new List<string>();
+            foreach(CategoryModel item in _categoryRepository.GetCategoryList())
             {
-                if (_category.Count > _nameCategory.Count)  // УБРАТЬ! (когда будет база...)
-                {
-                    _nameCategory.Add(item.CategoryName);
-                }
+                categoryNames.Add(item.CategoryName);
             }
-            return _nameCategory;
+            return categoryNames;
+        }
+
+        public void Create(CategoryModel model)
+        {
+            _categoryRepository.Save(model);
         }
 
         public void DeleteCategoryByCategoryId(int Id)
         {
-            throw new NotImplementedException();
+            _categoryRepository.Delete(Id);
         }
 
-        public void EditCategory(Category model)
+        public void EditCategory(CategoryModel model)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();   //!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
-        public Category GetCategory(int Id)
+        public CategoryModel GetCategory(int Id)
         {
-            throw new NotImplementedException();
+            return _categoryRepository.Get(Id);
         }
 
-        public IEnumerable<Category> GetCategoryList()
+        public IEnumerable<CategoryModel> GetCategoryList()
         {
-            throw new NotImplementedException();
+            return _categoryRepository.GetCategoryList();
         }
 
-        public void SaveCategory(Category model)
+        public void SaveCategory(CategoryModel model)
         {
-            throw new NotImplementedException();
+            _categoryRepository.Save(model);
         }
+
     }
 }

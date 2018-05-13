@@ -72,6 +72,10 @@
       <Project>{64E83599-BDF1-4B67-AD17-3ECE731D70C6}</Project>
       <Name>SA.OnlineStore.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SA.OnlineStore.DataAccess\SA.OnlineStore.DataAccess.csproj">
+      <Project>{14c02e43-5e18-4702-af88-c28d013a4fc7}</Project>
+      <Name>SA.OnlineStore.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

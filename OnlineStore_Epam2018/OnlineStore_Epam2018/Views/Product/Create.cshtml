@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Добавление продукта</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -20,12 +20,12 @@
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
-        </div>       
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryName,new SelectList(ViewBag.ListCategoryName), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(m => m.CategoryName, new SelectList(Model.CategoryNameList), "категория", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SeasonName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SeasonName, new SelectList(ViewBag.ListSeasonName), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(m => m.SeasonName, new SelectList(Model.SeasonNameList), "сезон", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SeasonName, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -1,60 +1,34 @@
-﻿using SA.OnlineStore.Bussines.Entity;
-using SA.OnlineStore.Bussines.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Components
+﻿namespace SA.OnlineStore.Bussines.Components
 {
+    #region Usings
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Service;
+    using System;
+    using System.Collections.Generic;
+    #endregion
+
     public class SeasonService : ISeasonService
     {
-
-        public List<Season> _seasons = new List<Season>();
-        public List<string> _seasonNames = new List<string>();
-
-        public SeasonService()
+        private readonly ISeasonRepository _seasonRepository;
+        public SeasonService(ISeasonRepository seasonRepository)
         {
-            Create(new Season
-            {
-                SeasonName = "лето"
-            });
-            Create(new Season
-            {
-                SeasonName = "осень"
-            });
-            Create(new Season
-            {
-                SeasonName = "зима"
-            });
+            _seasonRepository = seasonRepository;
         }
 
-        public void Create(Season model)
+        public IEnumerable<SeasonModel> GetSeasonList()
         {
-            _seasons.Add(model);
-        }
-
-        public Season GetSeason(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Season> GetSeasonList()
-        {
-            throw new NotImplementedException();
+            return _seasonRepository.GetSeasonList();
         }
 
         public IEnumerable<string> SeasonNameList()
         {
-            foreach (var item in _seasons)
+            List<string> seasonNames = new List<string>();
+            foreach (SeasonModel item in _seasonRepository.GetSeasonList())
             {
-                if (_seasons.Count > _seasonNames.Count)  // УБРАТЬ! (когда будет база...)
-                {
-                    _seasonNames.Add(item.SeasonName);
-                }
+                seasonNames.Add(item.SeasonName);
             }
-            return _seasonNames;
+            return seasonNames;
         }
     }
 }

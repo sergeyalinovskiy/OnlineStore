@@ -1,17 +1,13 @@
-﻿using SA.OnlineStore.Bussines.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Service
+﻿namespace SA.OnlineStore.Bussines.Service
 {
+    #region Usings
+    using SA.OnlineStore.Common.Entity;
+    using System.Collections.Generic;
+    #endregion
+
     public interface ISeasonService
     {
-        void Create(Season model);
-        Season GetSeason(int Id);
-        IEnumerable<Season> GetSeasonList();
+        IEnumerable<SeasonModel> GetSeasonList();
         IEnumerable<string> SeasonNameList();
     }
 }

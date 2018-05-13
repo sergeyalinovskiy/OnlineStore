@@ -1,148 +1,50 @@
-﻿using SA.OnlineStore.Bussines.Entity;
-using SA.OnlineStore.Bussines.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Components
+﻿namespace SA.OnlineStore.Bussines.Components
 {
+    #region Usings
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Service;
+    using System.Collections.Generic;
+    using System.Linq;
+    #endregion
+
     public class ProductService : IProductService
     {
-        private List<Product> _products = new List<Product>()
-        {
-            new Product()
-            {
-                Id=1,
-                Name="product",
-                CategoryName="Яблоня",
-                SeasonName="лето",
-                Picture="pic",
-                Description="desc",
-                Count=1,
-                Price=12
-            },
-            new Product()
-            {
-                Id=2,
-                Name="product2",
-                CategoryName="Груша",
-                SeasonName="осень",
-                Picture="pic2",
-                Description="desc2",
-                Count=2,
-                Price=23
-            },
-            new Product()
-            {
-                Id=3,
-                Name="product3",
-                CategoryName="Вишня",
-                SeasonName="зима",
-                Picture="pic3",
-                Description="desc3",
-                Count=3,
-                Price=31
-            },
-            new Product()
-            {
-                Id=4,
-                Name="product",
-                CategoryName="Яблоня",
-                SeasonName="лето",
-                Picture="pic",
-                Description="desc",
-                Count=1,
-                Price=14
-            },
-            new Product()
-            {
-                Id=5,
-                Name="product2",
-                CategoryName="Груша",
-                SeasonName="осень",
-                Picture="pic2",
-                Description="desc2",
-                Count=2,
-                Price=21
-            },
-            new Product()
-            {
-                Id=6,
-                Name="product3",
-                CategoryName="Вишня",
-                SeasonName="зима",
-                Picture="pic3",
-                Description="desc3",
-                Count=3,
-                Price=33
-            },
-                new Product(){
-                Id=1,
-                Name="product",
-                CategoryName="Яблоня",
-                SeasonName="осень",
-                Picture="pic",
-                Description="desc",
-                Count=1,
-                Price=14
-            },
-        };
-        public void DeleteProductByProductId(int Id)   //переделать!!!! 
-        {
-            Product p = new Product();
-            //_products.RemoveAt(Id);
-            foreach(var item in _products)
-            {
-                if (item.Id == Id)
-                {
-                    p = item;
-                }
-            }
-            _products.Remove(p);
+        private readonly IProductRepository _productRepository;
 
+        public ProductService(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
         }
 
-        public void EditProduct(Product model)
+        public void DeleteProductByProductId(int Id) 
         {
-            _products[model.Id].Name = model.Name;
-            _products[model.Id].CategoryName = model.CategoryName;
-            _products[model.Id].SeasonName = model.SeasonName;
-            _products[model.Id].Picture = model.Picture;
-            _products[model.Id].Description = model.Description;
-            _products[model.Id].Count = model.Count;
-            _products[model.Id].Price = model.Price;
+            _productRepository.Delete(Id);
         }
 
-
-        public Product GetProduct(int Id)
+        public void EditProduct(ProductModel model)
         {
-            return _products.Where(t => t.Id == Id).FirstOrDefault();
+            _productRepository.Save(model);
         }
 
-        public IEnumerable<Product> GetProductLIst()
+        public ProductModel GetProduct(int Id)
         {
-            return _products;
+            return _productRepository.Get(Id);
         }
 
-        public IEnumerable<Product> GetProductLIstByCategory(string category)
+        public IEnumerable<ProductModel> GetProductLIst()
         {
-            return _products.Where(x => x.CategoryName == category);
+            return _productRepository.GetList();
         }
 
-        public void SaveProduct(Product model)
+        public IEnumerable<ProductModel> GetProductLIstByCategory(int category)
         {
-            _products.Add(new Product
-            {
-                Name = model.Name,                
-                CategoryName=model.CategoryName,
-                SeasonName = model.SeasonName,
-                Picture = model.Picture,
-                Description = model.Description,
-                Count = model.Count,
-                Price = model.Price
-            });
+            return _productRepository.GetList().Where(x => x.CategoryId == category);
+        }
+
+        public void SaveProduct(ProductModel model)
+        {
+            _productRepository.Save(model);
         }
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Publicitys>
+	<Publicity Id="1">
+		<Name>Имя рекламы1 </Name>
+		<Text>Текст рекламы1 </Text>
+	</Publicity>
+	<Publicity Id="2">
+		<Name>Имя рекламы2 </Name>
+		<Text>Текст рекламы2 </Text>
+	</Publicity>
+	<Publicity Id="3">
+		<Name>Имя рекламы3</Name>
+		<Text>Текст рекламы3 </Text>
+	</Publicity>
+	<Publicity Id="4">
+		<Name>Имя рекламы4 </Name>
+		<Text>Текст рекламы4 </Text>
+	</Publicity>
+
+</Publicitys>

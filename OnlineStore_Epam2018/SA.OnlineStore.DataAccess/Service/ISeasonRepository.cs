@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace SA.OnlineStore.DataAccess.Service
 {
-    public interface ICategoryRepository
+    public interface ISeasonRepository
     {
-        void Delete(int Id);
-        void Save(CategoryModel model);
-        CategoryModel Get(int Id);
-        List<CategoryModel> GetCategoryList();
+       
+        List<SeasonModel> GetSeasonList();
     }
 }

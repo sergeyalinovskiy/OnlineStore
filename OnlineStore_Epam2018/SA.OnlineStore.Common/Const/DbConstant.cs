@@ -19,6 +19,9 @@ namespace SA.OnlineStore.Common.Const
              public const string SaveProduct = "SaveProduct";
              public const string DeleteProductByProductId = "DeleteProductByProductId";
              public const string DeleteCategoryByCategoryId = "DeleteCategoryByCategoryId";
+             public const string GetSeasonNames = "GetSeasonNames";
+             public const string SaveCategory = "SaveCategory";
+             public const string GetCategoryByCategoryId = "GetCategoryByCategoryId";
         }
     }
 }

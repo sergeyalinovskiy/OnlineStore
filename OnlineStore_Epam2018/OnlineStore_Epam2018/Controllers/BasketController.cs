@@ -23,12 +23,33 @@ namespace OnlineStore_Epam2018.Controllers
             _productListService = productListService;
         }
         
+        public ActionResult Save(ProductListViewModel model)
+        {
+            ProductListModel prodInBascet = ConvertToProductListModel(model);
+            _productListService.SaveProductListInBox(prodInBascet);
+            return View("Index");
+        }
+
         public ActionResult Index()
         {
             var products = ConvertToProductListViewModelList(_productListService.GetProductListInBox());
 
             return View(products);
         }
+
+
+        public ProductListModel ConvertToProductListModel(ProductListViewModel model)
+        {
+            return new ProductListModel
+            {
+                Id = model.Id,
+                ProductId = model.ProductId,
+                ProductName = model.ProductName,
+                Count = model.Count
+            };
+        }
+
+
 
 
         public ProductListViewModel ConvertToProductListViewModel(ProductListModel model)

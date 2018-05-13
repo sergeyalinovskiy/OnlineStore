@@ -21,7 +21,7 @@ namespace OnlineStore_Epam2018.Controllers
         {
            
         }
-        // GET: Order
+     
         public ActionResult Index()
         {
             var ordersList = this._orderService.GetOrderList().Select(o => this.ConvertToViewModel(o));

@@ -31,12 +31,12 @@ namespace SA.OnlineStore.Bussines.Components
 
         public void Create(CategoryModel model)
         {
-            throw new NotImplementedException();
+            _categoryRepository.Save(model);
         }
 
         public void DeleteCategoryByCategoryId(int Id)
         {
-            throw new NotImplementedException();
+            _categoryRepository.Delete(Id);
         }
 
         public void EditCategory(CategoryModel model)
@@ -46,7 +46,7 @@ namespace SA.OnlineStore.Bussines.Components
 
         public CategoryModel GetCategory(int Id)
         {
-            throw new NotImplementedException();
+            return _categoryRepository.Get(Id);
         }
 
         public IEnumerable<CategoryModel> GetCategoryList()
@@ -56,7 +56,7 @@ namespace SA.OnlineStore.Bussines.Components
 
         public void SaveCategory(CategoryModel model)
         {
-            throw new NotImplementedException();
+            _categoryRepository.Save(model);
         }
 
     }

@@ -1,15 +1,12 @@
-﻿
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Components
+﻿namespace SA.OnlineStore.Bussines.Components
 {
+    #region Usings
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Service;
+    using System.Collections.Generic;
+    using System.Linq;
+    #endregion
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;

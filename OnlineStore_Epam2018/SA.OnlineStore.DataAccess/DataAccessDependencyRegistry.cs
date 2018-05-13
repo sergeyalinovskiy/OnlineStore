@@ -16,7 +16,7 @@ namespace SA.OnlineStore.DataAccess
             For<IPublicityRepository>().Use<PublicityRepository>();
             For<IProductRepository>().Use<ProductRepository>();
             For<ICategoryRepository>().Use<CategoryRepository>();
-
+            For<ISeasonRepository>().Use<SeasonRepository>();
         }
     }
 }

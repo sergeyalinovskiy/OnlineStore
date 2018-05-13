@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable< OnlineStore_Epam2018.Models.ProductViewModel>
+
+@{
     ViewBag.Title = "Products";
     AjaxOptions options = new AjaxOptions()
     {
@@ -16,7 +18,7 @@
                 <td><h4>Категория   </h4>  </td>
             </tr>
             <tr>
-                <td>@Html.DropDownList("category", new SelectList(ViewBag.ListCategoryName), "Все", htmlAttributes: new { @class = "form-control selectlist" })   </td>
+                <td>@Html.DropDownList("category", new SelectList(), "Все", htmlAttributes: new { @class = "form-control selectlist" })   </td>
             </tr>
             <tr>
                 <td><input type="submit" value="Search" /></td>

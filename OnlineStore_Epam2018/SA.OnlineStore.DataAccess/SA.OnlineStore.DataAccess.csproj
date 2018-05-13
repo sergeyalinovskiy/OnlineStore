@@ -64,6 +64,7 @@
     <Compile Include="Components\CategoryRepository.cs" />
     <Compile Include="Components\ProductRepository.cs" />
     <Compile Include="Components\PublicityRepository.cs" />
+    <Compile Include="Components\SeasonRepository.cs" />
     <Compile Include="Connected Services\FirstWebServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -74,6 +75,7 @@
     <Compile Include="Service\ICategoryRepository.cs" />
     <Compile Include="Service\IPublicityRepository.cs" />
     <Compile Include="Service\IProductRepository.cs" />
+    <Compile Include="Service\ISeasonRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\FirstWebServiceReference\" />

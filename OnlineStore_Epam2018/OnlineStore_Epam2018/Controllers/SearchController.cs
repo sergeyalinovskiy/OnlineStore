@@ -26,68 +26,109 @@ namespace OnlineStore_Epam2018.Controllers
 
         public ActionResult Index(string category)
         {
-            ViewBag.ListCategoryName = _categoryService.CategoryNameList();
-            ViewBag.ListSeasonName = _seasonService.SeasonNameList();
-            return View("Index", (object)category);
+            var viewModel = new ProductViewModel()
+            {
+                CategoryNameList = _categoryService.CategoryNameList(),
+                SeasonNameList = _seasonService.SeasonNameList()
+            };
+
+            return View(viewModel);
         }
 
-        //public ActionResult OrdersData(string category, string season, string sort, string searchName)
-        //{
-        //    IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
-        //    if (!string.IsNullOrEmpty(category))
-        //    {
-        //        products = products.Where(p => p.CategoryName == category);
-        //    }
+        [HttpPost]
+        public ActionResult OrdersData(ProductViewModel model)
+        {
+            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+            if (!string.IsNullOrEmpty(model.CategoryName))
+            {
+                products = products.Where(p => p.CategoryName == model.CategoryName);
+            }
 
-        //    if (!string.IsNullOrEmpty(season))
-        //    {
-        //        products = products.Where(p => p.SeasonName == season);
-        //    }
+            if (!string.IsNullOrEmpty(model.SeasonName))
+            {
+                products = products.Where(p => p.SeasonName == model.SeasonName);
+            }
 
-        //    if (!string.IsNullOrEmpty(sort))
-        //    {
-        //        if (sort == "цена по убыванию")
-        //        {
-        //            products = products.OrderByDescending(p => p.Price);
-        //        }
-        //        if (sort == "цена по возрастанию")
-        //        {
-        //            products = products.OrderBy(p => p.Price);
-        //        }
-        //    }
+            //if (!string.IsNullOrEmpty(sort))
+            //{
+            //    if (sort == "цена по убыванию")
+            //    {
+            //        products = products.OrderByDescending(p => p.Price);
+            //    }
+            //    if (sort == "цена по возрастанию")
+            //    {
+            //        products = products.OrderBy(p => p.Price);
+            //    }
+            //}
 
-        //    if (!String.IsNullOrEmpty(searchName))
-        //    {
-        //        products = products.Where(p => p.Name == searchName);
-        //    }
-        //    return PartialView(products);
-        //}
+            if (!String.IsNullOrEmpty(model.Name))
+            {
+                products = products.Where(p => p.Name.Contains(model.Name));
+            }
+            return PartialView(products);
+        }
 
 
-        //public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<ProductModel> modelList)
-        //{
-        //    List<ProductViewModel> convertProductList = new List<ProductViewModel>();
 
-        //    foreach (var item in modelList)
-        //    {
-        //        convertProductList.Add(ConvertToViewModel(item));
-        //    }
-        //    return convertProductList;
-        //}
+        public ActionResult OrdersData(string category, string season, string sort, string searchName)
+        {
+            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+            //if (!string.IsNullOrEmpty(category))
+            //{
+            //    products = products.Where(p => p.CategoryName == category);
+            //}
 
-        //public ProductViewModel ConvertToViewModel(ProductModel model)
-        //{
-        //    return new ProductViewModel()
-        //    {
-        //        Id = model.Id,
-        //        Name = model.Name,
-        //        CategoryName = model.CategoryName,
-        //        SeasonName = model.SeasonName,
-        //        Count = model.Count,
-        //        Picture = model.Picture,
-        //        Price = model.Price,
-        //        Description = model.Description
-        //    };
-        //}
+            //if (!string.IsNullOrEmpty(season))
+            //{
+            //    products = products.Where(p => p.SeasonName == season);
+            //}
+
+            //if (!string.IsNullOrEmpty(sort))
+            //{
+            //    if (sort == "цена по убыванию")
+            //    {
+            //        products = products.OrderByDescending(p => p.Price);
+            //    }
+            //    if (sort == "цена по возрастанию")
+            //    {
+            //        products = products.OrderBy(p => p.Price);
+            //    }
+            //}
+
+            //if (!String.IsNullOrEmpty(searchName))
+            //{
+            //    products = products.Where(p => p.Name == searchName);
+            //}
+            return PartialView(products);
+        }
+
+
+        public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<ProductModel> modelList)
+        {
+            List<ProductViewModel> convertProductList = new List<ProductViewModel>();
+
+            foreach (var item in modelList)
+            {
+                convertProductList.Add(ConvertToViewModel(item));
+            }
+            return convertProductList;
+        }
+
+        public ProductViewModel ConvertToViewModel(ProductModel model)
+        {
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.SeasonId).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.CategoryId).FirstOrDefault();
+            return new ProductViewModel()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                CategoryName = category.CategoryName,
+                SeasonName = season.SeasonName,
+                Count = model.Count,
+                Picture = model.Picture,
+                Price = model.Price,
+                Description = model.Description
+            };
+        }
     }
 }

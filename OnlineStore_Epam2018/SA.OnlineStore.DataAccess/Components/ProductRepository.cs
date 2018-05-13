@@ -59,9 +59,9 @@ namespace SA.OnlineStore.DataAccess.Components
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
+                connection.Open();
                 SqlCommand command = new SqlCommand(DbConstant.Command.SaveProduct, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                connection.Open();
                 SqlParameter paramId = new SqlParameter
                 {
                     ParameterName = "Id",

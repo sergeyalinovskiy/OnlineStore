@@ -14,7 +14,7 @@ namespace OnlineStore_Epam2018.Controllers
         }
         public ViewResult NotFound()
         {
-            Response.StatusCode = 404;  //you may want to set this to 200
+            Response.StatusCode = 404;  
             return View("NotFound");
         }
 

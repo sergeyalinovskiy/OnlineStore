@@ -1,6 +1,7 @@
 ﻿
 using SA.OnlineStore.Bussines.Service;
 using SA.OnlineStore.Common.Entity;
+using SA.OnlineStore.DataAccess.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +12,14 @@ namespace SA.OnlineStore.Bussines.Components
 {
     public class SeasonService : ISeasonService
     {
-
-        public List<SeasonModel> _seasons = new List<SeasonModel>();
-        public List<string> _seasonNames = new List<string>();
-
-        public SeasonService()
+        private readonly ISeasonRepository _seasonRepository;
+        public SeasonService(ISeasonRepository seasonRepository)
         {
-            Create(new SeasonModel
-            {
-                SeasonName = "лето"
-            });
-            Create(new SeasonModel
-            {
-                SeasonName = "осень"
-            });
-            Create(new SeasonModel
-            {
-                SeasonName = "зима"
-            });
+            _seasonRepository = seasonRepository;
         }
-
         public void Create(SeasonModel model)
         {
-            _seasons.Add(model);
+            throw new NotImplementedException();
         }
 
         public SeasonModel GetSeason(int Id)
@@ -43,19 +29,17 @@ namespace SA.OnlineStore.Bussines.Components
 
         public IEnumerable<SeasonModel> GetSeasonList()
         {
-            throw new NotImplementedException();
+            return _seasonRepository.GetSeasonList();
         }
 
         public IEnumerable<string> SeasonNameList()
         {
-            foreach (var item in _seasons)
+            List<string> seasonNames = new List<string>();
+            foreach (SeasonModel item in _seasonRepository.GetSeasonList())
             {
-                if (_seasons.Count > _seasonNames.Count)  // УБРАТЬ! (когда будет база...)
-                {
-                    _seasonNames.Add(item.SeasonName);
-                }
+                seasonNames.Add(item.SeasonName);
             }
-            return _seasonNames;
+            return seasonNames;
         }
     }
 }

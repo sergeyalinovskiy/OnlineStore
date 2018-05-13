@@ -12,5 +12,6 @@ namespace SA.OnlineStore.Common.Entity
         public string ProductName { get; set; }
         public int ProductId { get; set; }
         public int Count { get; set; }
+        
     }
 }

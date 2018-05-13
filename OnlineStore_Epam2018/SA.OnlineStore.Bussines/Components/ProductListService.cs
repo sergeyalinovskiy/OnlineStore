@@ -12,7 +12,7 @@ namespace SA.OnlineStore.Bussines.Components
     public class ProductListService : IProductListService
     {
        
-        public List<ProductListModel> productsInBox = new List<ProductListModel>()
+        public static List<ProductListModel> productsInBox = new List<ProductListModel>()
         {
             new ProductListModel()
             {

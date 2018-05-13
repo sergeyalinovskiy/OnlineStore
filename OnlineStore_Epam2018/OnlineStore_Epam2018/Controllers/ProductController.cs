@@ -31,15 +31,41 @@ namespace OnlineStore_Epam2018.Controllers
         public ActionResult Index()
         {
             IEnumerable<ProductViewModel> productList = ConvertListToViewModel(_productService.GetProductLIst());
-            return View(productList);
+            return View("Index",productList);
         }
 
-        public ActionResult IndexSearch(int categoryId)
+        public ActionResult AddInBox(int id)
         {
-            IEnumerable<ProductViewModel> productList = ConvertListToViewModel(_productService.GetProductLIst());
+            ProductModel prod = new ProductModel();
+            foreach (ProductModel item in _productService.GetProductLIst())
+            {
+                if (item.Id == id)
+                {
+                    prod = item;
+                }
+            }
+            ProductListModel product = new ProductListModel()
+            {
+                Id = 3,
+                ProductId = prod.Id,
+                ProductName = prod.Name,
+                Count = 1
+            };
+            _productListService.AddNewItemInBox(product);
+            return View();
+        }
 
-            IEnumerable<ProductViewModel> list = productList.Where(q => q.CategoryId == categoryId);
-            return View("Index", list);
+        public ActionResult IndexSearch(int? id)
+        {
+            IEnumerable<ProductModel> productList = _productService.GetProductLIst();
+            if (id!=null)
+            {
+                productList = productList.Where(m => m.CategoryId == id);
+                IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
+                return View("Index", list);
+            }
+            IEnumerable<ProductViewModel> list2 = ConvertListToViewModel(productList);
+            return View("Index", list2);
         }
 
         public ActionResult CategoryList()
@@ -51,7 +77,9 @@ namespace OnlineStore_Epam2018.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new ProductViewModel();
+            viewModel = AddAllSelectLists(viewModel);
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
@@ -69,7 +97,7 @@ namespace OnlineStore_Epam2018.Controllers
                     this.ModelState.AddModelError("", "Internal Exceptions");
                 }
             }
-            return View();
+            return View(model);
         }
 
         public ActionResult Details(int id)
@@ -84,6 +112,34 @@ namespace OnlineStore_Epam2018.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Edit(int Id)
+        {
+            var product = this.ConvertToViewModel(this._productService.GetProduct(Id));
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult Edit(ProductViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                try
+                {
+                    var product = this.ConvertToBussinesModel(model);
+                    this._productService.SaveProduct(product);
+                    return RedirectToAction("Details", new { Id = model.Id });
+                }
+                catch (Exception)
+                {
+                    this.ModelState.AddModelError("", "Internal Exceptions");
+                }
+            }
+            return View();
+        }
+
+
+
+
+
         #region Convertation
         public List<ProductViewModel> ConvertListToViewModel(IEnumerable<ProductModel> models)
         {
@@ -94,6 +150,14 @@ namespace OnlineStore_Epam2018.Controllers
             }
             return products;
         }
+
+        public ProductViewModel AddAllSelectLists(ProductViewModel model)
+        {
+            model.CategoryNameList=_categoryService.CategoryNameList();
+            model.SeasonNameList = _seasonService.SeasonNameList();
+            return model;
+        }
+
         public List<CategoryViewModel> ConvertListToViewModel(IEnumerable<CategoryModel> models)
         {
             List<CategoryViewModel> products = new List<CategoryViewModel>();
@@ -105,21 +169,24 @@ namespace OnlineStore_Epam2018.Controllers
         }
         public CategoryViewModel ConvertToViewModel(CategoryModel model)
         {
+            var category = _categoryService.GetCategoryList().Where(c => c.ParentId == model.CategoryId).FirstOrDefault();
             return new CategoryViewModel()
             {
-                Id = model.CategoryId,
+                CategoryId = model.CategoryId,
                 CategoryName = model.CategoryName,
-                ParentId = model.ParentId,
+                ParentId= model.ParentId
             };
         }
         public ProductViewModel ConvertToViewModel(ProductModel model)
         {
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.SeasonId).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.CategoryId).FirstOrDefault();
             return new ProductViewModel()
             {
                 Id = model.Id,
                 Name = model.Name,
-                CategoryId = model.CategoryId,
-                SeasonId = model.SeasonId,
+                CategoryName = category.CategoryName,
+                SeasonName = season.SeasonName,
                 Picture = model.Picture,
                 Description = model.Description,
                 Count = model.Count,
@@ -129,12 +196,14 @@ namespace OnlineStore_Epam2018.Controllers
 
         public ProductModel ConvertToBussinesModel(ProductViewModel model)
         {
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonName == model.SeasonName).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryName == model.CategoryName).FirstOrDefault();
             return new ProductModel()
             {
                 Id = model.Id,
                 Name = model.Name,
-                CategoryId = model.CategoryId,
-                SeasonId = model.SeasonId,
+                CategoryId = category.CategoryId,
+                SeasonId = season.SeasonId,
                 Count = model.Count,
                 Picture = model.Picture,
                 Price = model.Price,

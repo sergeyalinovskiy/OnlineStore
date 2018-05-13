@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SA.OnlineStore.WCF
+﻿namespace SA.OnlineStore.WCF
 {
+    #region Usings
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    #endregion
     public class MakingPublicityList
     {
         Random r = new Random();
@@ -64,7 +64,7 @@ namespace SA.OnlineStore.WCF
                     Name = "Реклама_9",
                     Text = "Текст_9"
                 },
-                 new Publicity()
+                new Publicity()
         {
             Id = 10,
                     Name = "Реклама_10",

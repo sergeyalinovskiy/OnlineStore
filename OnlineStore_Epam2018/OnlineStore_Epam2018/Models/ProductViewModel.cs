@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
-namespace OnlineStore_Epam2018.Models
+﻿namespace OnlineStore_Epam2018.Models
 {
+    #region Usings
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    #endregion
+
     public class ProductViewModel
     {
-       
         public int Id { get; set; }
         [Required (ErrorMessage ="Ввведите имя ")]
         public string Name { get; set; }
@@ -22,6 +20,5 @@ namespace OnlineStore_Epam2018.Models
 
         public IEnumerable<string> SeasonNameList { get; set; }
         public IEnumerable<string> CategoryNameList { get; set; }
-        //public IEnumerable<string> sortList { get; set; }
     }
 }

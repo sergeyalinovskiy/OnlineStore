@@ -1,19 +1,15 @@
-﻿
-using log4net;
-using OnlineStore_Epam2018.Models;
-
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
-   
+    #region Usings
+    using OnlineStore_Epam2018.Models;
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.Common.Logger;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+
+    #endregion
+
     public class HomeController : Controller
     {
         private readonly ICommonLogger _myLoger;

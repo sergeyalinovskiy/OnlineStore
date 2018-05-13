@@ -1,12 +1,13 @@
-﻿using OnlineStore_Epam2018.Models;
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+    using OnlineStore_Epam2018.Models;
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    #endregion
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -25,6 +26,7 @@ namespace OnlineStore_Epam2018.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Create(CategoryViewModel model)
         {
@@ -56,12 +58,12 @@ namespace OnlineStore_Epam2018.Controllers
             return RedirectToAction("Index");
         }
 
-
         public ActionResult Edit(int Id)
         {
             var category = this.ConvertToViewModel(this._categoryService.GetCategory(Id));
             return View(category);
         }
+
         [HttpPost]
         public ActionResult Edit(CategoryViewModel model)
         {
@@ -80,8 +82,6 @@ namespace OnlineStore_Epam2018.Controllers
             }
             return View();
         }
-
-
 
         public List<CategoryViewModel> ConvertToListViewModel(IEnumerable<CategoryModel> modelList)
         {
@@ -112,6 +112,5 @@ namespace OnlineStore_Epam2018.Controllers
                 ParentId = model.ParentId
             };
         }
-
     }
 }

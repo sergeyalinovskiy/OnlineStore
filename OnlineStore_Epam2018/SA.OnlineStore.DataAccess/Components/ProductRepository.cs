@@ -1,11 +1,13 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Service;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-
-namespace SA.OnlineStore.DataAccess.Components
+﻿namespace SA.OnlineStore.DataAccess.Components
 {
+    #region Usings
+    using SA.OnlineStore.Common.Const;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Service;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    #endregion
+
     public class ProductRepository : IProductRepository
     {
         public ProductRepository()
@@ -62,6 +64,7 @@ namespace SA.OnlineStore.DataAccess.Components
                 connection.Open();
                 SqlCommand command = new SqlCommand(DbConstant.Command.SaveProduct, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
+
                 SqlParameter paramId = new SqlParameter
                 {
                     ParameterName = "Id",

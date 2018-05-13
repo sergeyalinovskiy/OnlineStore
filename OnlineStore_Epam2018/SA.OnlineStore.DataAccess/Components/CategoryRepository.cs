@@ -1,15 +1,13 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Service;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Components
+﻿namespace SA.OnlineStore.DataAccess.Components
 {
+    #region Usings
+    using SA.OnlineStore.Common.Const;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Service;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    #endregion
+
     public class CategoryRepository : ICategoryRepository
     {
         public void Delete(int Id)
@@ -19,7 +17,6 @@ namespace SA.OnlineStore.DataAccess.Components
                 connection.Open();
                 SqlCommand command = new SqlCommand(DbConstant.Command.DeleteCategoryByCategoryId, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-
                 SqlParameter nameParam = new SqlParameter
                 {
                     ParameterName = "Id",
@@ -41,6 +38,7 @@ namespace SA.OnlineStore.DataAccess.Components
                     ParameterName = "Id",
                     Value = Id
                 };
+
                 command.Parameters.Add(nameParam);
                 connection.Open();
                 var reader = command.ExecuteReader();
@@ -82,6 +80,7 @@ namespace SA.OnlineStore.DataAccess.Components
                 connection.Open();
                 SqlCommand command = new SqlCommand(DbConstant.Command.SaveCategory, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
+
                 SqlParameter paramId = new SqlParameter
                 {
                     ParameterName = "Id",

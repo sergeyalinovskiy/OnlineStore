@@ -1,15 +1,12 @@
-﻿
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Components
+﻿namespace SA.OnlineStore.Bussines.Components
 {
+    #region Usings
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Service;
+    using System;
+    using System.Collections.Generic;
+    #endregion
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -41,7 +38,7 @@ namespace SA.OnlineStore.Bussines.Components
 
         public void EditCategory(CategoryModel model)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();   //!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         public CategoryModel GetCategory(int Id)

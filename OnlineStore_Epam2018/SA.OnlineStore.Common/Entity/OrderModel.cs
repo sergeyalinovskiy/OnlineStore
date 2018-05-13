@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace SA.OnlineStore.Common.Entity
+﻿namespace SA.OnlineStore.Common.Entity
 {
+    #region Usings
+    using System;
+    #endregion
     public class OrderModel
     {
         public int Id { get; set; }

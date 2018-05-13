@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+    using System.Web.Mvc;
+    #endregion
+
     public class ErrorController : Controller
     {
         public ViewResult Index()

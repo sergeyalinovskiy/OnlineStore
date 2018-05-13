@@ -1,14 +1,11 @@
-﻿
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Components
+﻿namespace SA.OnlineStore.Bussines.Components
 {
+    #region Usings
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System.Collections.Generic;
+    using System.Linq;
+    #endregion
     public class SearchSeervice : ISearchService
     {
         private readonly IProductService _productService;
@@ -36,16 +33,6 @@ namespace SA.OnlineStore.Bussines.Components
         {
             var productPriceDown = _productService.GetProductLIst().OrderByDescending(p => p.Price);
             return productPriceDown;
-        }
-
-        public IEnumerable<ProductModel> ProductByProductName()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ProductModel> ProductBySeason(int category)
-        {
-            throw new NotImplementedException();
         }
     }
 }

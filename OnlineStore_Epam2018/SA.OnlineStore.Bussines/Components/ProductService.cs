@@ -7,6 +7,7 @@
     using System.Collections.Generic;
     using System.Linq;
     #endregion
+
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;

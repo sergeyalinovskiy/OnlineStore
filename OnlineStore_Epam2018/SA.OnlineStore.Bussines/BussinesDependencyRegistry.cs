@@ -1,15 +1,12 @@
-﻿using SA.OnlineStore.Bussines.Components;
-using SA.OnlineStore.Bussines.Service;
-using StructureMap.Configuration.DSL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines
+﻿namespace SA.OnlineStore.Bussines
 {
-     public class BussinesDependencyRegistry : Registry 
+    #region Usings
+    using SA.OnlineStore.Bussines.Components;
+    using SA.OnlineStore.Bussines.Service;
+    using StructureMap.Configuration.DSL;
+    #endregion
+
+    public class BussinesDependencyRegistry : Registry 
     {
         public BussinesDependencyRegistry()
         {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SA.OnlineStore.WCF
+﻿namespace SA.OnlineStore.WCF
 {
     public class Publicity
     {

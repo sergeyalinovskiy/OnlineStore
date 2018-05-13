@@ -1,15 +1,14 @@
-﻿using OnlineStore_Epam2018.Models;
-
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+    using OnlineStore_Epam2018.Models;
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    #endregion
     public class SearchController : Controller
     {
         private readonly IProductService _productService;
@@ -31,7 +30,6 @@ namespace OnlineStore_Epam2018.Controllers
                 CategoryNameList = _categoryService.CategoryNameList(),
                 SeasonNameList = _seasonService.SeasonNameList()
             };
-
             return View(viewModel);
         }
 
@@ -68,8 +66,6 @@ namespace OnlineStore_Epam2018.Controllers
             return PartialView(products);
         }
 
-
-
         public ActionResult OrdersData(string category, string season, string sort, string searchName)
         {
             IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
@@ -101,7 +97,6 @@ namespace OnlineStore_Epam2018.Controllers
             //}
             return PartialView(products);
         }
-
 
         public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<ProductModel> modelList)
         {

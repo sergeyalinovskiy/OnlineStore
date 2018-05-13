@@ -1,14 +1,14 @@
-﻿using OnlineStore_Epam2018.Models;
-
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+    using OnlineStore_Epam2018.Models;
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System;
+    using System.Linq;
+    using System.Web.Mvc;
+    #endregion
+
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
@@ -17,6 +17,7 @@ namespace OnlineStore_Epam2018.Controllers
         {
             _orderService = orderService;
         }
+
         public OrderController()
         {
            
@@ -28,7 +29,6 @@ namespace OnlineStore_Epam2018.Controllers
             return View(ordersList);
         }
         
-
         public ActionResult Details(int Id)
         {
             var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
@@ -64,6 +64,7 @@ namespace OnlineStore_Epam2018.Controllers
             var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
             return View(order);
         }
+
         [HttpPost]
         public ActionResult Edit(OrderViewModel model)
         {

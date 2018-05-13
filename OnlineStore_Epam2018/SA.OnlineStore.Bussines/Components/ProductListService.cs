@@ -1,17 +1,14 @@
-﻿
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Components
+﻿namespace SA.OnlineStore.Bussines.Components
 {
+    #region Usings
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System.Collections.Generic;
+    using System.Linq;
+    #endregion
+
     public class ProductListService : IProductListService
     {
-       
         public static List<ProductListModel> productsInBox = new List<ProductListModel>()
         {
             new ProductListModel()
@@ -63,8 +60,6 @@ namespace SA.OnlineStore.Bussines.Components
         {
             return productsInBox;
         }
-
-
 
     }
 }

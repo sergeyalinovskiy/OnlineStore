@@ -1,15 +1,13 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Service;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Components
+﻿namespace SA.OnlineStore.DataAccess.Components
 {
+    #region Usings
+    using SA.OnlineStore.Common.Const;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Service;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    #endregion
+
     public class SeasonRepository : ISeasonRepository
     {
         public List<SeasonModel> GetSeasonList()

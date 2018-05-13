@@ -1,10 +1,10 @@
-﻿
-using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-
-namespace SA.OnlineStore.Bussines.Service
+﻿namespace SA.OnlineStore.Bussines.Service
 {
+    #region Usings
+    using SA.OnlineStore.Common.Entity;
+    using System.Collections.Generic;
+    #endregion
+
     public interface IProductService 
     {
         void DeleteProductByProductId(int Id);

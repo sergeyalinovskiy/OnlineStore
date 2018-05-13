@@ -1,19 +1,17 @@
-﻿using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.FirstWebServiceReference;
-using SA.OnlineStore.DataAccess.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Components
+﻿namespace SA.OnlineStore.DataAccess.Components
 {
+    #region Usings
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.FirstWebServiceReference;
+    using SA.OnlineStore.DataAccess.Service;
+    using System.Collections.Generic;
+    using System.ServiceModel;
+    #endregion
+
     public class PublicityRepository : IPublicityRepository
     {
         private ChannelFactory<FirstWebServiceReference.IFirstWebService> _channel = new 
-            ChannelFactory<FirstWebServiceReference.IFirstWebService>(new BasicHttpBinding(), new EndpointAddress("http://localhost:51702/FirstWebService.svc"));
+               ChannelFactory<FirstWebServiceReference.IFirstWebService>(new BasicHttpBinding(), new EndpointAddress("http://localhost:51702/FirstWebService.svc"));
 
         private FirstWebServiceReference.IFirstWebService _service;
 
@@ -37,7 +35,6 @@ namespace SA.OnlineStore.DataAccess.Components
         public IEnumerable<PublicityModel> ConvertToPublicityWcfList(IEnumerable<Publicity> listModel)
         {
             List<PublicityModel> resultList = new List<PublicityModel>();
-
             foreach(Publicity item in listModel)
             {
                 resultList.Add(ConvertToDataAccessModel(item));

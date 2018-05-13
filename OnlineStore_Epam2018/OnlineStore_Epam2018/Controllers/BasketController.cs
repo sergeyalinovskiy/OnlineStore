@@ -1,15 +1,14 @@
-﻿using OnlineStore_Epam2018.Models;
-
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+    using OnlineStore_Epam2018.Models;
+    using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Entity;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+
+    #endregion
+
     public class BasketController : Controller
     {
         private readonly IProductListService _productListService;
@@ -33,10 +32,8 @@ namespace OnlineStore_Epam2018.Controllers
         public ActionResult Index()
         {
             var products = ConvertToProductListViewModelList(_productListService.GetProductListInBox());
-
             return View(products);
         }
-
 
         public ProductListModel ConvertToProductListModel(ProductListViewModel model)
         {
@@ -48,9 +45,6 @@ namespace OnlineStore_Epam2018.Controllers
                 Count = model.Count
             };
         }
-
-
-
 
         public ProductListViewModel ConvertToProductListViewModel(ProductListModel model)
         {

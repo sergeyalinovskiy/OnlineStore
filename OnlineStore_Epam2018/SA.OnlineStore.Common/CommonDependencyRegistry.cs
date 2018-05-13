@@ -1,15 +1,10 @@
-﻿
-using SA.OnlineStore.Common.Logger;
-using StructureMap.Configuration.DSL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace SA.OnlineStore.Common
+﻿namespace SA.OnlineStore.Common
 {
+    #region Usings
+    using SA.OnlineStore.Common.Logger;
+    using StructureMap.Configuration.DSL;
+    #endregion
+
     public class CommonDependencyRegistry :Registry
     {
         public CommonDependencyRegistry()

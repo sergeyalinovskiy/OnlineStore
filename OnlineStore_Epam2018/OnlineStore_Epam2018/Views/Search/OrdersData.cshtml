@@ -15,9 +15,9 @@
     <td>
         @Html.DisplayFor(modelItem => item.SeasonName)
     </td>
-    <td>
+    @*<td>
         @Html.DisplayFor(modelItem => item.Picture)
-    </td>
+    </td>*@
     <td>
         @Html.DisplayFor(modelItem => item.Description)
     </td>
@@ -28,7 +28,7 @@
         @Html.DisplayFor(modelItem => item.Price)
     </td>
     <td>
-        @Html.RouteLink("Details", new { controller = "Product", action = "Details", id = item.Id })
+        @Html.RouteLink("Подробнее", new { controller = "Product", action = "Details", id = item.Id })
     </td>
 </tr>
 }

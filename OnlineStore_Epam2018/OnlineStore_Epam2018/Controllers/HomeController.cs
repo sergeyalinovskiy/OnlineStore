@@ -7,7 +7,6 @@
     using SA.OnlineStore.Common.Logger;
     using System.Collections.Generic;
     using System.Web.Mvc;
-
     #endregion
 
     public class HomeController : Controller

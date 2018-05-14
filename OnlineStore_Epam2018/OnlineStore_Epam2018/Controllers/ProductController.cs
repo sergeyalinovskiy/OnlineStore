@@ -36,7 +36,7 @@
         public ActionResult Index()
         {
             IEnumerable<ProductViewModel> productList = ConvertListToViewModel(_productService.GetProductLIst());
-            return View("Index",productList);
+            return View("Index", productList);
         }
 
         public ActionResult AddInBox(int id)
@@ -63,7 +63,7 @@
         public ActionResult IndexSearch(int? id)
         {
             IEnumerable<ProductModel> productList = _productService.GetProductLIst();
-            if (id!=null)
+            if (id != null)
             {
                 productList = productList.Where(m => m.CategoryId == id);
                 IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
@@ -91,20 +91,18 @@
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            try
+            if (this.ModelState.IsValid)
             {
-                if (this.ModelState.IsValid)
-                {
-                    var product = this.ConvertToBussinesModel(model);
-                    _productService.SaveProduct(product);
-                    return RedirectToAction("Index");
-                }
+                var product = this.ConvertToBussinesModel(model);
+                _productService.SaveProduct(product);
+                return RedirectToAction("Index");
             }
-            catch (Exception)
+            else
             {
-                this.ModelState.AddModelError("", "Internal Exceptions");
-                _myLoger.Info("Internal Exceptions");
+                ModelState.AddModelError("", "Exception");
             }
+
+            model = AddAllSelectLists(model);
 
             return View(model);
         }
@@ -159,7 +157,7 @@
 
         public ProductViewModel AddAllSelectLists(ProductViewModel model)
         {
-            model.CategoryNameList=_categoryService.CategoryNameList();
+            model.CategoryNameList = _categoryService.CategoryNameList();
             model.SeasonNameList = _seasonService.SeasonNameList();
             return model;
         }
@@ -181,7 +179,7 @@
             {
                 CategoryId = model.CategoryId,
                 CategoryName = model.CategoryName,
-                ParentId= model.ParentId
+                ParentId = model.ParentId
             };
         }
 
@@ -217,9 +215,9 @@
                 Price = model.Price,
                 Description = model.Description
             };
-           
 
-        } 
+
+        }
         #endregion
     }
 }

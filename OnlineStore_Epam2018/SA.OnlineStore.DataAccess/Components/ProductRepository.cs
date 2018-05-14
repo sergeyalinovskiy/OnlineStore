@@ -3,6 +3,7 @@
     #region Usings
     using SA.OnlineStore.Common.Const;
     using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.Common.Logger;
     using SA.OnlineStore.DataAccess.Service;
     using System.Collections.Generic;
     using System.Data.SqlClient;
@@ -10,9 +11,10 @@
 
     public class ProductRepository : IProductRepository
     {
-        public ProductRepository()
+        private readonly ICommonLogger _commonLogger;
+        public ProductRepository(ICommonLogger commonLogger)
         {
-
+            _commonLogger = commonLogger;
         }
 
         public void Delete(int Id)
@@ -105,7 +107,15 @@
                     ParameterName = "Price",
                     Value = model.Price
                 };
+                try
+                {
 
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Exception");
+                    throw;
+                }
                 command.Parameters.Add(paramId);
                 command.Parameters.Add(paramName);
                 command.Parameters.Add(paramCategory);

@@ -12,8 +12,9 @@
 </body>
 @using (Ajax.BeginForm("OrderData", "Search", options, htmlAttributes: new { @id = "id" }))
 {
-    <table>
+    <table style="float:initial";>
         <tr>
+           
             <th>
                 Имя
             </th>
@@ -46,9 +47,10 @@
         </tr>
     </table>
 
-    <table cellpadding="6">
+    <table cellpadding="6" border="1">
         <thead>
             <tr>
+                <th></th>
                 <th>Имя</th>
                 <th>Категория</th>
                 <th>Сезон</th>

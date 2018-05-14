@@ -13,7 +13,9 @@
         [Required(ErrorMessage = "Вs,thbnt rfntujhb. ")]
         public string CategoryName { get; set; }
         public string SeasonName{ get; set; }
+        [Required]
         public string Picture { get; set; }
+        [Required]
         public string Description { get; set; }
         public int Count { get; set; }
         public int Price { get; set; }

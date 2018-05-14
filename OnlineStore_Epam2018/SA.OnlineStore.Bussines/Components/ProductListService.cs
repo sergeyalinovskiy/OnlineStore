@@ -15,8 +15,8 @@
             {
                 Id=1,
                 ProductId=1,
-                ProductName="11",
-                Count=10
+                ProductName="Инструкция по посадке и уходу",
+                Count=1
             }
         };
 

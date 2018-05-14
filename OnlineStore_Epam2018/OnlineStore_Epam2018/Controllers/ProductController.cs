@@ -4,6 +4,7 @@
     using OnlineStore_Epam2018.Models;
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.Common.Logger;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,13 +17,15 @@
         private readonly ICategoryService _categoryService;
         private readonly ISeasonService _seasonService;
         private readonly IProductListService _productListService;
+        private readonly ICommonLogger _myLoger;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IProductListService productListService)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IProductListService productListService, ICommonLogger myLoger)
         {
             _productService = productService;
             _categoryService = categoryService;
             _seasonService = seasonService;
             _productListService = productListService;
+            _myLoger = myLoger;
         }
 
         public ProductController()
@@ -80,6 +83,7 @@
         public ActionResult Create()
         {
             var viewModel = new ProductViewModel();
+            viewModel.Picture = "picture_default.jpg";
             viewModel = AddAllSelectLists(viewModel);
             return View(viewModel);
         }
@@ -87,19 +91,21 @@
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            if (this.ModelState.IsValid)
+            try
             {
-                try
+                if (this.ModelState.IsValid)
                 {
                     var product = this.ConvertToBussinesModel(model);
                     _productService.SaveProduct(product);
                     return RedirectToAction("Index");
                 }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
             }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError("", "Internal Exceptions");
+                _myLoger.Info("Internal Exceptions");
+            }
+
             return View(model);
         }
 

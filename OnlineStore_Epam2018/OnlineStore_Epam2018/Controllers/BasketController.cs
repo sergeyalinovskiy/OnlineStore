@@ -73,9 +73,7 @@
             var products = ConvertToProductListViewModelList(_productListService.GetProductListInBox());
             return View(products);
         }
-
-
-
+        
         public ProductListViewModel ConvertToProductViewModel(ProductListModel model)
         {
             return new ProductListViewModel
@@ -86,7 +84,6 @@
                 Count = model.Count
             };
         }
-
 
         public ProductListModel ConvertToProductListModel(ProductListViewModel model)
         {

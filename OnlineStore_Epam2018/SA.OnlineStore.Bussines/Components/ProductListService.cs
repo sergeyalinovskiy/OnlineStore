@@ -15,8 +15,8 @@
             {
                 Id=1,
                 ProductId=1,
-                ProductName="11",
-                Count=10
+                ProductName="Инструкция по посадке и уходу",
+                Count=1
             }
         };
 
@@ -33,10 +33,21 @@
             productsInBox.Remove(p);
         }
 
+        ProductListModel p = new ProductListModel();
+
         public void SaveProductListInBox(ProductListModel model)
         {
+            foreach(ProductListModel item in productsInBox)
+            {
+                if (item.Id == model.Id)
+                {
+                    p = item;
+                }
+            }
+            productsInBox.Remove(p);
             productsInBox.Add(model);
         }
+             
 
         public void EditProductListInBox(ProductListModel model)
         {

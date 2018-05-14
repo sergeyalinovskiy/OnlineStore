@@ -4,6 +4,7 @@
     using OnlineStore_Epam2018.Models;
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.Common.Logger;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,13 +17,15 @@
         private readonly ICategoryService _categoryService;
         private readonly ISeasonService _seasonService;
         private readonly IProductListService _productListService;
+        private readonly ICommonLogger _myLoger;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IProductListService productListService)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IProductListService productListService, ICommonLogger myLoger)
         {
             _productService = productService;
             _categoryService = categoryService;
             _seasonService = seasonService;
             _productListService = productListService;
+            _myLoger = myLoger;
         }
 
         public ProductController()
@@ -33,7 +36,7 @@
         public ActionResult Index()
         {
             IEnumerable<ProductViewModel> productList = ConvertListToViewModel(_productService.GetProductLIst());
-            return View("Index",productList);
+            return View("Index", productList);
         }
 
         public ActionResult AddInBox(int id)
@@ -60,7 +63,7 @@
         public ActionResult IndexSearch(int? id)
         {
             IEnumerable<ProductModel> productList = _productService.GetProductLIst();
-            if (id!=null)
+            if (id != null)
             {
                 productList = productList.Where(m => m.CategoryId == id);
                 IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
@@ -80,6 +83,7 @@
         public ActionResult Create()
         {
             var viewModel = new ProductViewModel();
+            viewModel.Picture = "picture_default.jpg";
             viewModel = AddAllSelectLists(viewModel);
             return View(viewModel);
         }
@@ -89,17 +93,17 @@
         {
             if (this.ModelState.IsValid)
             {
-                try
-                {
-                    var product = this.ConvertToBussinesModel(model);
-                    _productService.SaveProduct(product);
-                    return RedirectToAction("Index");
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+                var product = this.ConvertToBussinesModel(model);
+                _productService.SaveProduct(product);
+                return RedirectToAction("Index");
             }
+            else
+            {
+                ModelState.AddModelError("", "Exception");
+            }
+
+            model = AddAllSelectLists(model);
+
             return View(model);
         }
 
@@ -153,7 +157,7 @@
 
         public ProductViewModel AddAllSelectLists(ProductViewModel model)
         {
-            model.CategoryNameList=_categoryService.CategoryNameList();
+            model.CategoryNameList = _categoryService.CategoryNameList();
             model.SeasonNameList = _seasonService.SeasonNameList();
             return model;
         }
@@ -175,7 +179,7 @@
             {
                 CategoryId = model.CategoryId,
                 CategoryName = model.CategoryName,
-                ParentId= model.ParentId
+                ParentId = model.ParentId
             };
         }
 
@@ -211,9 +215,9 @@
                 Price = model.Price,
                 Description = model.Description
             };
-           
 
-        } 
+
+        }
         #endregion
     }
 }

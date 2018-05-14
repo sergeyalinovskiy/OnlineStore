@@ -68,13 +68,15 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                <p>  
-                    @Html.ActionLink("Добавить в карзину", "AddInBox", new { id = item.Id })
+                <p>
+                    @Html.RouteLink("Добавить в карзину", new { controller = "Product", action = "AddInBox",  id = item.Id }, new { @class = "btn btn-default" })
                 </p>
                 <p>
-                    @Html.ActionLink("Подробнее", "Details", new { id = item.Id }) 
+                    @Html.RouteLink("Подробнее", new { controller = "Product", action = "Details", id = item.Id }, new { @class = "btn btn-default" })
                 </p>
-                <p>    <a href="~/Product/Delete/@item.Id" onclick="confirm('Вы действительно хотите удалить?');">Удалить</a>
+                <p>
+                    @Html.RouteLink("Удалить", new { controller = "Product", action = "Delete", id = item.Id }, new { @class = "btn btn-default" })
+                    @*<a href="~/Product/Delete/@item.Id" onclick="confirm('Вы действительно хотите удалить?');">Удалить</a>*@
                 </p>
             </td>
         </tr>

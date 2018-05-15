@@ -199,6 +199,7 @@
     <Content Include="Views\Basket\Details.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Product\ErrorPartialView.cshtml" />
+    <Content Include="Views\Home\Publicity.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

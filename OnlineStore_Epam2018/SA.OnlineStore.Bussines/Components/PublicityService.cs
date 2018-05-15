@@ -16,12 +16,16 @@
             _publicityRepository = publicityRepository;
         }
 
-        public PublicityModel GetPublicity()
+        //public PublicityModel GetPublicity()
+        //{
+        //    PublicityModel publicity = _publicityRepository.GetPublicity();
+        //    return publicity;
+        //}       
+        public IEnumerable<PublicityModel> GetDefaultList()
         {
-            PublicityModel publicity = _publicityRepository.GetPublicity();
-            return publicity;
-        }       
-
+            IEnumerable<PublicityModel> resultList = _publicityRepository.GetDefaultList();
+            return resultList;
+        }
         public IEnumerable<PublicityModel> GetPublicityList()
         {
             IEnumerable<PublicityModel> resultList = _publicityRepository.GetPublicityList();

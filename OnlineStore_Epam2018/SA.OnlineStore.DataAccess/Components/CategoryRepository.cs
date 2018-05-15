@@ -3,18 +3,33 @@
     #region Usings
     using SA.OnlineStore.Common.Const;
     using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.Common.Logger;
     using SA.OnlineStore.DataAccess.Service;
+    using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
     #endregion
 
     public class CategoryRepository : ICategoryRepository
     {
+        private readonly ICommonLogger _commonLogger;
+        public CategoryRepository(ICommonLogger commonLogger)
+        {
+            _commonLogger = commonLogger;
+        }
         public void Delete(int Id)
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
-                connection.Open();
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Error connection with DB CategoryRepository/Delete");
+                    throw;
+                }
                 SqlCommand command = new SqlCommand(DbConstant.Command.DeleteCategoryByCategoryId, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlParameter nameParam = new SqlParameter
@@ -40,7 +55,15 @@
                 };
 
                 command.Parameters.Add(nameParam);
-                connection.Open();
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Error connection with DB CategoryRepository/Get");
+                    throw;
+                }
                 var reader = command.ExecuteReader();
                 CategoryModel category = null;
                 if (reader.Read())
@@ -58,7 +81,15 @@
             {
                 SqlCommand command = new SqlCommand(DbConstant.Command.GetCategoryList, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                connection.Open();
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Error connection with DB CategoryRepository/GetCategoryist");
+                    throw;
+                }
                 var reader = command.ExecuteReader();
                 List<CategoryModel> productList = new List<CategoryModel>();
                 if (reader.HasRows)
@@ -77,10 +108,18 @@
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
-                connection.Open();
+                
                 SqlCommand command = new SqlCommand(DbConstant.Command.SaveCategory, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Error connection with DB CategoryRepository/Save");
+                    throw;
+                }
                 SqlParameter paramId = new SqlParameter
                 {
                     ParameterName = "Id",
@@ -107,18 +146,22 @@
 
         private CategoryModel ParseToCategory(SqlDataReader reader)
         {
-            return new CategoryModel()
+            try
             {
-                CategoryId = (int)reader["Id"],
-                CategoryName = reader["Name"].ToString(),
-                ParentId = (int)reader["ParentId"]
-            };
+                return new CategoryModel()
+                {
+                    CategoryId = (int)reader["Id"],
+                    CategoryName = reader["Name"].ToString(),
+                    ParentId = (int)reader["ParentId"]
+                };
+            }
+            catch (Exception)
+            {
+                _commonLogger.Info("Input model is notValid CategoryRepository/ParseToCategory");
+                var model = new CategoryModel();
+                model = null;
+                return model;
+            }
         }
     }
 }
-
-       
-
-
-
-

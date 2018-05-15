@@ -87,9 +87,9 @@ D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\log4net.
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\log4net.xml
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.Common.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.Common.pdb
-D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Collections.Immutable.dll
-D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Log.config
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.DataAccess.dll
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.DataAccess.pdb
 D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.DataAccess.dll.config
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Collections.Immutable.dll
+D:\REPOSITORY\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.dll

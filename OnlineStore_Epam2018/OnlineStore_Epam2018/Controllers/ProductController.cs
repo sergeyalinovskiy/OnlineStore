@@ -36,6 +36,10 @@
         public ActionResult Index()
         {
             IEnumerable<ProductViewModel> productList = ConvertListToViewModel(_productService.GetProductLIst());
+            if (productList == null)
+            {
+                return PartialView("ErrorPartialView");
+            }
             return View("Index", productList);
         }
 
@@ -215,8 +219,6 @@
                 Price = model.Price,
                 Description = model.Description
             };
-
-
         }
         #endregion
     }

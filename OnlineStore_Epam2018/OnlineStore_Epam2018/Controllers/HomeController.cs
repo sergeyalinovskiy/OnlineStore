@@ -14,7 +14,7 @@
         private readonly ICommonLogger _myLoger;
         private readonly IPublicityService _publicityService;
 
-        public HomeController(ICommonLogger myLoger, IPublicityService publicityService)
+        public HomeController( IPublicityService publicityService, ICommonLogger myLoger)
         {
             _myLoger = myLoger;
             _publicityService = publicityService;
@@ -27,11 +27,21 @@
 
         public ActionResult Index()
         {
-            _myLoger.Info("Exception message");
-            return View(ConvertToProductViewModelList(_publicityService.GetPublicityList()));
+            try
+            {
+                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());
+                return View(publicity);
+            }
+            catch
+            {
+                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetDefaultList());
+                    return View(publicity);
+                
+            }
+           
         }
 
-        public IEnumerable<PublicityViewModel> ConvertToProductViewModelList(IEnumerable<PublicityModel> modelList)
+        public IEnumerable<PublicityViewModel> ConvertToPublicityViewModelList(IEnumerable<PublicityModel> modelList)
         {
             List<PublicityViewModel> convertPublicityList = new List<PublicityViewModel>();
 
@@ -51,7 +61,5 @@
                 Text = model.Text
             };
         }
-
-
     }
 }

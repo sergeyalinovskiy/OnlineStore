@@ -21,10 +21,19 @@
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
-                connection.Open();
+                
                 SqlCommand command = new SqlCommand(DbConstant.Command.DeleteProductByProductId, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Error connection with DB ProductRepository/Delete");
+                    throw;
+                }
+
                 SqlParameter nameParam = new SqlParameter
                 {
                     ParameterName = "Id",
@@ -47,7 +56,17 @@
                     Value = Id
                 };
                 command.Parameters.Add(nameParam);
-                connection.Open();
+                
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Error connection with DB ProductRepository/Get");
+                    throw;
+                }
+
                 var reader = command.ExecuteReader();
                 ProductModel product = null;
                 if (reader.Read())
@@ -63,7 +82,16 @@
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
-                connection.Open();
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Error connection with DB ProductRepository/Save");
+                    throw;
+                }
+                
                 SqlCommand command = new SqlCommand(DbConstant.Command.SaveProduct, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -107,15 +135,7 @@
                     ParameterName = "Price",
                     Value = model.Price
                 };
-                try
-                {
-
-                }
-                catch (System.Exception)
-                {
-                    _commonLogger.Info("Exception");
-                    throw;
-                }
+                
                 command.Parameters.Add(paramId);
                 command.Parameters.Add(paramName);
                 command.Parameters.Add(paramCategory);
@@ -135,7 +155,15 @@
             {
                 SqlCommand command = new SqlCommand(DbConstant.Command.GetProductList, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                connection.Open();
+                try
+                {
+                    connection.Open();
+                }
+                catch (System.Exception)
+                {
+                    _commonLogger.Info("Error connection with DB ProductRepository/GetList");
+                    throw;
+                }
                 var reader = command.ExecuteReader();
                 List<ProductModel> productList = new List<ProductModel>();
                 if (reader.HasRows)

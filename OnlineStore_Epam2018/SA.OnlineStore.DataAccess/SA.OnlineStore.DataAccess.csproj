@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,7 +66,7 @@
     <Compile Include="Components\ProductRepository.cs" />
     <Compile Include="Components\PublicityRepository.cs" />
     <Compile Include="Components\SeasonRepository.cs" />
-    <Compile Include="Connected Services\FirstWebServiceReference\Reference.cs">
+    <Compile Include="Connected Services\NewServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -78,21 +79,21 @@
     <Compile Include="Service\ISeasonRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\FirstWebServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Connected Services\FirstWebServiceReference\FirstWebService.wsdl" />
-    <None Include="Connected Services\FirstWebServiceReference\FirstWebService.xsd">
+    <None Include="SA.OnlineStore.DataAccess.dll.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Connected Services\NewServiceReference\NewWebService.wsdl" />
+    <None Include="Connected Services\NewServiceReference\NewWebService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FirstWebServiceReference\FirstWebService1.xsd">
+    <None Include="Connected Services\NewServiceReference\NewWebService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FirstWebServiceReference\FirstWebService2.xsd">
+    <None Include="Connected Services\NewServiceReference\NewWebService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FirstWebServiceReference\SA.OnlineStore.DataAccess.FirstWebServiceReference.Publicity.datasource">
+    <None Include="Connected Services\NewServiceReference\SA.OnlineStore.DataAccess.NewServiceReference.Publicity.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -102,26 +103,28 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\FirstWebServiceReference\FirstWebService.disco" />
+    <WCFMetadataStorage Include="Connected Services\NewServiceReference\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\FirstWebServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\FirstWebServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\FirstWebServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SA.OnlineStore.Common\SA.OnlineStore.Common.csproj">
       <Project>{64E83599-BDF1-4B67-AD17-3ECE731D70C6}</Project>
       <Name>SA.OnlineStore.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NewServiceReference\NewWebService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NewServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NewServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NewServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

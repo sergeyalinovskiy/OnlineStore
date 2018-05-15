@@ -27,18 +27,24 @@
 
         public ActionResult Index()
         {
+            return View();
+        }
+
+
+        public ActionResult Publicity()
+        {
+
             try
             {
                 IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());
-                return View(publicity);
+                return PartialView(publicity);
             }
             catch
             {
                 IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetDefaultList());
-                    return View(publicity);
-                
+                return PartialView(publicity);
+
             }
-           
         }
 
         public IEnumerable<PublicityViewModel> ConvertToPublicityViewModelList(IEnumerable<PublicityModel> modelList)

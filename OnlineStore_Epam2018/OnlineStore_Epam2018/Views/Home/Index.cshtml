@@ -6,24 +6,11 @@
     <h2>Саженцы Могилев</h2>
 
     <publicity_Board id="publicityBoard" style="float:left;">
-        <table border="1">
-            @foreach (var item in Model)
-            {
-                
-            <tr>
-                @*<td>
-            @Html.DisplayFor(model => item.Id)
-        </td>*@
-                <td>
-                    <p>
-                        @Html.DisplayFor(model => item.Name)
-                    </p>
-                    <p>
-                        @Html.DisplayFor(model => item.Text)
-                    </p>
-                </td>
-            </tr>}
-        </table>
+
+
+        @Html.Action("Publicity","Home");
+
+
     </publicity_Board>
 
     <text_Board id="textBoard" style="float:initial;">

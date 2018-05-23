@@ -1,6 +1,6 @@
 ﻿namespace SA.OnlineStore.Common.Entity
 {
-   public class ProductListModel
+   public class ProductList
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

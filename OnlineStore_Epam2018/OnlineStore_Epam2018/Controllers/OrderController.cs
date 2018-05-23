@@ -15,6 +15,10 @@
 
         public OrderController(IOrderService orderService)
         {
+            if (orderService == null)
+            {
+                throw new NullReferenceException("orderService");
+            }
             _orderService = orderService;
         }
 
@@ -90,9 +94,9 @@
             return RedirectToAction("Index");
         }
 
-        private OrderModel ConvertToBusinesModel(OrderViewModel model)
+        private Order ConvertToBusinesModel(OrderViewModel model)
         {
-            return new OrderModel()
+            return new Order()
             {
                 Id = model.Id,
                 UserId = model.UserId,
@@ -102,7 +106,7 @@
             };
         }
 
-        private OrderViewModel ConvertToViewModel(OrderModel model)
+        private OrderViewModel ConvertToViewModel(Order model)
         {
             return new OrderViewModel()
             {

@@ -11,6 +11,6 @@ namespace SA.OnlineStore.WCF
     public interface INewWebService
     {
         [OperationContract]
-        IEnumerable<Publicity> GetPublicityList();
+        IEnumerable<PublicityService> GetPublicityList();
     }
 }

@@ -18,18 +18,18 @@
             _categoryService = categoryService;
         }
 
-        public IEnumerable<ProductModel> ProductByCategory(int category)
+        public IEnumerable<Product> ProductByCategory(int category)
         {
             return _productService.GetProductLIstByCategory(category);
         }
 
-        public IEnumerable<ProductModel> ProductByPriceUp()
+        public IEnumerable<Product> ProductByPriceUp()
         {
             var productPriceDown = _productService.GetProductLIst().OrderBy(p => p.Price);
             return productPriceDown;
         }
 
-        public IEnumerable<ProductModel> ProductByPriceDown()
+        public IEnumerable<Product> ProductByPriceDown()
         {
             var productPriceDown = _productService.GetProductLIst().OrderByDescending(p => p.Price);
             return productPriceDown;

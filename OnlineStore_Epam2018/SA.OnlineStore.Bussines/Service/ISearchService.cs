@@ -6,8 +6,8 @@
     #endregion
     public interface ISearchService
     {
-        IEnumerable<ProductModel> ProductByCategory(int category);
-        IEnumerable<ProductModel> ProductByPriceUp();
-        IEnumerable<ProductModel> ProductByPriceDown();
+        IEnumerable<Product> ProductByCategory(int category);
+        IEnumerable<Product> ProductByPriceUp();
+        IEnumerable<Product> ProductByPriceDown();
     }
 }

@@ -37,23 +37,31 @@
                     ParameterName = "Id",
                     Value = Id
                 };
-                command.Parameters.Add(nameParam);
+                try
+                {
+                    command.Parameters.Add(nameParam);
+                }
+                catch (Exception)
+                {
+                    _commonLogger.Info("Error in command.Parametrs CategoryRepository/Delete");
+                    throw;
+                }
                 command.ExecuteNonQuery();
             }
         }
 
-        public CategoryModel Get(int Id)
+        public Category Get(int Id)
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
                 SqlCommand command = new SqlCommand(DbConstant.Command.GetCategoryByCategoryId, connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
+
                 SqlParameter nameParam = new SqlParameter
                 {
                     ParameterName = "Id",
                     Value = Id
                 };
-
                 command.Parameters.Add(nameParam);
                 try
                 {
@@ -64,18 +72,28 @@
                     _commonLogger.Info("Error connection with DB CategoryRepository/Get");
                     throw;
                 }
-                var reader = command.ExecuteReader();
-                CategoryModel category = null;
-                if (reader.Read())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    category = this.ParseToCategory(reader);
+                   
+                    Category category = null;
+                    try
+                    {
+                        if (reader.Read())
+                        {
+                            category = this.ParseToCategory(reader);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        _commonLogger.Info("Error reader with DB CategoryRepository/Get");
+                        throw;
+                    }
+                    return category;
                 }
-                reader.Close();
-                return category;
             }
         }
 
-        public List<CategoryModel> GetCategoryList()
+        public List<Category> GetCategoryList()
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
@@ -90,21 +108,30 @@
                     _commonLogger.Info("Error connection with DB CategoryRepository/GetCategoryist");
                     throw;
                 }
-                var reader = command.ExecuteReader();
-                List<CategoryModel> productList = new List<CategoryModel>();
-                if (reader.HasRows)
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    List<Category> productList = new List<Category>();
+                    if (reader.HasRows)
                     {
-                        productList.Add(ParseToCategory(reader));
+                        try
+                        {
+                            while (reader.Read())
+                            {
+                                productList.Add(ParseToCategory(reader));
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            _commonLogger.Info("Error reader with DB CategoryRepository/GetCategoryist");
+                            throw;
+                        }
                     }
+                    return productList;
                 }
-                reader.Close();
-                return productList;
             }
         }
 
-        public void Save(CategoryModel model)
+        public void Save(Category model)
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
@@ -135,20 +162,27 @@
                     ParameterName = "ParentId",
                     Value = model.ParentId
                 };
-
-                command.Parameters.Add(paramId);
-                command.Parameters.Add(paramName);
-                command.Parameters.Add(paramCategory);
+                try
+                {
+                    command.Parameters.Add(paramId);
+                    command.Parameters.Add(paramName);
+                    command.Parameters.Add(paramCategory);
+                }
+                catch (Exception)
+                {
+                     _commonLogger.Info("Error command.Parameters.Add in CategoryRepository/Save");
+                    throw;
+                }
           
                 command.ExecuteNonQuery();
             }
         }
 
-        private CategoryModel ParseToCategory(SqlDataReader reader)
+        private Category ParseToCategory(SqlDataReader reader)
         {
             try
             {
-                return new CategoryModel()
+                return new Category()
                 {
                     CategoryId = (int)reader["Id"],
                     CategoryName = reader["Name"].ToString(),
@@ -158,7 +192,7 @@
             catch (Exception)
             {
                 _commonLogger.Info("Input model is notValid CategoryRepository/ParseToCategory");
-                var model = new CategoryModel();
+                var model = new Category();
                 model = null;
                 return model;
             }

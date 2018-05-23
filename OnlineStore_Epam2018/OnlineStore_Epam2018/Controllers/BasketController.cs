@@ -20,6 +20,10 @@
         }
         public BasketController(IProductListService productListService)
         {
+            if (productListService == null)
+            {
+                throw new NullReferenceException("productListService");
+            }
             _productListService = productListService;
         }
 
@@ -31,7 +35,7 @@
         
         public ActionResult Save(ProductListViewModel model)
         {
-            ProductListModel prodInBascet = ConvertToProductListModel(model);
+            ProductList prodInBascet = ConvertToProductListModel(model);
             _productListService.SaveProductListInBox(prodInBascet);
             return View("Index");
         }
@@ -74,7 +78,7 @@
             return View(products);
         }
         
-        public ProductListViewModel ConvertToProductViewModel(ProductListModel model)
+        public ProductListViewModel ConvertToProductViewModel(ProductList model)
         {
             return new ProductListViewModel
             {
@@ -85,9 +89,9 @@
             };
         }
 
-        public ProductListModel ConvertToProductListModel(ProductListViewModel model)
+        public ProductList ConvertToProductListModel(ProductListViewModel model)
         {
-            return new ProductListModel
+            return new ProductList
             {
                 Id = model.Id,
                 ProductId = model.ProductId,
@@ -96,7 +100,7 @@
             };
         }
 
-        public ProductListViewModel ConvertToProductListViewModel(ProductListModel model)
+        public ProductListViewModel ConvertToProductListViewModel(ProductList model)
         {
             return new ProductListViewModel
             {
@@ -107,7 +111,7 @@
             };
         }
 
-        public IEnumerable<ProductListViewModel> ConvertToProductListViewModelList(IEnumerable<ProductListModel> modelList)
+        public IEnumerable<ProductListViewModel> ConvertToProductListViewModelList(IEnumerable<ProductList> modelList)
         {
             List<ProductListViewModel> convertProductList = new List<ProductListViewModel>();
 

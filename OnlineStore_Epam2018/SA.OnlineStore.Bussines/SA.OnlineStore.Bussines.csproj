@@ -58,14 +58,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BussinesDependencyRegistry.cs" />
-    <Compile Include="Components\CategoryService.cs" />
-    <Compile Include="Components\OrderService.cs" />
-    <Compile Include="Components\ProductListService.cs" />
-    <Compile Include="Components\ProductService.cs" />
-    <Compile Include="Components\PublicityService.cs" />
-    <Compile Include="Components\SearchSeervice.cs" />
-    <Compile Include="Components\SeasonService.cs" />
+    <Compile Include="Dependency\BussinesDependencyRegistry.cs" />
+    <Compile Include="Service\Implementation\CategoryService.cs" />
+    <Compile Include="Service\Implementation\OrderService.cs" />
+    <Compile Include="Service\Implementation\ProductListService.cs" />
+    <Compile Include="Service\Implementation\ProductService.cs" />
+    <Compile Include="Service\Implementation\PublicityService.cs" />
+    <Compile Include="Service\Implementation\SearchSeervice.cs" />
+    <Compile Include="Service\Implementation\SeasonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ICategoryService.cs" />
     <Compile Include="Service\IProductListService.cs" />

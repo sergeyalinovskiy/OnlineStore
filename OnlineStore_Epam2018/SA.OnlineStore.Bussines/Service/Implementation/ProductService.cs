@@ -22,27 +22,27 @@
             _productRepository.Delete(Id);
         }
 
-        public void EditProduct(ProductModel model)
+        public void EditProduct(Product model)
         {
             _productRepository.Save(model);
         }
 
-        public ProductModel GetProduct(int Id)
+        public Product GetProduct(int Id)
         {
             return _productRepository.Get(Id);
         }
 
-        public IEnumerable<ProductModel> GetProductLIst()
+        public IEnumerable<Product> GetProductLIst()
         {
             return _productRepository.GetList();
         }
 
-        public IEnumerable<ProductModel> GetProductLIstByCategory(int category)
+        public IEnumerable<Product> GetProductLIstByCategory(int category)
         {
             return _productRepository.GetList().Where(x => x.CategoryId == category);
         }
 
-        public void SaveProduct(ProductModel model)
+        public void SaveProduct(Product model)
         {
             _productRepository.Save(model);
         }

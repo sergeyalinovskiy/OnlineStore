@@ -21,14 +21,14 @@
         //    PublicityModel publicity = _publicityRepository.GetPublicity();
         //    return publicity;
         //}       
-        public IEnumerable<PublicityModel> GetDefaultList()
+        public IEnumerable<Publicity> GetDefaultList()
         {
-            IEnumerable<PublicityModel> resultList = _publicityRepository.GetDefaultList();
+            IEnumerable<Publicity> resultList = _publicityRepository.GetDefaultList();
             return resultList;
         }
-        public IEnumerable<PublicityModel> GetPublicityList()
+        public IEnumerable<Publicity> GetPublicityList()
         {
-            IEnumerable<PublicityModel> resultList = _publicityRepository.GetPublicityList();
+            IEnumerable<Publicity> resultList = _publicityRepository.GetPublicityList();
             return resultList;
         }
     }

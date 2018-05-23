@@ -8,8 +8,8 @@
     public interface ICategoryRepository
     {
         void Delete(int Id);
-        void Save(CategoryModel model);
-        CategoryModel Get(int Id);
-        List<CategoryModel> GetCategoryList();
+        void Save(Category model);
+        Category Get(int Id);
+        List<Category> GetCategoryList();
     }
 }

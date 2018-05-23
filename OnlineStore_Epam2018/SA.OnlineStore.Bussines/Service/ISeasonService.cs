@@ -7,7 +7,7 @@
 
     public interface ISeasonService
     {
-        IEnumerable<SeasonModel> GetSeasonList();
+        IEnumerable<Season> GetSeasonList();
         IEnumerable<string> SeasonNameList();
     }
 }

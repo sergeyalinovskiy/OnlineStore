@@ -9,9 +9,9 @@
 
     public class ProductListService : IProductListService
     {
-        public static List<ProductListModel> productsInBox = new List<ProductListModel>()
+        public static List<ProductList> productsInBox = new List<ProductList>()
         {
-            new ProductListModel()
+            new ProductList()
             {
                 Id=1,
                 ProductId=1,
@@ -22,8 +22,8 @@
 
         public void DeleteProductInBoxById(int Id)
         {
-            ProductListModel p = new ProductListModel();
-            foreach (ProductListModel item in productsInBox)
+            ProductList p = new ProductList();
+            foreach (ProductList item in productsInBox)
             {
                 if (item.Id == Id)
                 {
@@ -33,11 +33,11 @@
             productsInBox.Remove(p);
         }
 
-        ProductListModel p = new ProductListModel();
+        ProductList p = new ProductList();
 
-        public void SaveProductListInBox(ProductListModel model)
+        public void SaveProductListInBox(ProductList model)
         {
-            foreach(ProductListModel item in productsInBox)
+            foreach(ProductList item in productsInBox)
             {
                 if (item.Id == model.Id)
                 {
@@ -49,7 +49,7 @@
         }
              
 
-        public void EditProductListInBox(ProductListModel model)
+        public void EditProductListInBox(ProductList model)
         {
             productsInBox[model.Id].Id = model.Id;
             productsInBox[model.Id].ProductId = model.ProductId;
@@ -57,17 +57,17 @@
             productsInBox[model.Id].Count = model.Count;
         }
 
-        public ProductListModel GetProductListInBox(int Id)
+        public ProductList GetProductListInBox(int Id)
         {
             return productsInBox.Where(t => t.Id == Id).FirstOrDefault();
         }
 
-        public void AddNewItemInBox(ProductListModel product)
+        public void AddNewItemInBox(ProductList product)
         {
             productsInBox.Add(product);
         }
 
-        public IEnumerable<ProductListModel> GetProductListInBox()
+        public IEnumerable<ProductList> GetProductListInBox()
         {
             return productsInBox;
         }

@@ -16,7 +16,7 @@
             _seasonRepository = seasonRepository;
         }
 
-        public IEnumerable<SeasonModel> GetSeasonList()
+        public IEnumerable<Season> GetSeasonList()
         {
             return _seasonRepository.GetSeasonList();
         }
@@ -24,7 +24,7 @@
         public IEnumerable<string> SeasonNameList()
         {
             List<string> seasonNames = new List<string>();
-            foreach (SeasonModel item in _seasonRepository.GetSeasonList())
+            foreach (Season item in _seasonRepository.GetSeasonList())
             {
                 seasonNames.Add(item.SeasonName);
             }

@@ -4,6 +4,7 @@
     using OnlineStore_Epam2018.Models;
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.Common.Logger;
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -11,8 +12,13 @@
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        private readonly ICommonLogger _myLoger;
+        public CategoryController(ICategoryService categoryService, ICommonLogger commonLogger)
         {
+            if (categoryService == null)
+            {
+                throw new NullReferenceException("categoryService");
+            }
             _categoryService = categoryService;
         }
 
@@ -83,17 +89,17 @@
             return View();
         }
 
-        public List<CategoryViewModel> ConvertToListViewModel(IEnumerable<CategoryModel> modelList)
+        public List<CategoryViewModel> ConvertToListViewModel(IEnumerable<Category> modelList)
         {
             List<CategoryViewModel> resultList = new List<CategoryViewModel>();
-            foreach(CategoryModel item in modelList)
+            foreach(Category item in modelList)
             {
                 resultList.Add(ConvertToViewModel(item));
             }
             return resultList;
         }
 
-        public CategoryViewModel ConvertToViewModel(CategoryModel model)
+        public CategoryViewModel ConvertToViewModel(Category model)
         {
             return new CategoryViewModel()
             {
@@ -103,9 +109,9 @@
             };
         }
 
-        public CategoryModel ConvertToBussinesModel(CategoryViewModel model)
+        public Category ConvertToBussinesModel(CategoryViewModel model)
         {
-            return new CategoryModel()
+            return new Category()
             {
                 CategoryId = model.CategoryId,
                 CategoryName = model.CategoryName,

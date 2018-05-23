@@ -8,10 +8,10 @@
     public interface IProductService 
     {
         void DeleteProductByProductId(int Id);
-        void SaveProduct(ProductModel model);
-        void EditProduct(ProductModel model);
-        ProductModel GetProduct(int Id);
-        IEnumerable<ProductModel> GetProductLIst();
-        IEnumerable<ProductModel> GetProductLIstByCategory(int category);
+        void SaveProduct(Product model);
+        void EditProduct(Product model);
+        Product GetProduct(int Id);
+        IEnumerable<Product> GetProductLIst();
+        IEnumerable<Product> GetProductLIstByCategory(int category);
     }
 }

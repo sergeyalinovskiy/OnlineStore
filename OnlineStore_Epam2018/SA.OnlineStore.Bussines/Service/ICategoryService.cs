@@ -7,12 +7,12 @@
 
     public interface ICategoryService
     {
-        void Create(CategoryModel model);
+        void Create(Category model);
         void DeleteCategoryByCategoryId(int Id);
-        void SaveCategory(CategoryModel model);
-        void EditCategory(CategoryModel model);
-        CategoryModel GetCategory(int Id);
-        IEnumerable<CategoryModel> GetCategoryList();
+        void SaveCategory(Category model);
+        void EditCategory(Category model);
+        Category GetCategory(int Id);
+        IEnumerable<Category> GetCategoryList();
         IEnumerable<string> CategoryNameList();
     }
 }

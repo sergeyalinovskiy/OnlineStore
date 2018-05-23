@@ -10,20 +10,20 @@
 
     public class OrderService : IOrderService
     {
-        private List<OrderModel> _orders = new List<OrderModel>() {
-            new OrderModel() {Id=1,
+        private List<Order> _orders = new List<Order>() {
+            new Order() {Id=1,
                          UserId =1,
                          StatusId=1,
                          Address="qe",
                          DateOrder=DateTime.Now.Date
             } ,
-            new OrderModel() {Id=1,
+            new Order() {Id=1,
                          UserId =2,
                          StatusId=1,
                          Address="qe",
                          DateOrder=DateTime.Now.Date
             } ,
-            new OrderModel() {Id=1,
+            new Order() {Id=1,
                          UserId =3,
                          StatusId=1,
                          Address="qe",
@@ -35,19 +35,19 @@
             _orders.RemoveAt(Id);
         }
 
-        public OrderModel GetOrder(int Id)
+        public Order GetOrder(int Id)
         {
             return _orders.Where(t => t.Id == Id).FirstOrDefault();
         }
 
-        public IEnumerable<OrderModel> GetOrderList()
+        public IEnumerable<Order> GetOrderList()
         {
             return _orders;
         }
 
-        public void SaveOrder(OrderModel model)
+        public void SaveOrder(Order model)
         {
-            _orders.Add(new OrderModel
+            _orders.Add(new Order
             {
                 Id = model.Id,
                 UserId=model.UserId,
@@ -57,7 +57,7 @@
             });
         }
 
-        public void EditOrder(OrderModel model)
+        public void EditOrder(Order model)
         {
             _orders[model.Id].StatusId = model.StatusId;
             _orders[model.Id].Address = model.Address;

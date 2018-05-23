@@ -8,6 +8,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Text)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Picture)
+        </th>
         <th></th>
     </tr>
 
@@ -19,7 +22,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.Text)
         </td>
-        
+        <td>
+            <img src="~/Content/publicity/@item.Picture" width="45" />
+        </td>
+
     </tr>
 }
 </table>

@@ -19,14 +19,14 @@
         public IEnumerable<string> CategoryNameList()
         {
             List<string> categoryNames = new List<string>();
-            foreach(CategoryModel item in _categoryRepository.GetCategoryList())
+            foreach(Category item in _categoryRepository.GetCategoryList())
             {
                 categoryNames.Add(item.CategoryName);
             }
             return categoryNames;
         }
 
-        public void Create(CategoryModel model)
+        public void Create(Category model)
         {
             _categoryRepository.Save(model);
         }
@@ -36,22 +36,22 @@
             _categoryRepository.Delete(Id);
         }
 
-        public void EditCategory(CategoryModel model)
+        public void EditCategory(Category model)
         {
             throw new NotImplementedException();   //!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
-        public CategoryModel GetCategory(int Id)
+        public Category GetCategory(int Id)
         {
             return _categoryRepository.Get(Id);
         }
 
-        public IEnumerable<CategoryModel> GetCategoryList()
+        public IEnumerable<Category> GetCategoryList()
         {
             return _categoryRepository.GetCategoryList();
         }
 
-        public void SaveCategory(CategoryModel model)
+        public void SaveCategory(Category model)
         {
             _categoryRepository.Save(model);
         }

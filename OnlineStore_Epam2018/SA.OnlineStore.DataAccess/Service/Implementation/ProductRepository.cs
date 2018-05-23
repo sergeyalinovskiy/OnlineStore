@@ -5,6 +5,7 @@
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
     using SA.OnlineStore.DataAccess.Service;
+    using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
     #endregion
@@ -44,7 +45,7 @@
             }
         }
 
-        public ProductModel Get(int Id)
+        public Product Get(int Id)
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
@@ -64,21 +65,30 @@
                 catch (System.Exception)
                 {
                     _commonLogger.Info("Error connection with DB ProductRepository/Get");
-                    throw;
+                    
                 }
 
-                var reader = command.ExecuteReader();
-                ProductModel product = null;
-                if (reader.Read())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    product = this.ParseToProduct(reader);
+                    Product product = null;
+                    try
+                    {
+                        if (reader.Read())
+                        {
+                            product = this.ParseToProduct(reader);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
+                        throw;
+                    }
+                    return product;
                 }
-                reader.Close();
-                return product;
             }
         }
 
-        public void Save(ProductModel model)
+        public void Save(Product model)
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
@@ -149,7 +159,7 @@
             }
         }
 
-        public List<ProductModel> GetList()
+        public List<Product> GetList()
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
@@ -164,33 +174,53 @@
                     _commonLogger.Info("Error connection with DB ProductRepository/GetList");
                     throw;
                 }
-                var reader = command.ExecuteReader();
-                List<ProductModel> productList = new List<ProductModel>();
-                if (reader.HasRows)
+
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    List<Product> productList = new List<Product>();
+                    try
                     {
-                        productList.Add(ParseToProduct(reader));
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                productList.Add(ParseToProduct(reader));
+                            }
+                        }
                     }
+                    catch (Exception)
+                    {
+                        _commonLogger.Info("Error reader with DB ProductRepository/GetList");
+                        throw;
+                    }
+                    return productList;
                 }
-                reader.Close();
-                return productList;
             }
         }
 
-        private ProductModel ParseToProduct(SqlDataReader reader)
+        private Product ParseToProduct(SqlDataReader reader)
         {
-            return new ProductModel()
+            try
             {
-                Id = int.Parse(reader["Id"].ToString()),
-                Name = reader["Name"].ToString(),
-                CategoryId = (int)reader["CategoryId"],
-                SeasonId = (int)reader["SeasonsId"],
-                Picture = reader["Picture"].ToString(),
-                Description = reader["Description"].ToString(),
-                Count = (int)reader["Count"],
-                Price = (int)reader["Price"]
-            };
+                return new Product()
+                {
+                    Id = int.Parse(reader["Id"].ToString()),
+                    Name = reader["Name"].ToString(),
+                    CategoryId = (int)reader["CategoryId"],
+                    SeasonId = (int)reader["SeasonsId"],
+                    Picture = reader["Picture"].ToString(),
+                    Description = reader["Description"].ToString(),
+                    Count = (int)reader["Count"],
+                    Price = (int)reader["Price"]
+                };
+            }
+            catch (Exception)
+            {
+                _commonLogger.Info("Input model is notValid ProductRepository/ParseToProduct");
+                var model = new Product();
+                model = null;
+                return model;
+            }
         }
     }
 }

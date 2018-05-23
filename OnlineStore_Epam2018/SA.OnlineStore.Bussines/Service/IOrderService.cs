@@ -7,9 +7,9 @@
     public interface IOrderService
     {
         void DeleteOrderByOrderId(int Id);
-        void SaveOrder(OrderModel model);
-        void EditOrder(OrderModel model);
-        OrderModel GetOrder(int Id);
-        IEnumerable<OrderModel> GetOrderList();
+        void SaveOrder(Order model);
+        void EditOrder(Order model);
+        Order GetOrder(int Id);
+        IEnumerable<Order> GetOrderList();
     }
 }

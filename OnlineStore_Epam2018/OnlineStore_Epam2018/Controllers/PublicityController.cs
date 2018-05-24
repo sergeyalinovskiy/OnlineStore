@@ -65,7 +65,7 @@ namespace OnlineStore_Epam2018.Controllers
                 Id = model.Id,
                 Name = model.Name,
                 Text = model.Text,
-                Picture = PictureConverter.byteArrayToImage(model.Picture)
+                Picture = model.Picture
             };
         }
     }

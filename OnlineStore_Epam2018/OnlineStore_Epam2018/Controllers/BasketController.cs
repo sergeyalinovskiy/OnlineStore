@@ -7,7 +7,6 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-
     #endregion
 
     public class BasketController : Controller
@@ -18,6 +17,7 @@
         {
 
         }
+
         public BasketController(IProductListService productListService)
         {
             if (productListService == null)

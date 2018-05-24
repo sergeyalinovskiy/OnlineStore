@@ -103,10 +103,20 @@
 
         public ActionResult CategoryList()
         {
-            var categorys = ConvertListToViewModel(_categoryService.GetCategoryList());
+            var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m=>m.ParentId==0));
 
             return PartialView(categorys);
         }
+
+        public ActionResult CategoryList2(int id)
+        {
+            var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m => m.ParentId == id));
+
+            return PartialView(categorys);
+        }
+
+
+
 
         public ActionResult Create()
         {

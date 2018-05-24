@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 
 namespace OnlineStore_Epam2018.Models
 {
@@ -11,6 +12,6 @@ namespace OnlineStore_Epam2018.Models
         [Display(Name = "Текст")]
         [Required(ErrorMessage = "Ввведите текст рекламы")]
         public string Text { get; set; }
-        public string Picture { get; set; }
+        public Image Picture { get; set; }
     }
 }

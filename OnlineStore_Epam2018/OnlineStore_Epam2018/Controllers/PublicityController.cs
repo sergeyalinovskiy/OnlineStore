@@ -33,7 +33,6 @@ namespace OnlineStore_Epam2018.Controllers
         
         public ActionResult Publicity()
         {
-
             try
             {
                 IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());//hfp,bn 

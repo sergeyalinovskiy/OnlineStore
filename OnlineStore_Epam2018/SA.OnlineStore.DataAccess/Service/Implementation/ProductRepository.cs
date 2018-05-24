@@ -22,26 +22,28 @@
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
-                
-                SqlCommand command = new SqlCommand(DbConstant.Command.DeleteProductByProductId, connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                try
-                {
-                    connection.Open();
-                }
-                catch (System.Exception)
-                {
-                    _commonLogger.Info("Error connection with DB ProductRepository/Delete");
-                    throw;
-                }
 
-                SqlParameter nameParam = new SqlParameter
+                using (SqlCommand command = new SqlCommand(DbConstant.Command.DeleteProductByProductId, connection))
                 {
-                    ParameterName = "Id",
-                    Value = Id
-                };
-                command.Parameters.Add(nameParam);
-                command.ExecuteNonQuery();
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    try
+                    {
+                        connection.Open();
+                    }
+                    catch (System.Exception)
+                    {
+                        _commonLogger.Info("Error connection with DB ProductRepository/Delete");
+                        throw;
+                    }
+
+                    SqlParameter nameParam = new SqlParameter
+                    {
+                        ParameterName = "Id",
+                        Value = Id
+                    };
+                    command.Parameters.Add(nameParam);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
@@ -103,61 +105,63 @@
                     _commonLogger.Info("Error connection with DB ProductRepository/Save");
                     throw;
                 }
-                
-                SqlCommand command = new SqlCommand(DbConstant.Command.SaveProduct, connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                SqlParameter paramId = new SqlParameter
+                using (SqlCommand command = new SqlCommand(DbConstant.Command.SaveProduct, connection))
                 {
-                    ParameterName = "Id",
-                    Value = model.Id
-                };
-                SqlParameter paramName = new SqlParameter
-                {
-                    ParameterName = "Name",
-                    Value = model.Name
-                };
-                SqlParameter paramCategory = new SqlParameter
-                {
-                    ParameterName = "CategoryId",
-                    Value = model.CategoryId
-                };
-                SqlParameter paramSeason = new SqlParameter
-                {
-                    ParameterName = "SeasonsId",
-                    Value = model.SeasonId
-                };
-                SqlParameter paramPicture = new SqlParameter
-                {
-                    ParameterName = "Picture",
-                    Value = model.Picture
-                };
-                SqlParameter paramDescription = new SqlParameter
-                {
-                    ParameterName = "Description",
-                    Value = model.Description
-                };
-                SqlParameter paramCount = new SqlParameter
-                {
-                    ParameterName = "Count",
-                    Value = model.Count
-                };
-                SqlParameter paramPrice = new SqlParameter
-                {
-                    ParameterName = "Price",
-                    Value = model.Price
-                };
-                
-                command.Parameters.Add(paramId);
-                command.Parameters.Add(paramName);
-                command.Parameters.Add(paramCategory);
-                command.Parameters.Add(paramSeason);
-                command.Parameters.Add(paramPicture);
-                command.Parameters.Add(paramDescription);
-                command.Parameters.Add(paramCount);
-                command.Parameters.Add(paramPrice);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                command.ExecuteNonQuery();
+                    SqlParameter paramId = new SqlParameter
+                    {
+                        ParameterName = "Id",
+                        Value = model.Id
+                    };
+                    SqlParameter paramName = new SqlParameter
+                    {
+                        ParameterName = "Name",
+                        Value = model.Name
+                    };
+                    SqlParameter paramCategory = new SqlParameter
+                    {
+                        ParameterName = "CategoryId",
+                        Value = model.CategoryId
+                    };
+                    SqlParameter paramSeason = new SqlParameter
+                    {
+                        ParameterName = "SeasonsId",
+                        Value = model.SeasonId
+                    };
+                    SqlParameter paramPicture = new SqlParameter
+                    {
+                        ParameterName = "Picture",
+                        Value = model.Picture
+                    };
+                    SqlParameter paramDescription = new SqlParameter
+                    {
+                        ParameterName = "Description",
+                        Value = model.Description
+                    };
+                    SqlParameter paramCount = new SqlParameter
+                    {
+                        ParameterName = "Count",
+                        Value = model.Count
+                    };
+                    SqlParameter paramPrice = new SqlParameter
+                    {
+                        ParameterName = "Price",
+                        Value = model.Price
+                    };
+
+                    command.Parameters.Add(paramId);
+                    command.Parameters.Add(paramName);
+                    command.Parameters.Add(paramCategory);
+                    command.Parameters.Add(paramSeason);
+                    command.Parameters.Add(paramPicture);
+                    command.Parameters.Add(paramDescription);
+                    command.Parameters.Add(paramCount);
+                    command.Parameters.Add(paramPrice);
+
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
@@ -165,37 +169,39 @@
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
-                SqlCommand command = new SqlCommand(DbConstant.Command.GetProductList, connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                try
+                using (SqlCommand command = new SqlCommand(DbConstant.Command.GetProductList, connection))
                 {
-                    connection.Open();
-                }
-                catch (System.Exception)
-                {
-                    _commonLogger.Info("Error connection with DB ProductRepository/GetList");
-                    throw;
-                }
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    List<Product> productList = new List<Product>();
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
                     try
                     {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                productList.Add(ParseToProduct(reader));
-                            }
-                        }
+                        connection.Open();
                     }
-                    catch (Exception)
+                    catch (System.Exception)
                     {
-                        _commonLogger.Info("Error reader with DB ProductRepository/GetList");
+                        _commonLogger.Info("Error connection with DB ProductRepository/GetList");
                         throw;
                     }
-                    return productList;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<Product> productList = new List<Product>();
+                        try
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    productList.Add(ParseToProduct(reader));
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            _commonLogger.Info("Error reader with DB ProductRepository/GetList");
+                            throw;
+                        }
+                        return productList;
+                    }
                 }
             }
         }

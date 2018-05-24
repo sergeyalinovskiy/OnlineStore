@@ -17,7 +17,8 @@
     <table border="1">
         <h3>Категории</h3>
         @Html.Action("CategoryList")
-        </table>
+        @Html.Action("CategoryList2", "Product", new { id = 100 })
+    </table>
 </navigation_Board>
 
 

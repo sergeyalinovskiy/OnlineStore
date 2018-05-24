@@ -50,8 +50,8 @@
                  {
                      Id = 100,
                      Name = "Реклама отсутствует",
-                     Text = ""
-                     //Picture="x"
+                     Text = "",
+                     Picture="x"
                 },
                 // new Publicity()
                 // {

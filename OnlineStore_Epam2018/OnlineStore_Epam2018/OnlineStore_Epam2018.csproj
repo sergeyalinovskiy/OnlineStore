@@ -192,7 +192,6 @@
     <Content Include="Views\Basket\Index.cshtml" />
     <Content Include="Views\Product\AddInBox.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
-    <Content Include="Views\Product\CategoryList.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Details.cshtml" />
@@ -201,8 +200,8 @@
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Product\ErrorPartialView.cshtml" />
     <Content Include="Views\Publicity\Publicity.cshtml" />
-    <Content Include="Views\Publicity\Publicity2.cshtml" />
-    <Content Include="Views\Publicity\Publicity3.cshtml" />
+    <Content Include="Views\Product\CategoryList.cshtml" />
+    <Content Include="Views\Product\CategoryList2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

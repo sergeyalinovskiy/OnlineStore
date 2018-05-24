@@ -49,14 +49,15 @@
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
-                SqlCommand command = new SqlCommand(DbConstant.Command.GetProductByProductId, connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                SqlParameter nameParam = new SqlParameter
+                using (SqlCommand command = new SqlCommand(DbConstant.Command.GetProductByProductId, connection))
                 {
-                    ParameterName = "Id",
-                    Value = Id
-                };
-                command.Parameters.Add(nameParam);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    SqlParameter nameParam = new SqlParameter
+                    {
+                        ParameterName = "Id",
+                        Value = Id
+                    };
+                    command.Parameters.Add(nameParam);
                 
                 try
                 {
@@ -84,6 +85,7 @@
                         throw;
                     }
                     return product;
+                    }
                 }
             }
         }

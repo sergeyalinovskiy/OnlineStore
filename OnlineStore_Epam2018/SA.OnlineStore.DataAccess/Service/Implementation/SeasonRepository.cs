@@ -22,34 +22,36 @@
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
-                SqlCommand command = new SqlCommand(DbConstant.Command.GetSeasonList, connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                try
+                using (SqlCommand command = new SqlCommand(DbConstant.Command.GetSeasonList, connection))
                 {
-                    connection.Open();
-                }
-                catch (Exception)
-                {
-                    _commonLogger.Info("Error connection SeassonRepository");
-                }
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    List<Season> productList = new List<Season>();
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
                     try
                     {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                productList.Add(ParseToSeason(reader));
-                            }
-                        }
+                        connection.Open();
                     }
                     catch (Exception)
                     {
-                        _commonLogger.Info("Error reader SeassonRepository/GetSeasonList");
+                        _commonLogger.Info("Error connection SeassonRepository");
                     }
-                    return productList;
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<Season> productList = new List<Season>();
+                        try
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    productList.Add(ParseToSeason(reader));
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            _commonLogger.Info("Error reader SeassonRepository/GetSeasonList");
+                        }
+                        return productList;
+                    }
                 }
             }
         }

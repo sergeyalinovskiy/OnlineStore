@@ -96,7 +96,8 @@
                 productList = productList.Where(m => m.CategoryId == id);
                 IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
                 return View("Index", list);
-            }
+            }  
+           
             IEnumerable<ProductViewModel> list2 = ConvertListToViewModel(productList);
             return View("Index", list2);
         }
@@ -108,11 +109,11 @@
             return PartialView(categorys);
         }
 
-        public ActionResult CategoryList2(int id)
+        public ActionResult SubCategoryList(int id)
         {
             var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m => m.ParentId == id));
 
-            return PartialView(categorys);
+            return PartialView("SubCategoryList",categorys);
         }
 
 

@@ -86,8 +86,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="INewWebService.cs" />
-    <Compile Include="MakingPublicityList.cs" />
+    <Compile Include="Service\INewWebService.cs" />
+    <Compile Include="StaticList\MakingPublicityList.cs" />
     <Compile Include="NewWebService.svc.cs">
       <DependentUpon>NewWebService.svc</DependentUpon>
     </Compile>

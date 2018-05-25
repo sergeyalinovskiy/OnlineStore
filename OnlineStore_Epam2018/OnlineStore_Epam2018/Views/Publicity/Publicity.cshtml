@@ -23,9 +23,7 @@
             @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
-        <img src="~/Connected Services/@item.Picture" width="45"/>
-            <img src=@item.Picture width="45" />
-            @*<img @item.Picture width="45" />*@
+            <img src="data:image;base64,@item.Picture" />
         </td>
 
     </tr>

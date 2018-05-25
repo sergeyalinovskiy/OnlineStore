@@ -1,5 +1,6 @@
 ﻿namespace SA.OnlineStore.DataAccess.Components
 {
+    using SA.OnlineStore.Common.Convert;
     #region Usings
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
@@ -44,29 +45,17 @@
 
         public IEnumerable<Publicity> GetDefaultList()
         {
+            byte[] a = new byte[3];
             List<Publicity> listPublicity = new List<Publicity>()
             {
+                
                 new Publicity()
                  {
                      Id = 100,
                      Name = "Реклама отсутствует",
                      Text = "",
-                     Picture="x"
-                },
-                // new Publicity()
-                // {
-                //     Id = 101,
-                //     Name = "Реклама отсутствует",
-                //     Text = "Нет соединения с сервисом",
-                //     Picture="x"
-                //},
-                //  new Publicity()
-                // {
-                //     Id = 102,
-                //     Name = "Реклама отсутствует",
-                //     Text = "Нет соединения с сервисом",
-                //     Picture="x"
-                //}
+                     Picture=a
+                }
             };
             return listPublicity;
         }
@@ -100,10 +89,10 @@
         {
             return new Publicity
             {
-                Id=model.Id,
+                Id = model.Id,
                 Name = model.Name,
                 Text = model.Text,
-                Picture=model.Picture
+                Picture = PictureConverter.GetNormalizedImage(model.Picture,60,60)
             };
         }
     }

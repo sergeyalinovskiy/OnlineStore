@@ -69,6 +69,10 @@
 
         public ActionResult AddInBox(int id)
         {
+            if (id <= 0)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             Product prod = new Product();
             foreach (Product item in _productService.GetProductLIst())
             {
@@ -90,10 +94,21 @@
 
         public ActionResult IndexSearch(int? id)
         {
+            if (id < 1)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             IEnumerable<Product> productList = _productService.GetProductLIst();
             if (id != null)
             {
                 productList = productList.Where(m => m.CategoryId == id);
+                foreach(Category item in _categoryService.GetCategoryList())
+                {
+                    if (item.ParentId == 0 && item.CategoryId == id)
+                    {
+
+                    }
+                }
                 IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
                 return View("Index", list);
             }  
@@ -148,8 +163,15 @@
 
         public ActionResult Details(int id)
         {
-            ProductViewModel product = ConvertToViewModel(_productService.GetProduct(id));
-            return View(product);
+            if (id>0)
+            {
+                ProductViewModel product = ConvertToViewModel(_productService.GetProduct(id));
+                return View(product);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
 
         public ActionResult Delete(int id)

@@ -191,10 +191,3 @@ D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineSto
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.pdb
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.dll.config
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\2.jpg
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\4.jpg
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\5.jpg
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\6.jpg
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\7.jpg
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\8.jpg
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\9.jpg

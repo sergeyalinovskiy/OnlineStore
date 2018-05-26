@@ -92,25 +92,55 @@
             return View();
         }
 
-        public ActionResult IndexSearch(int? id)
+        public ActionResult IndexSearch(int id)
         {
             if (id < 1)
             {
                 return RedirectToAction("Index", "Error");
             }
             IEnumerable<Product> productList = _productService.GetProductLIst();
-            if (id != null)
+            if (id != 0)
             {
                 productList = productList.Where(m => m.CategoryId == id);
-                foreach(Category item in _categoryService.GetCategoryList())
-                {
-                    if (item.ParentId == 0 && item.CategoryId == id)
-                    {
 
+                List<Product> p = new List<Product>();
+                List<int> c = new List<int>();
+                int n = productList.Count();
+                if (n<=1 )
+                {
+                    foreach (Category item in _categoryService.GetCategoryList())
+                    {
+                        if (item.ParentId == id)
+                        {
+                            c.Add(item.CategoryId);
+
+                        }
+                        else
+                        {
+                            if (c.Count == 0)
+                            {
+                                c.Add(id);
+                            }
+                        }
                     }
+                    foreach (int i in c)
+                    {
+                        foreach(Product item2 in _productService.GetProductLIst())
+                        {
+                            if (item2.CategoryId == i)
+                            {
+                                p.Add(item2);
+                            }
+                        }
+                    }
+                    IEnumerable<ProductViewModel> list = ConvertListToViewModel(p);
+                    return View("Index", list);
                 }
-                IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
-                return View("Index", list);
+                else
+                {
+                    IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
+                    return View("Index", list);
+                }
             }  
            
             IEnumerable<ProductViewModel> list2 = ConvertListToViewModel(productList);

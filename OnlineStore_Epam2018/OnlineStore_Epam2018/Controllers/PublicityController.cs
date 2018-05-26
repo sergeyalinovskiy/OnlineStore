@@ -34,17 +34,17 @@ namespace OnlineStore_Epam2018.Controllers
         
         public ActionResult Publicity()
         {
-            //try
-            //{
+            try
+            {
                 IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());
                 return PartialView(publicity);
-            //}
-            //catch
-            //{
-            //    IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetDefaultList());
-            //    return PartialView(publicity);
+            }
+            catch
+            {
+                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetDefaultList());
+                return PartialView(publicity);
 
-            //}
+            }
         }
 
         public IEnumerable<PublicityViewModel> ConvertToPublicityViewModelList(IEnumerable<Publicity> modelList)

@@ -11,5 +11,6 @@
         void EditOrder(Order model);
         Order GetOrder(int Id);
         IEnumerable<Order> GetOrderList();
+        void GetDefaultOrder(int UserId);
     }
 }

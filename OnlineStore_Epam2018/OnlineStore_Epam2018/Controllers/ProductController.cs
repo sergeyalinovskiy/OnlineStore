@@ -16,10 +16,11 @@
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ISeasonService _seasonService;
-        private readonly IProductListService _productListService;
+        private readonly IBasketService _basketService;
         private readonly ICommonLogger _myLoger;
+        private readonly IOrderService _orderService;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IProductListService productListService, ICommonLogger myLoger)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IBasketService basketService, ICommonLogger myLoger, IOrderService orderService)
         {
             try
             {
@@ -27,7 +28,7 @@
                 {
                     throw new ArgumentNullException("productService");
                 }
-                if (productListService == null)
+                if (basketService == null)
                 {
                     throw new ArgumentNullException("productListService");
                 }
@@ -42,14 +43,14 @@
                 _productService = productService;
                 _categoryService = categoryService;
                 _seasonService = seasonService;
-                _productListService = productListService;
+                _basketService = basketService;
+                _orderService = orderService;
                 _myLoger = myLoger;
             }
             catch (NullReferenceException)
             {
                 View("Create");
             }
-            
         }
 
         public ProductController()
@@ -59,7 +60,10 @@
 
         public ActionResult Index()
         {
-            IEnumerable<ProductViewModel> productList = ConvertListToViewModel(_productService.GetProductLIst());
+            var list = _productService.GetProductLIst();
+
+            IEnumerable<ProductViewModel> productList;
+            productList = ConvertListToViewModel(list);
             if (productList == null)
             {
                 return PartialView("ErrorPartialView");
@@ -73,22 +77,8 @@
             {
                 return RedirectToAction("Index", "Error");
             }
-            Product prod = new Product();
-            foreach (Product item in _productService.GetProductLIst())
-            {
-                if (item.Id == id)
-                {
-                    prod = item;
-                }
-            }
-            ProductList product = new ProductList()
-            {
-                Id = 3,
-                ProductId = prod.Id,
-                ProductName = prod.Name,
-                Count = 1
-            };
-            _productListService.AddNewItemInBox(product);
+
+            AddProductInBox(id);
             return View();
         }
 
@@ -106,14 +96,13 @@
                 List<Product> p = new List<Product>();
                 List<int> c = new List<int>();
                 int n = productList.Count();
-                if (n<=1 )
+                if (n <= 1)
                 {
                     foreach (Category item in _categoryService.GetCategoryList())
                     {
                         if (item.ParentId == id)
                         {
                             c.Add(item.CategoryId);
-
                         }
                         else
                         {
@@ -125,7 +114,7 @@
                     }
                     foreach (int i in c)
                     {
-                        foreach(Product item2 in _productService.GetProductLIst())
+                        foreach (Product item2 in _productService.GetProductLIst())
                         {
                             if (item2.CategoryId == i)
                             {
@@ -141,8 +130,8 @@
                     IEnumerable<ProductViewModel> list = ConvertListToViewModel(productList);
                     return View("Index", list);
                 }
-            }  
-           
+            }
+
             IEnumerable<ProductViewModel> list2 = ConvertListToViewModel(productList);
             return View("Index", list2);
         }
@@ -160,10 +149,7 @@
 
             return PartialView("SubCategoryList",categorys);
         }
-
-
-
-
+        
         public ActionResult Create()
         {
             var viewModel = new ProductViewModel();
@@ -308,5 +294,53 @@
             };
         }
         #endregion
+
+
+        public void AddProductInBox(int id)
+        {
+           
+            Product prod = new Product();
+            foreach (Product item in _productService.GetProductLIst())
+            {
+                if (item.Id == id)
+                {
+                    prod = item;
+                }
+            }
+
+            int countProductInBasket = _orderService.GetOrderList().Where(m => m.UserId == 1).Count();
+            int trigger = 0;
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.UserId == 1))
+            {
+                if (order.StatusId != 1)
+                {
+                    trigger++;
+                }
+            }
+            if (countProductInBasket == trigger)
+            {
+                _orderService.GetDefaultOrder(1);
+            }
+
+            int orderId = 1;
+
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.UserId == 1))
+            {
+                if (order.StatusId == 1)
+                {
+                    orderId = order.Id;
+                }
+            }
+            Basket basket = new Basket()
+            {
+                Id = 3,
+                ProductId = prod.Id,
+                OrderId = orderId,
+                ProductName = prod.Name,
+                Count = 1,
+                Price = prod.Price
+            };
+            _basketService.AddNewItemInBox(basket);
+        }
     }
 }

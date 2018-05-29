@@ -3,6 +3,7 @@
     #region Usings
     using SA.OnlineStore.Bussines.Components;
     using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Bussines.Service.Implementation;
     using StructureMap.Configuration.DSL;
     #endregion
 
@@ -15,7 +16,10 @@
             For<ICategoryService>().Use<CategoryService>();
             For<ISeasonService>().Use<SeasonService>();
             For<ISearchService>().Use<SearchSeervice>();
-            For<IProductListService>().Use<ProductListService>();
+            For<IBasketService>().Use<BasketService>();
+            For<IUserService>().Use<UserService>();
+            For<IEmailService>().Use<EmailService>();
+            For<IPhoneService>().Use<PhoneService>();
         }
     }
 }

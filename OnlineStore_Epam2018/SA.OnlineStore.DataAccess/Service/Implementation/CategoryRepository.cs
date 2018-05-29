@@ -4,197 +4,211 @@
     using SA.OnlineStore.Common.Const;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
+    using SA.OnlineStore.DataAccess.Implements;
     using SA.OnlineStore.DataAccess.Service;
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Data.SqlClient;
     #endregion
 
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : IRepository<Category>
     {
         private readonly ICommonLogger _commonLogger;
-        public CategoryRepository(ICommonLogger commonLogger)
+        private readonly IRealizationImplementation _realization;
+        private readonly SqlConnection _connection;
+        public CategoryRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
+           
             _commonLogger = commonLogger;
+            _realization = realization;
+            _connection = _realization.GetConnection();
         }
-        public void Delete(int Id)
+
+        public void Create(Category item)
         {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
+            try
             {
-                try
+                _connection.Open();
+                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveCategory);
+                command.Parameters.Add(new SqlParameter
                 {
-                    connection.Open();
-                }
-                catch (System.Exception)
+                    ParameterName = "Id",
+                    Value = item.CategoryId
+                });
+                command.Parameters.Add(new SqlParameter
                 {
-                    _commonLogger.Info("Error connection with DB CategoryRepository/Delete");
-                    throw;
-                }
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.DeleteCategoryByCategoryId, connection))
+                    ParameterName = "Name",
+                    Value = item.CategoryName
+                });
+                command.Parameters.Add(new SqlParameter
                 {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    SqlParameter nameParam = new SqlParameter
-                    {
-                        ParameterName = "Id",
-                        Value = Id
-                    };
+                    ParameterName = "ParentId",
+                    Value = item.ParentId
+                });
+                command.ExecuteNonQuery();
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            try
+            {
+                _realization.GetConnection().Open();
+                var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteCategoryByCategoryId);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
+                command.ExecuteNonQuery();
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _realization.GetConnection().Close();
+            }
+        }
+
+        public IReadOnlyCollection<Category> GetAll()
+        {
+            try
+            {
+                //_realization.GetConnection().Open();
+                _connection.Open();
+                var command = _realization.GetCommand(_connection,DbConstant.Command.GetCategoryList);
+
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    List<Category> categorys = new List<Category>();
                     try
                     {
-                        command.Parameters.Add(nameParam);
+                        while (reader.Read())
+                        {
+                            categorys.Add(ParseToCategory(reader));
+                        }
                     }
                     catch (Exception)
                     {
-                        _commonLogger.Info("Error in command.Parametrs CategoryRepository/Delete");
+                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
                         throw;
                     }
-                    command.ExecuteNonQuery();
+                    finally
+                    {
+                        reader.Close();
+                    }
+                    return categorys;
                 }
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
             }
         }
 
-        public Category Get(int Id)
+        public Category GetById(int id)
         {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
+            try
             {
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.GetCategoryByCategoryId, connection))
+                _connection.Open();
+                var command = _realization.GetCommand(_connection,DbConstant.Command.GetCategoryByCategoryId);
+                command.Parameters.Add(new SqlParameter
                 {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                    SqlParameter nameParam = new SqlParameter
-                    {
-                        ParameterName = "Id",
-                        Value = Id
-                    };
-                    command.Parameters.Add(nameParam);
-                    try
-                    {
-                        connection.Open();
-                    }
-                    catch (System.Exception)
-                    {
-                        _commonLogger.Info("Error connection with DB CategoryRepository/Get");
-                        throw;
-                    }
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-
-                        Category category = null;
-                        try
-                        {
-                            if (reader.Read())
-                            {
-                                category = this.ParseToCategory(reader);
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            _commonLogger.Info("Error reader with DB CategoryRepository/Get");
-                            throw;
-                        }
-                        return category;
-                    }
-                }
-            }
-        }
-
-        public List<Category> GetCategoryList()
-        {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.GetCategoryList, connection))
+                    ParameterName = "Id",
+                    Value = id
+                });
+                using (IDataReader reader = command.ExecuteReader())
                 {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                   Category category = null;
                     try
                     {
-                        connection.Open();
-                    }
-                    catch (System.Exception)
-                    {
-                        _commonLogger.Info("Error connection with DB CategoryRepository/GetCategoryist");
-                        throw;
-                    }
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        List<Category> productList = new List<Category>();
-                        if (reader.HasRows)
+                        if (reader.Read())
                         {
-                            try
-                            {
-                                while (reader.Read())
-                                {
-                                    productList.Add(ParseToCategory(reader));
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                _commonLogger.Info("Error reader with DB CategoryRepository/GetCategoryist");
-                                throw;
-                            }
+                            category = this.ParseToCategory(reader);
                         }
-                        return productList;
-                    }
-                }
-            }
-        }
-
-        public void Save(Category model)
-        {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
-            {
-
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.SaveCategory, connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    try
-                    {
-                        connection.Open();
-                    }
-                    catch (System.Exception)
-                    {
-                        _commonLogger.Info("Error connection with DB CategoryRepository/Save");
-                        throw;
-                    }
-                    SqlParameter paramId = new SqlParameter
-                    {
-                        ParameterName = "Id",
-                        Value = model.CategoryId
-                    };
-                    SqlParameter paramName = new SqlParameter
-                    {
-                        ParameterName = "Name",
-                        Value = model.CategoryName
-                    };
-                    SqlParameter paramCategory = new SqlParameter
-                    {
-                        ParameterName = "ParentId",
-                        Value = model.ParentId
-                    };
-                    try
-                    {
-                        command.Parameters.Add(paramId);
-                        command.Parameters.Add(paramName);
-                        command.Parameters.Add(paramCategory);
                     }
                     catch (Exception)
                     {
-                        _commonLogger.Info("Error command.Parameters.Add in CategoryRepository/Save");
+                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
                         throw;
                     }
-
-                    command.ExecuteNonQuery();
+                    reader.Close();
+                    return category;
                 }
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
             }
         }
 
-        private Category ParseToCategory(SqlDataReader reader)
+        public void Update(Category item)
+        {
+            try
+            {
+                //_realization.GetConnection().Open();
+                _connection.Open();
+                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveCategory);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = item.CategoryId
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Name",
+                    Value = item.CategoryName
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "ParentId",
+                    Value = item.ParentId
+                });
+                command.ExecuteNonQuery();
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+       
+        private Category ParseToCategory(IDataReader reader)
         {
             try
             {
                 return new Category()
                 {
-                    CategoryId = (int)reader["Id"],
-                    CategoryName = reader["Name"].ToString(),
-                    ParentId = (int)reader["ParentId"]
+                    CategoryId = _realization.GetFieldValue<int>(reader, "Id"),
+                    CategoryName = _realization.GetFieldValue<string>(reader, "Name"),
+                    ParentId = _realization.GetFieldValue<int>(reader, "ParentId")
                 };
             }
             catch (Exception)

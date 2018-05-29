@@ -56,6 +56,9 @@
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -142,12 +145,15 @@
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Controllers\BasketController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PhoneController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PublicityController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -158,7 +164,7 @@
     </Compile>
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
-    <Compile Include="Models\ProductListViewModel.cs" />
+    <Compile Include="Models\BasketViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\PublicityViewModel.cs" />
     <Compile Include="Models\SeasonViewModel.cs" />
@@ -183,7 +189,6 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Product\IndexOld.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
@@ -201,6 +206,7 @@
     <Content Include="Views\Product\ErrorPartialView.cshtml" />
     <Content Include="Views\Publicity\Publicity.cshtml" />
     <Content Include="Views\Product\CategoryList.cshtml" />
+    <Content Include="Views\Basket\OrderDetails.cshtml" />
     <None Include="Views\Product\SubCategoryList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -212,6 +218,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\publicity\" />
+    <Folder Include="Views\Email\" />
+    <Folder Include="Views\Phone\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SA.OnlineStore.Bussines\SA.OnlineStore.Bussines.csproj">

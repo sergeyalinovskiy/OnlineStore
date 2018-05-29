@@ -7,7 +7,7 @@
 
     public interface IPublicityRepository
     {
-        IEnumerable<Publicity> GetDefaultList();
+       
         IEnumerable<Publicity> GetPublicityList();
     }
 }

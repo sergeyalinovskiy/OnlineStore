@@ -36,6 +36,9 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -62,9 +65,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implements\IRepository.cs" />
+    <Compile Include="Implements\RealizationImplementation.cs" />
+    <Compile Include="Service\IEmailRepository.cs" />
+    <Compile Include="Service\Implementation\BasketRepository.cs" />
     <Compile Include="Service\Implementation\CategoryRepository.cs" />
+    <Compile Include="Service\Implementation\EmailRepository.cs" />
+    <Compile Include="Service\Implementation\OrderRepository.cs" />
+    <Compile Include="Service\Implementation\PhoneRepository.cs" />
     <Compile Include="Service\Implementation\ProductRepository.cs" />
     <Compile Include="Service\Implementation\PublicityRepository.cs" />
+    <Compile Include="Service\Implementation\RoleRepository.cs" />
     <Compile Include="Service\Implementation\SeasonRepository.cs" />
     <Compile Include="Connected Services\NewServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -74,12 +85,19 @@
     <Compile Include="Dependency\DataAccessDependencyRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ICategoryRepository.cs" />
+    <Compile Include="Service\Implementation\UserRepository.cs" />
+    <Compile Include="Service\IPhoneRepository.cs" />
     <Compile Include="Service\IPublicityRepository.cs" />
     <Compile Include="Service\IProductRepository.cs" />
-    <Compile Include="Service\ISeasonRepository.cs" />
+    <Compile Include="Implements\IRealizationImplementation.cs" />
+    <Compile Include="Service\IRoleRepository.cs" />
+    <Compile Include="Service\IUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\DataSources\SA.OnlineStore.WCF.PublicityService.datasource" />
     <None Include="SA.OnlineStore.DataAccess.dll.config">
       <SubType>Designer</SubType>
@@ -129,5 +147,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

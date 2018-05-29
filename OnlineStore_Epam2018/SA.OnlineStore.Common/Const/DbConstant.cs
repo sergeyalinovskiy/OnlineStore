@@ -19,6 +19,24 @@
              public const string GetSeasonNames = "GetSeasonNames";
              public const string SaveCategory = "SaveCategory";
              public const string GetCategoryByCategoryId = "GetCategoryByCategoryId";
+
+            //Order
+            public const string GetOrderByUserId = "GetOrderByUserId";
+            public const string GetOrders = "GetOrders";
+            public const string SaveOrder = "SaveOrder";
+            public const string DeleteOrderByOrderId = "DeleteOrderByOrderId";
+            public const string UpdateOrder = "UpdateOrder";
+
+            //public const string DeleteBasketByOrderId = "DeleteBasketByOrderId";
+
+            //basket
+            public const string GetBasketByOrderId = "GetBasketByOrderId";
+            public const string GetBasketById = "GetBasketById";
+            public const string SaveProductInBasket = "SaveProductInBasket";
+            public const string SaveNewProductInBasket = "SaveNewProductInBasket";
+            public const string DeleteProductInBasketById = "DeleteProductInBasketById";
+            public const string GetBaskets = "GetBaskets";
+
         }
     }
 }

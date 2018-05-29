@@ -43,22 +43,7 @@
         //    return channelFactory.CreateChannel();
         //}
 
-        public IEnumerable<Publicity> GetDefaultList()
-        {
-            byte[] a = new byte[3];
-            List<Publicity> listPublicity = new List<Publicity>()
-            {
-                
-                new Publicity()
-                 {
-                     Id = 100,
-                     Name = "Реклама отсутствует",
-                     Text = "",
-                     Picture=a
-                }
-            };
-            return listPublicity;
-        }
+        
 
         public IEnumerable<Publicity> GetPublicityList()
         {

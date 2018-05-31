@@ -40,7 +40,7 @@
 
         public IEnumerable<Product> GetProductLIstByCategory(int category)
         {
-            return _productRepository.GetAll().Where(x => x.CategoryId == category);
+            return _productRepository.GetAll().Where(x => x.Category.CategoryId == category);
         }
 
         public void SaveProduct(Product model)

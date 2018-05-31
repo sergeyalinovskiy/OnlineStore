@@ -62,8 +62,8 @@
             Order order = new Order
             {
                 DateOrder = DateTime.Now,
-                UserId = id,
-                StatusId = 1,
+                User=new User(){UserId=id } ,
+                StatusOrder =new StatusOrder() {Id=1 },
                 Address = "куда вести?"
             };
             _orderRepository.Create(order);

@@ -65,9 +65,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implements\IRepository.cs" />
+    <Compile Include="Service\IRepository.cs" />
     <Compile Include="Implements\RealizationImplementation.cs" />
-    <Compile Include="Service\IEmailRepository.cs" />
     <Compile Include="Service\Implementation\BasketRepository.cs" />
     <Compile Include="Service\Implementation\CategoryRepository.cs" />
     <Compile Include="Service\Implementation\EmailRepository.cs" />
@@ -84,14 +83,8 @@
     </Compile>
     <Compile Include="Dependency\DataAccessDependencyRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ICategoryRepository.cs" />
     <Compile Include="Service\Implementation\UserRepository.cs" />
-    <Compile Include="Service\IPhoneRepository.cs" />
-    <Compile Include="Service\IPublicityRepository.cs" />
-    <Compile Include="Service\IProductRepository.cs" />
-    <Compile Include="Implements\IRealizationImplementation.cs" />
-    <Compile Include="Service\IRoleRepository.cs" />
-    <Compile Include="Service\IUserRepository.cs" />
+    <Compile Include="Service\IRealizationImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

@@ -12,7 +12,6 @@
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
-        //private readonly ICommonLogger _myLoger;
         public CategoryController()
         {
         }

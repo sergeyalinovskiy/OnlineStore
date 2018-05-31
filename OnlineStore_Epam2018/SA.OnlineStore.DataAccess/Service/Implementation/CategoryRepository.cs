@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     #endregion
 
     public class CategoryRepository : IRepository<Category>
@@ -87,31 +88,12 @@
         {
             try
             {
-                //_realization.GetConnection().Open();
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.GetCategoryList);
-
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    List<Category> categorys = new List<Category>();
-                    try
-                    {
-                        while (reader.Read())
-                        {
-                            categorys.Add(ParseToCategory(reader));
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-                    return categorys;
-                }
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetCategoryList);
+                var categorysTable = _realization.CreateTable("Categorys");
+                categorysTable = _realization.FillInTable(categorysTable, command);
+                var list = ParseToCategoryList(categorysTable);
+                return list;
             }
             catch (Exception exeption)
             {
@@ -129,30 +111,12 @@
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.GetCategoryByCategoryId);
-                command.Parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Id",
-                    Value = id
-                });
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                   Category category = null;
-                    try
-                    {
-                        if (reader.Read())
-                        {
-                            category = this.ParseToCategory(reader);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    reader.Close();
-                    return category;
-                }
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetCategoryByCategoryId);
+                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                var categoryTable = _realization.CreateTable("Category");
+                categoryTable = _realization.FillInTable(categoryTable, command);
+                var @category= ParseToCategory(categoryTable);
+                return @category;
             }
             catch (Exception exeption)
             {
@@ -169,7 +133,6 @@
         {
             try
             {
-                //_realization.GetConnection().Open();
                 _connection.Open();
                 var command = _realization.GetCommand(_connection,DbConstant.Command.SaveCategory);
                 command.Parameters.Add(new SqlParameter
@@ -199,25 +162,34 @@
                 _connection.Close();
             }
         }
-       
-        private Category ParseToCategory(IDataReader reader)
+
+        private List<Category> ParseToCategoryList(DataTable table)
         {
-            try
+            var list = table.AsEnumerable().Select(m =>
             {
                 return new Category()
                 {
-                    CategoryId = _realization.GetFieldValue<int>(reader, "Id"),
-                    CategoryName = _realization.GetFieldValue<string>(reader, "Name"),
-                    ParentId = _realization.GetFieldValue<int>(reader, "ParentId")
+                    CategoryId = m.Field<int>("Id"),
+                    CategoryName = m.Field<string>("Name"),
+                    ParentId = m.Field<int>("ParentId")
+                   
                 };
-            }
-            catch (Exception)
+            }).ToList();
+            return list;
+        }
+
+        private Category ParseToCategory(DataTable table)
+        {
+            var category = table.AsEnumerable().Select(m =>
             {
-                _commonLogger.Info("Input model is notValid CategoryRepository/ParseToCategory");
-                var model = new Category();
-                model = null;
-                return model;
-            }
+                return new Category()
+                {
+                    CategoryId = m.Field<int>("Id"),
+                    CategoryName = m.Field<string>("Name"),
+                    ParentId = m.Field<int>("ParentId")
+                };
+            }).First();
+            return category;
         }
     }
 }

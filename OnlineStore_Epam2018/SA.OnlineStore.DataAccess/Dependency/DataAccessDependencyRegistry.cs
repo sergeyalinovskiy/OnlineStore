@@ -13,7 +13,7 @@
     {
         public DataAccessDependencyRegistry()
         {
-            For<IPublicityRepository>().Use<PublicityRepository>();
+            For<IRepository<Publicity>>().Use<PublicityRepository>();
             For<IRepository<Product>>().Use<ProductRepository>();
             For<IRepository<Category>>().Use<CategoryRepository>();
             For<IRepository<Season>>().Use<SeasonRepository>();

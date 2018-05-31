@@ -11,6 +11,7 @@
         private readonly IProductService _productService;
         private readonly ISeasonService _seasonService;
         private readonly ICategoryService _categoryService;
+
         public SearchSeervice(IProductService productService, ISeasonService seasonService, ICategoryService categoryService)
         {
             _productService = productService;

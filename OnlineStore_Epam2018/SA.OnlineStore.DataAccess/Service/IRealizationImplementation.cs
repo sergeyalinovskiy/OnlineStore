@@ -14,5 +14,9 @@ namespace SA.OnlineStore.DataAccess.Service
         IDbCommand GetCommand(SqlConnection connection,string storedProcedure);
         void AddParametr(IDbCommand cmd, string parametrName, object value, DbType paramType);
         T GetFieldValue<T>(IDataReader reader, string fieldName);
+
+        void ExecCommand(IDbCommand command);
+        DataTable CreateTable(string tableName);
+        DataTable FillInTable(DataTable table, IDbCommand command);
     }
 }

@@ -78,6 +78,7 @@
     <Compile Include="Entity\Publicity.cs" />
     <Compile Include="Entity\Role.cs" />
     <Compile Include="Entity\Season.cs" />
+    <Compile Include="Entity\StatusOrder.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Entity\UserLogin.cs" />
     <Compile Include="Logger\CommonLogger.cs" />

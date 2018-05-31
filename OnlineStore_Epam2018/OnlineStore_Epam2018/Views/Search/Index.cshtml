@@ -14,7 +14,6 @@
 {
     <table style="float:initial";>
         <tr>
-           
             <th>
                 Имя
             </th>
@@ -24,23 +23,23 @@
             <th>
                 Сезон
             </th>
-            @*<th>
+            <th>
                 Цена
-            </th>*@
+            </th>
         </tr>
         <tr>
             <th>
                 @Html.EditorFor(m=>m.Name)
             </th>
             <th>
-                @Html.DropDownListFor(m=>m.CategoryName, new SelectList(Model.CategoryNameList), "Все", htmlAttributes: new { @class = "form-control selectlist" })
+                @Html.DropDownListFor(m=>m.CategoryName, new SelectList(Model.CategoryList.Where(m => m.ParentId!=0).Select(m => m.CategoryName)), "Все", htmlAttributes: new { @class = "form-control selectlist" })
             </th>
             <th>
-                @Html.DropDownListFor(m=>m.SeasonName, new SelectList(Model.SeasonNameList), "Все", htmlAttributes: new { @class = "form-control selectlist" })
+                @Html.DropDownListFor(m=>m.SeasonName, new SelectList(Model.SeasonList.Select(m=>m.SeasonName)), "Все", htmlAttributes: new { @class = "form-control selectlist" })
             </th>
-            @*<th>
+            <th>
                 @Html.DropDownList("sort", new SelectList(new[] { "цена по убыванию", "цена по возрастанию" }), "Все", htmlAttributes: new { @class = "form-control selectlist" })
-            </th>*@
+            </th>
             <th>
                 <input type="submit" value="Найти" />
             </th>

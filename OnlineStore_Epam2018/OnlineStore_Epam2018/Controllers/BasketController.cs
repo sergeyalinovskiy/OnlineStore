@@ -36,8 +36,8 @@
         
         public ActionResult Save(BasketViewModel model)
         {
-            Basket prodInBascet = ConvertToProductListModel(model);
-            _basketService.SaveProductListInBox(prodInBascet);
+            Basket prodInBasket = ConvertToProductListModel(model);
+            _basketService.SaveProductListInBox(prodInBasket);
             return View("Index");
         }
 
@@ -81,7 +81,7 @@
 
         public ActionResult OrderDetails(int id)
         {
-            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.OrderId == id));
+            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.Order.Id == id));
            
             return View(products);
         }
@@ -91,11 +91,11 @@
             return new BasketViewModel
             {
                 Id = model.Id,
-                OrderId = model.OrderId,
-                ProductId = model.ProductId,
-                ProductName = model.ProductName,
+                OrderId = model.Order.Id,
+                ProductId = model.Product.Id,
+                ProductName = model.Product.Name,
                 Count = model.Count,
-                Price = model.Price
+                Price = model.Product.Price
 
             };
         }
@@ -105,11 +105,17 @@
             return new Basket
             {
                 Id = model.Id,
-                OrderId=model.OrderId,
-                ProductId = model.ProductId,
-                ProductName = model.ProductName,
+                Order= new Order()
+                {
+                    Id = model.OrderId,
+                },
+                Product= new Product()
+                {
+                    Id = model.ProductId,
+                    Name=model.ProductName,
+                    Price = model.Price
+                },
                 Count = model.Count,
-                Price = model.Price
             };
         }
 
@@ -118,11 +124,11 @@
             return new BasketViewModel
             {
                 Id = model.Id,
-                OrderId = model.OrderId,
-                ProductId = model.ProductId,
-                ProductName= model.ProductName,
-                Count= model.Count,
-                Price=model.Price
+                OrderId = model.Order.Id,
+                ProductId = model.Product.Id,
+                ProductName = model.Product.Name,
+                Count = model.Count,
+                Price = model.Product.Price
             };
         }
 

@@ -41,7 +41,7 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "UserId",
-                    Value = item.UserId
+                    Value = item.User.UserId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -51,7 +51,7 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "StatusId",
-                    Value = item.StatusId
+                    Value = item.StatusOrder.Id
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -96,41 +96,26 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
+
+
         public IReadOnlyCollection<Order> GetAll()
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetOrders);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetOrdersList);
 
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    List<Order> orders = new List<Order>();
-                    try
-                    {
-                        while (reader.Read())
-                        {
-                            orders.Add(ParseToOrder(reader));
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-
-                    return orders;
-                }
+                var orderTable = _realization.CreateTable("Orders");
+                orderTable = _realization.FillInTable(orderTable, command);
+                var list = CreateListFromTable(orderTable);
+                return list;
             }
+
             catch (Exception exeption)
             {
                 _commonLogger.Info(exeption.Message);
                 throw new Exception();
-            }
+    }
             finally
             {
                 _connection.Close();
@@ -142,33 +127,12 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetOrderByUserId);
-                command.Parameters.Add(new SqlParameter
-                {
-                    ParameterName = "UserId",
-                    Value = id
-                });
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    Order order = null;
-                    try
-                    {
-                        if (reader.Read())
-                        {
-                            order = this.ParseToOrder(reader);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-                    return order;
-                }
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetOrdersListById);
+                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                var orderTable = _realization.CreateTable("Order");
+                orderTable = _realization.FillInTable(orderTable, command);
+                var @order = FillEntity(orderTable);
+                return @order;
             }
             catch (Exception exeption)
             {
@@ -201,7 +165,7 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "StatusId",
-                    Value = item.StatusId
+                    Value = item.StatusOrder.Id
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -222,26 +186,59 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-        private Order ParseToOrder(IDataReader reader)
+        private List<Order> CreateListFromTable(DataTable table)
         {
-            try
+            List<Order> orders = new List<Order>();
+            var list = table.AsEnumerable().Select(m =>
             {
                 return new Order()
                 {
-                    Id = _realization.GetFieldValue<int>(reader, "Id"),
-                    UserId = _realization.GetFieldValue<int>(reader, "UserId"),
-                    Address = _realization.GetFieldValue<string>(reader, "Address"),
-                    StatusId = _realization.GetFieldValue<int>(reader, "StatusId"),
-                    DateOrder = _realization.GetFieldValue<DateTime>(reader, "DateOrder")
+                    Id = m.Field<int>("Id"),
+                    User = new User()
+                    {
+                        UserId = m.Field<int>("UserId"),
+                        Name = m.Field<string>("UserName"),
+                        LastName = m.Field<string>("LastName")
+                    },
+                    Address = m.Field<string>("Address"),
+                    StatusOrder = new StatusOrder()
+                    {
+                        Id = m.Field<int>("StatusId"),
+                        StatusOrderName = m.Field<string>("OrderStatusName")
+                    },
+                    DateOrder = m.Field<DateTime>("DateOrder")
                 };
-            }
-            catch (Exception)
-            {
-                _commonLogger.Info("Input model is notValid ProductRepository/ParseToProduct");
-                var model = new Order();
-                model = null;
-                return model;
-            }
+            }).ToList();
+            return list;
         }
+
+        
+
+        private Order FillEntity(DataTable table)
+        {
+            var order = table.AsEnumerable().Select(m =>
+            {
+                return new Order()
+                {
+                    Id = m.Field<int>("Id"),
+                    User = new User()
+                    {
+                        UserId = m.Field<int>("UserId"),
+                        Name = m.Field<string>("UserName"),
+                        LastName = m.Field<string>("LastName")
+                    },
+                    Address = m.Field<string>("Address"),
+                    StatusOrder = new StatusOrder()
+                    {
+                        Id = m.Field<int>("StatusId"),
+                        StatusOrderName = m.Field<string>("OrderStatusName")
+                    },
+                    DateOrder = m.Field<DateTime>("DateOrder")
+                };
+            }).First();
+            return order;
+        }
+
+
     }
 }

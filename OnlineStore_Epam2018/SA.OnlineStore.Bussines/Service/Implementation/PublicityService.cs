@@ -3,15 +3,16 @@
     #region Usings
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Implements;
     using SA.OnlineStore.DataAccess.Service;
     using System.Collections.Generic;
     #endregion
 
     public class PublicityService :IPublicityService
     {
-        private readonly IPublicityRepository _publicityRepository;
+        private readonly IRepository<Publicity> _publicityRepository;
 
-        public PublicityService(IPublicityRepository publicityRepository)
+        public PublicityService(IRepository<Publicity> publicityRepository)
         {
             _publicityRepository = publicityRepository;
         }
@@ -28,7 +29,7 @@
         //}
         public IEnumerable<Publicity> GetPublicityList()
         {
-            IEnumerable<Publicity> resultList = _publicityRepository.GetPublicityList();
+            IEnumerable<Publicity> resultList = _publicityRepository.GetAll();
             return resultList;
         }
     }

@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     #endregion
 
     public class SeasonRepository : IRepository<Season>
@@ -40,28 +41,11 @@
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.GetSeasonList);
-                using(var reader= command.ExecuteReader())
-                {
-                    List<Season> seasonList = new List<Season>();
-                    try
-                    {
-                        while (reader.Read())
-                        {
-                        seasonList.Add(ParseToSeason(reader));
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader SeassonRepository/GetSeasonList");
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-                    return seasonList;
-                }
-              
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetSeasonList);
+                var seasonssTable = _realization.CreateTable("Seasons");
+                seasonssTable = _realization.FillInTable(seasonssTable, command);
+                var list = ParseToSeasonList(seasonssTable);
+                return list;
             }
             catch (Exception exeption)
             {
@@ -72,8 +56,9 @@
             {
                 _connection.Close();
             }
-        }
 
+        }
+           
         public Season GetById(int id)
         {
             throw new NotImplementedException();
@@ -84,13 +69,18 @@
             throw new NotImplementedException();
         }
 
-        private Season ParseToSeason(IDataReader reader)
+        private List<Season> ParseToSeasonList(DataTable table)
         {
-            return new Season()
+            var list = table.AsEnumerable().Select(m =>
             {
-                SeasonId =_realization.GetFieldValue<int>(reader,"Id"),
-                SeasonName = _realization.GetFieldValue<string>(reader, "Name")
-            };
-        }
+                return new Season()
+                {
+                    SeasonId = m.Field<int>("Id"),
+                    SeasonName = m.Field<string>("Name"),
+
+                };
+            }).ToList();
+            return list;
+        }     
     }
 }

@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace SA.OnlineStore.Common.Entity
 {
-    public class User
+    public class StatusOrder
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
+        public string StatusOrderName { get; set; }
 
-        public string Name { get; set; }
-
-        public string LastName { get; set; }
     }
 }

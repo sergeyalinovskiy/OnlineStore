@@ -20,8 +20,6 @@ namespace SA.OnlineStore.DataAccess.Implements
 
         public IDbCommand GetCommand(SqlConnection connection, string storedProcedure)
         {
-            //var connection = GetConnection();
-            //connection.Open();
             var command = new SqlCommand(storedProcedure, connection) { CommandType = CommandType.StoredProcedure };
             return command;
         }
@@ -41,6 +39,24 @@ namespace SA.OnlineStore.DataAccess.Implements
         {
             var value = reader.GetValue(reader.GetOrdinal(fieldName));
             return (T)value;
+        }
+
+        public void ExecCommand(IDbCommand command)
+        {
+            command.ExecuteNonQuery();
+        }
+
+        public DataTable CreateTable(string tableName)
+        {
+            var table = new DataTable(tableName);
+            return table;
+        }
+
+        public DataTable FillInTable(DataTable table, IDbCommand command)
+        {
+            var adapter = new SqlDataAdapter((SqlCommand)command);
+            adapter.Fill(table);
+            return table;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace OnlineStore_Epam2018.Models
 {
+    using SA.OnlineStore.Common.Entity;
     #region Usings
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -30,7 +31,7 @@
         [Required(ErrorMessage = "Установите цену")]
         public int Price { get; set; }
 
-        public IEnumerable<string> SeasonNameList { get; set; }
-        public IEnumerable<string> CategoryNameList { get; set; }
+        public IEnumerable<Season> SeasonList { get; set; }
+        public IEnumerable<Category> CategoryList { get; set; }
     }
 }

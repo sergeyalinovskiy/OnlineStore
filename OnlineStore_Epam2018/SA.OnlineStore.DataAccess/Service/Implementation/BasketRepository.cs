@@ -37,12 +37,12 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "ProductId",
-                    Value = item.ProductId
+                    Value = item.Product.Id
                 });
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "OrderId",
-                    Value = item.OrderId
+                    Value = item.Order.Id
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -93,29 +93,11 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetBaskets);
-
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    List<Basket> baskets = new List<Basket>();
-                    try
-                    {
-                        while (reader.Read())
-                        {
-                            baskets.Add(ParseToBasket(reader));
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-                    return baskets;
-                }
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductsInBaskets);
+                var basketTable = _realization.CreateTable("Buskets");
+                basketTable = _realization.FillInTable(basketTable, command);
+                var list = ParseToBasketList(basketTable);
+                return list;
             }
             catch (Exception exeption)
             {
@@ -133,33 +115,12 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetBasketById);
-                command.Parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Id",
-                    Value = id
-                });
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    Basket basket = null;
-                    try
-                    {
-                        if (reader.Read())
-                        {
-                            basket = this.ParseToBasket(reader);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-                    return basket;
-                }
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductsInBasketsByBasketId);
+                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                var basketTable = _realization.CreateTable("Basket");
+                basketTable = _realization.FillInTable(basketTable, command);
+                var @basket = ParseToBasket(basketTable);
+                return @basket;
             }
             catch (Exception exeption)
             {
@@ -181,7 +142,7 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "ProductId",
-                    Value = item.ProductId
+                    Value = item.Product.Id
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -202,28 +163,101 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             };
         }
 
-        private Basket ParseToBasket(IDataReader reader)
+
+
+        
+
+
+        private List<Basket> ParseToBasketList(DataTable table)
         {
-            try
+            List<Basket> productsList = new List<Basket>();
+            var list = table.AsEnumerable().Select(m =>
             {
                 return new Basket()
                 {
-                    Id = _realization.GetFieldValue<int>(reader, "Id"),
-                    OrderId = _realization.GetFieldValue<int>(reader, "OrderId"),
-                    ProductName = _realization.GetFieldValue<string>(reader, "Name"),
-                    ProductId=_realization.GetFieldValue<int>(reader, "ProductId"),
-                    Picture= _realization.GetFieldValue<string>(reader, "Picture"),
-                    Count =_realization.GetFieldValue<int>(reader, "Count"),
-                    Price=_realization.GetFieldValue<int>(reader, "Price")
+                    Id = m.Field<int>("Id"),
+                    Order = new Order()
+                    {
+                         Id = m.Field<int>("OrderId"),
+                        User = new User()
+                        {
+                            UserId=m.Field<int>("UserId")
+                        },
+                         Address = m.Field<string>("Address"),
+                         StatusOrder=new StatusOrder()
+                         {
+                             Id= m.Field<int>("StatusId")
+                         },
+                         DateOrder=m.Field<DateTime>("DateOrder"),
+                    },
+                    Product = new Product()
+                    {
+                       Id = m.Field<int>("ProductId"),
+                        Name = m.Field<string>("Name"),
+                        Category= new Category()
+                        {
+                            CategoryId=m.Field<int>("CategoryId")
+                        },
+                        Season = new Season()
+                        {
+                            SeasonId = m.Field<int>("SeasonsId")
+                        },
+                        Picture=m.Field<string>("Picture"),
+                        Description=m.Field<string>("Description"),
+                        Price=m.Field<int>("Price"),
+                    },
+                  Count=m.Field<int>("Count")
                 };
-            }
-            catch (Exception)
-            {
-                _commonLogger.Info("Input model is notValid ProductRepository/ParseToProduct");
-                var model = new Basket();
-                model = null;
-                return model;
-            }
+            }).ToList();
+            return list;
         }
-    }
+
+        private Basket ParseToBasket(DataTable table)
+        {
+            var order = table.AsEnumerable().Select(m =>
+            {
+                return new Basket()
+                {
+                    Id = m.Field<int>("Id"),
+                    Order = new Order()
+                    {
+                        Id = m.Field<int>("OrderId"),
+                        User = new User()
+                        {
+                            UserId = m.Field<int>("UserId")
+                        },
+                        Address = m.Field<string>("Address"),
+                        StatusOrder = new StatusOrder()
+                        {
+                            Id = m.Field<int>("StatusId")
+                        },
+                        DateOrder = m.Field<DateTime>("DateOrder"),
+                    },
+                    Product = new Product()
+                    {
+                        Id = m.Field<int>("ProductId"),
+                        Name = m.Field<string>("Name"),
+                        Category = new Category()
+                        {
+                            CategoryId = m.Field<int>("CategoryId")
+                        },
+                        Season = new Season()
+                        {
+                            SeasonId = m.Field<int>("SeasonsId")
+                        },
+                        Picture = m.Field<string>("Picture"),
+                        Description = m.Field<string>("Description"),
+                        Price = m.Field<int>("Price"),
+                    },
+                    Count = m.Field<int>("Count")
+                };
+            }).First();
+            return order;
+        }
+
+
+
+
+
+        }
 }

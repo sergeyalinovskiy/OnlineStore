@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     #endregion
 
     public class ProductRepository : IRepository<Product>
@@ -31,7 +32,6 @@
         {
             try
             {
-                //_realization.GetConnection().Open();
                 _connection.Open();
                 var command = _realization.GetCommand(_connection,DbConstant.Command.SaveProduct);
                 command.Parameters.Add(new SqlParameter
@@ -47,12 +47,12 @@
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "CategoryId",
-                    Value = item.CategoryId
+                    Value = item.Category.CategoryId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "SeasonsId",
-                    Value = item.SeasonId
+                    Value = item.Season.SeasonId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -91,7 +91,6 @@
             try
             {
                 _connection.Open();
-                //_realization.GetConnection().Open();
                 var command = _realization.GetCommand(_connection,DbConstant.Command.SaveProduct);
                 command.Parameters.Add(new SqlParameter
                 {
@@ -106,12 +105,12 @@
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "CategoryId",
-                    Value = item.CategoryId
+                    Value = item.Category.CategoryId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "SeasonsId",
-                    Value = item.SeasonId
+                    Value = item.Season.SeasonId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -150,34 +149,12 @@
             try
             {
                 _connection.Open();
-                //_realization.GetConnection().Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductByProductId);
-                command.Parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Id",
-                    Value = id
-                });
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    Product product = null;
-                    try
-                    {
-                        if (reader.Read())
-                        {
-                            product = this.ParseToProduct(reader);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-                    return product;
-                }
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductListByProductId);
+                _realization.AddParametr(command,"Id", id, DbType.Int32);
+                var productTable = _realization.CreateTable("Products");
+                productTable = _realization.FillInTable(productTable, command);
+                var @product = FillEntity(productTable);
+                return @product; 
             }
             catch (Exception exeption)
             {
@@ -194,14 +171,9 @@
             try
             {
                 _connection.Open();
-                //_realization.GetConnection().Open();
                 var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteProductByProductId);
-                command.Parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Id",
-                    Value = id
-                });
-                command.ExecuteNonQuery();
+                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                _realization.ExecCommand(command);
             }
             catch (Exception exeption)
             {
@@ -218,30 +190,11 @@
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductList);
-               
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    List<Product> products = new List<Product>();
-                    try
-                    {
-                        while (reader.Read())
-                        {
-                            products.Add(ParseToProduct(reader));
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-                    
-                    return products;
-                }
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetProducts);
+                var productTable = _realization.CreateTable("Products");
+                productTable = _realization.FillInTable(productTable, command);
+                var list = CreateListFromTable(productTable);
+                return list;
             }
             catch (Exception exeption)
             {
@@ -253,30 +206,64 @@
                 _connection.Close();
             }
         }
-        
-        private Product ParseToProduct(IDataReader reader)
+
+
+        private List<Product> CreateListFromTable(DataTable table)
         {
-            try
+            List<Product> productsList = new List<Product>();
+            var list = table.AsEnumerable().Select(m =>
+             {
+                 return new Product()
+                 {
+                     Id = m.Field<int>("Id"),
+                     Name = m.Field<string>("Name"),
+                     Category = new Category()
+                     {
+                         CategoryId = m.Field<int>("CategoryId"),
+                         CategoryName = m.Field<string>("CategoryName"),
+                         ParentId = m.Field<int>("ParentId")
+                     },
+                     Season = new Season()
+                     {
+                         SeasonId = m.Field<int>("SeasonsId"),
+                         SeasonName = m.Field<string>("SeasonsName")
+                     },
+                     Picture = m.Field<string>("Picture"),
+                     Description = m.Field<string>("Description"),
+                     Count = m.Field<int>("Count"),
+                     Price = m.Field<int>("Price")
+                 };
+             }).ToList();
+            return list;
+        }
+
+        private Product FillEntity(DataTable table)
+        {
+            var product = table.AsEnumerable().Select(m =>
             {
                 return new Product()
                 {
-                    Id = _realization.GetFieldValue<int>(reader, "Id"),
-                    Name = _realization.GetFieldValue<string>(reader, "Name"),
-                    CategoryId = _realization.GetFieldValue<int>(reader, "CategoryId"),
-                    SeasonId = _realization.GetFieldValue<int>(reader, "SeasonsId"),
-                    Picture = _realization.GetFieldValue<string>(reader, "Picture"),
-                    Description = _realization.GetFieldValue<string>(reader, "Description"),
-                    Count = _realization.GetFieldValue<int>(reader, "Count"),
-                    Price = _realization.GetFieldValue<int>(reader, "Price")
+                    Id = m.Field<int>("Id"),
+                    Name = m.Field<string>("Name"),
+                    Category = new Category()
+                    {
+                        CategoryId = m.Field<int>("CategoryId"),
+                        CategoryName = m.Field<string>("CategoryName"),
+                        ParentId = m.Field<int>("ParentId")
+                    },
+                    Season = new Season()
+                    {
+                        SeasonId = m.Field<int>("SeasonsId"),
+                        SeasonName = m.Field<string>("SeasonsName")
+                    },
+                    Picture = m.Field<string>("Picture"),
+                    Description = m.Field<string>("Description"),
+                    Count = m.Field<int>("Count"),
+                    Price = m.Field<int>("Price")
                 };
-            }
-            catch (Exception)
-            {
-                _commonLogger.Info("Input model is notValid ProductRepository/ParseToProduct");
-                var model = new Product();
-                model = null;
-                return model;
-            }
+            }).First();
+            return product;
         }
+
     }
 }

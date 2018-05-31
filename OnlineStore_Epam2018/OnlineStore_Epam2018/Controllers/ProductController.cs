@@ -91,7 +91,7 @@
             IEnumerable<Product> productList = _productService.GetProductLIst();
             if (id != 0)
             {
-                productList = productList.Where(m => m.CategoryId == id);
+                productList = productList.Where(m => m.Category.CategoryId == id);
 
                 List<Product> p = new List<Product>();
                 List<int> c = new List<int>();
@@ -116,7 +116,7 @@
                     {
                         foreach (Product item2 in _productService.GetProductLIst())
                         {
-                            if (item2.CategoryId == i)
+                            if (item2.Category.CategoryId == i)
                             {
                                 p.Add(item2);
                             }
@@ -152,9 +152,13 @@
         
         public ActionResult Create()
         {
-            var viewModel = new ProductViewModel();
+            var viewModel = new ProductViewModel()
+            {
+                CategoryList = _categoryService.GetCategoryList(),
+                SeasonList = _seasonService.GetSeasonList()
+            };
             viewModel.Picture = "picture_default.jpg";
-            viewModel = AddAllSelectLists(viewModel);
+            //viewModel = AddAllSelectLists(viewModel);
             return View(viewModel);
         }
 
@@ -171,8 +175,9 @@
             {
                 ModelState.AddModelError("", "Exception");
             }
-
-            model = AddAllSelectLists(model);
+            model.CategoryList = _categoryService.GetCategoryList();
+            model.SeasonList = _seasonService.GetSeasonList();
+            //model = AddAllSelectLists(model);
 
             return View(model);
         }
@@ -196,9 +201,15 @@
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(int ProductId)
         {
-            var product = this.ConvertToViewModel(this._productService.GetProduct(Id));
+            //var viewModel = new ProductViewModel()
+            //{
+            //    Id = ProductId,
+            //    CategoryList = _categoryService.GetCategoryList(),
+            //    SeasonList = _seasonService.GetSeasonList()
+            //};
+            var product = this.ConvertToViewModel(this._productService.GetProduct(ProductId));
             return View(product);
         }
 
@@ -232,12 +243,12 @@
             return products;
         }
 
-        public ProductViewModel AddAllSelectLists(ProductViewModel model)
-        {
-            model.CategoryNameList = _categoryService.CategoryNameList();
-            model.SeasonNameList = _seasonService.SeasonNameList();
-            return model;
-        }
+        //public ProductViewModel AddAllSelectLists(ProductViewModel model)
+        //{
+        //    //model.CategoryNameList = _categoryService.CategoryNameList();
+        //    //model.SeasonNameList = _seasonService.SeasonNameList();
+        //    //return model;
+        //}
 
         public List<CategoryViewModel> ConvertListToViewModel(IEnumerable<Category> models)
         {
@@ -262,12 +273,13 @@
 
         public ProductViewModel ConvertToViewModel(Product model)
         {
-            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.SeasonId).FirstOrDefault();
-            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.CategoryId).FirstOrDefault();
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
             return new ProductViewModel()
             {
                 Id = model.Id,
                 Name = model.Name,
+
                 CategoryName = category.CategoryName,
                 SeasonName = season.SeasonName,
                 Picture = model.Picture,
@@ -285,16 +297,25 @@
             {
                 Id = model.Id,
                 Name = model.Name,
-                CategoryId = category.CategoryId,
-                SeasonId = season.SeasonId,
+                Category=new Category()
+                {
+                    CategoryId= category.CategoryId,
+                    CategoryName=category.CategoryName,
+                    ParentId=category.ParentId  
+                },
+                Season= new Season()
+                {
+                    SeasonId = season.SeasonId,
+                    SeasonName=season.SeasonName
+                },
                 Count = model.Count,
                 Picture = model.Picture,
                 Price = model.Price,
                 Description = model.Description
+                
             };
         }
         #endregion
-
 
         public void AddProductInBox(int id)
         {
@@ -308,11 +329,11 @@
                 }
             }
 
-            int countProductInBasket = _orderService.GetOrderList().Where(m => m.UserId == 1).Count();
+            int countProductInBasket = _orderService.GetOrderList().Where(m => m.User.UserId == 1).Count();
             int trigger = 0;
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.UserId == 1))
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 1))
             {
-                if (order.StatusId != 1)
+                if (order.StatusOrder.Id != 1)
                 {
                     trigger++;
                 }
@@ -324,9 +345,9 @@
 
             int orderId = 1;
 
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.UserId == 1))
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 1))
             {
-                if (order.StatusId == 1)
+                if (order.StatusOrder.Id == 1)
                 {
                     orderId = order.Id;
                 }
@@ -334,11 +355,17 @@
             Basket basket = new Basket()
             {
                 Id = 3,
-                ProductId = prod.Id,
-                OrderId = orderId,
-                ProductName = prod.Name,
-                Count = 1,
-                Price = prod.Price
+                Product = new Product()
+                {
+                    Id = prod.Id,
+                    Name = prod.Name,
+                    Price = prod.Price
+                },
+                Order = new Order()
+                {
+                    Id= orderId
+                },
+                Count = 1
             };
             _basketService.AddNewItemInBox(basket);
         }

@@ -13,6 +13,5 @@ namespace SA.OnlineStore.DataAccess.Implements
         void Update(T item);
         T GetById(int id);
         IReadOnlyCollection<T> GetAll();
-
     }
 }

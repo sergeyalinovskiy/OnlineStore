@@ -38,7 +38,6 @@
             public const string GetOrdersListById = "GetOrdersListById";
             public const string GetOrdersList = "GetOrdersList";
 
-            //public const string DeleteBasketByOrderId = "DeleteBasketByOrderId";
 
             //basket
             public const string GetBasketByOrderId = "GetBasketByOrderId";

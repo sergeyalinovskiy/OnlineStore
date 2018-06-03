@@ -14,9 +14,12 @@ namespace OnlineStore_Epam2018.Controllers
 
         public EmailController(IEmailService emailService)
         {
+            if (emailService == null)
+            {
+                throw new NullReferenceException("emailService");
+            }
             _emailService = emailService;
         }
-
 
         [HttpPost]
         public JsonResult GetEmailsByUserId(int userId)

@@ -30,7 +30,7 @@
                 }
                 if (basketService == null)
                 {
-                    throw new ArgumentNullException("productListService");
+                    throw new ArgumentNullException("basketService");
                 }
                 if (categoryService == null)
                 {
@@ -158,7 +158,6 @@
                 SeasonList = _seasonService.GetSeasonList()
             };
             viewModel.Picture = "picture_default.jpg";
-            //viewModel = AddAllSelectLists(viewModel);
             return View(viewModel);
         }
 
@@ -177,7 +176,6 @@
             }
             model.CategoryList = _categoryService.GetCategoryList();
             model.SeasonList = _seasonService.GetSeasonList();
-            //model = AddAllSelectLists(model);
 
             return View(model);
         }
@@ -203,12 +201,6 @@
 
         public ActionResult Edit(int ProductId)
         {
-            //var viewModel = new ProductViewModel()
-            //{
-            //    Id = ProductId,
-            //    CategoryList = _categoryService.GetCategoryList(),
-            //    SeasonList = _seasonService.GetSeasonList()
-            //};
             var product = this.ConvertToViewModel(this._productService.GetProduct(ProductId));
             return View(product);
         }
@@ -241,14 +233,7 @@
                 products.Add(ConvertToViewModel(item));
             }
             return products;
-        }
-
-        //public ProductViewModel AddAllSelectLists(ProductViewModel model)
-        //{
-        //    //model.CategoryNameList = _categoryService.CategoryNameList();
-        //    //model.SeasonNameList = _seasonService.SeasonNameList();
-        //    //return model;
-        //}
+        } 
 
         public List<CategoryViewModel> ConvertListToViewModel(IEnumerable<Category> models)
         {

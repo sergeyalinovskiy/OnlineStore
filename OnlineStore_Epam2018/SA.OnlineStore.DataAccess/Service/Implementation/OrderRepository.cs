@@ -145,7 +145,6 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-
         public void Update(Order item)
         {
             try
@@ -212,8 +211,6 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             return list;
         }
 
-        
-
         private Order FillEntity(DataTable table)
         {
             var order = table.AsEnumerable().Select(m =>
@@ -238,7 +235,5 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }).First();
             return order;
         }
-
-
     }
 }

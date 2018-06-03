@@ -22,7 +22,6 @@ namespace OnlineStore_Epam2018.Controllers
             {
                throw new ArgumentNullException("publicityService");
             }
-           
             _publicityService = publicityService;
         }
 
@@ -41,9 +40,15 @@ namespace OnlineStore_Epam2018.Controllers
             }
             catch
             {
-                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());
-                return PartialView(publicity);
-
+                List<Publicity> list = new List<Publicity>();
+                list.Add(new Publicity()
+                {
+                    Id = 11,
+                    Name = "Реклама на сайте",
+                    Picture = PictureConverter.ImageToByteArray(PictureConverter.GetImg("D:\\111\\OnlineStore\\OnlineStore_Epam2018\\OnlineStore_Epam2018\\Content\\img\\picture_BelSladkoe.jpg")),
+                    Text = "отсутствует"
+                });
+                return PartialView(ConvertToPublicityViewModelList(list));
             }
            
         }

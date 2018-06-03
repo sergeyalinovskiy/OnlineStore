@@ -44,6 +44,10 @@
 
         public Order GetOrder(int Id)
         {
+            if (Id < 1)
+            {
+                return null;
+            }
             return _orderRepository.GetAll().Where(t => t.Id == Id).FirstOrDefault();
         }
 
@@ -54,24 +58,33 @@
 
         public void SaveOrder(Order model)
         {
-            _orderRepository.Create(model);
+            if (model != null)
+            {
+                _orderRepository.Create(model);
+            }
         }
 
         public void GetDefaultOrder(int id)
         {
-            Order order = new Order
+            if (id > 0)
             {
-                DateOrder = DateTime.Now,
-                User=new User(){UserId=id } ,
-                StatusOrder =new StatusOrder() {Id=1 },
-                Address = "куда вести?"
-            };
-            _orderRepository.Create(order);
+                Order order = new Order
+                {
+                    DateOrder = DateTime.Now,
+                    User = new User() { UserId = id },
+                    StatusOrder = new StatusOrder() { Id = 1 },
+                    Address = "куда вести?"
+                };
+                _orderRepository.Create(order);
+            }
         }
 
         public void EditOrder(Order model)
         {
-            _orderRepository.Update(model);
+            if (model != null)
+            {
+                _orderRepository.Update(model);
+            }
         }
     }
 }

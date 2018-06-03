@@ -11,12 +11,5 @@
         public string Address { get; set; }
         public StatusOrder StatusOrder { get; set; }
         public DateTime DateOrder { get; set; }
-
-
-        //public int Id { get; set; }
-        //public int UserId { get; set; }
-        //public string Address { get; set; }
-        //public int StatusId { get; set; }
-        //public DateTime DateOrder { get; set; }
     }
 }

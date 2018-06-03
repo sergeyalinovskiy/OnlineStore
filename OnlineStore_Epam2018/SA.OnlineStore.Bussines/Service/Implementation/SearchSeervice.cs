@@ -21,6 +21,10 @@
 
         public IEnumerable<Product> ProductByCategory(int category)
         {
+            if (category < 1)
+            {
+                return null;
+            }
             return _productService.GetProductLIstByCategory(category);
         }
 

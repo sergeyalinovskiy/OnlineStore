@@ -14,6 +14,10 @@ namespace OnlineStore_Epam2018.Controllers
 
         public PhoneController(IPhoneService phoneService)
         {
+            if (phoneService == null)
+            {
+                throw new NullReferenceException("phoneService");
+            }
             _phoneService = phoneService;
         }
 

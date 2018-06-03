@@ -20,7 +20,6 @@
         private readonly SqlConnection _connection;
         public CategoryRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
-           
             _commonLogger = commonLogger;
             _realization = realization;
             _connection = _realization.GetConnection();

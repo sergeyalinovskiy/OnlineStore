@@ -11,6 +11,10 @@ namespace SA.OnlineStore.Bussines.Service.Implementation
     {
         public User GetUserById(int id)
         {
+            if (id < 1)
+            {
+                return null;
+            }
             throw new NotImplementedException();
         }
 

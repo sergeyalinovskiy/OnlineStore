@@ -21,11 +21,35 @@
 
         public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IProductListService productListService, ICommonLogger myLoger)
         {
-            _productService = productService;
-            _categoryService = categoryService;
-            _seasonService = seasonService;
-            _productListService = productListService;
-            _myLoger = myLoger;
+            try
+            {
+                if (productService == null)
+                {
+                    throw new ArgumentNullException("productService");
+                }
+                if (productListService == null)
+                {
+                    throw new ArgumentNullException("productListService");
+                }
+                if (categoryService == null)
+                {
+                    throw new ArgumentNullException("categoryService");
+                }
+                if (seasonService == null)
+                {
+                    throw new ArgumentNullException("seasonService");
+                }
+                _productService = productService;
+                _categoryService = categoryService;
+                _seasonService = seasonService;
+                _productListService = productListService;
+                _myLoger = myLoger;
+            }
+            catch (NullReferenceException)
+            {
+                View("Create");
+            }
+            
         }
 
         public ProductController()
@@ -45,15 +69,15 @@
 
         public ActionResult AddInBox(int id)
         {
-            ProductModel prod = new ProductModel();
-            foreach (ProductModel item in _productService.GetProductLIst())
+            Product prod = new Product();
+            foreach (Product item in _productService.GetProductLIst())
             {
                 if (item.Id == id)
                 {
                     prod = item;
                 }
             }
-            ProductListModel product = new ProductListModel()
+            ProductList product = new ProductList()
             {
                 Id = 3,
                 ProductId = prod.Id,
@@ -66,7 +90,7 @@
 
         public ActionResult IndexSearch(int? id)
         {
-            IEnumerable<ProductModel> productList = _productService.GetProductLIst();
+            IEnumerable<Product> productList = _productService.GetProductLIst();
             if (id != null)
             {
                 productList = productList.Where(m => m.CategoryId == id);
@@ -137,7 +161,7 @@
                 try
                 {
                     var product = this.ConvertToBussinesModel(model);
-                    this._productService.SaveProduct(product);
+                    _productService.SaveProduct(product);
                     return RedirectToAction("Details", new { Id = model.Id });
                 }
                 catch (Exception)
@@ -149,10 +173,10 @@
         }
 
         #region Convertation
-        public List<ProductViewModel> ConvertListToViewModel(IEnumerable<ProductModel> models)
+        public List<ProductViewModel> ConvertListToViewModel(IEnumerable<Product> models)
         {
             List<ProductViewModel> products = new List<ProductViewModel>();
-            foreach (ProductModel item in models)
+            foreach (Product item in models)
             {
                 products.Add(ConvertToViewModel(item));
             }
@@ -166,17 +190,17 @@
             return model;
         }
 
-        public List<CategoryViewModel> ConvertListToViewModel(IEnumerable<CategoryModel> models)
+        public List<CategoryViewModel> ConvertListToViewModel(IEnumerable<Category> models)
         {
             List<CategoryViewModel> products = new List<CategoryViewModel>();
-            foreach (CategoryModel item in models)
+            foreach (Category item in models)
             {
                 products.Add(ConvertToViewModel(item));
             }
             return products;
         }
 
-        public CategoryViewModel ConvertToViewModel(CategoryModel model)
+        public CategoryViewModel ConvertToViewModel(Category model)
         {
             var category = _categoryService.GetCategoryList().Where(c => c.ParentId == model.CategoryId).FirstOrDefault();
             return new CategoryViewModel()
@@ -187,7 +211,7 @@
             };
         }
 
-        public ProductViewModel ConvertToViewModel(ProductModel model)
+        public ProductViewModel ConvertToViewModel(Product model)
         {
             var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.SeasonId).FirstOrDefault();
             var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.CategoryId).FirstOrDefault();
@@ -204,11 +228,11 @@
             };
         }
 
-        public ProductModel ConvertToBussinesModel(ProductViewModel model)
+        public Product ConvertToBussinesModel(ProductViewModel model)
         {
             var season = _seasonService.GetSeasonList().Where(s => s.SeasonName == model.SeasonName).FirstOrDefault();
             var category = _categoryService.GetCategoryList().Where(c => c.CategoryName == model.CategoryName).FirstOrDefault();
-            return new ProductModel()
+            return new Product()
             {
                 Id = model.Id,
                 Name = model.Name,

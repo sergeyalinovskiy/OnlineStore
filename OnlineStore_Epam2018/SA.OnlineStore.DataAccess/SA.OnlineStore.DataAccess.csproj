@@ -62,16 +62,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\CategoryRepository.cs" />
-    <Compile Include="Components\ProductRepository.cs" />
-    <Compile Include="Components\PublicityRepository.cs" />
-    <Compile Include="Components\SeasonRepository.cs" />
+    <Compile Include="Service\Implementation\CategoryRepository.cs" />
+    <Compile Include="Service\Implementation\ProductRepository.cs" />
+    <Compile Include="Service\Implementation\PublicityRepository.cs" />
+    <Compile Include="Service\Implementation\SeasonRepository.cs" />
     <Compile Include="Connected Services\NewServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="DataAccessDependencyRegistry.cs" />
+    <Compile Include="Dependency\DataAccessDependencyRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ICategoryRepository.cs" />
     <Compile Include="Service\IPublicityRepository.cs" />
@@ -79,6 +79,8 @@
     <Compile Include="Service\ISeasonRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\DataSources\SA.OnlineStore.WCF.PublicityService.datasource" />
     <None Include="SA.OnlineStore.DataAccess.dll.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -93,9 +95,6 @@
     <None Include="Connected Services\NewServiceReference\NewWebService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\NewServiceReference\SA.OnlineStore.DataAccess.NewServiceReference.Publicity.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Service\packages.config" />
   </ItemGroup>
@@ -109,6 +108,10 @@
     <ProjectReference Include="..\SA.OnlineStore.Common\SA.OnlineStore.Common.csproj">
       <Project>{64E83599-BDF1-4B67-AD17-3ECE731D70C6}</Project>
       <Name>SA.OnlineStore.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SA.OnlineStore.WCF\SA.OnlineStore.WCF.csproj">
+      <Project>{AB449077-BC72-4594-A548-3F5E519B5A1D}</Project>
+      <Name>SA.OnlineStore.WCF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

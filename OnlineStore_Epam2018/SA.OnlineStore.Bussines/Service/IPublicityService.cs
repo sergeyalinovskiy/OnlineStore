@@ -8,7 +8,7 @@
     public interface IPublicityService
     {
         //PublicityModel GetPublicity();
-        IEnumerable<PublicityModel> GetDefaultList();
-        IEnumerable<PublicityModel> GetPublicityList();
+        IEnumerable<Publicity> GetDefaultList();
+        IEnumerable<Publicity> GetPublicityList();
     }
 }

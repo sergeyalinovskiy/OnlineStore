@@ -7,6 +7,6 @@
 
     public interface ISeasonRepository
     {
-        List<SeasonModel> GetSeasonList();
+        List<Season> GetSeasonList();
     }
 }

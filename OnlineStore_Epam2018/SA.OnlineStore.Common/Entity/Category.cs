@@ -1,6 +1,6 @@
 ﻿namespace SA.OnlineStore.Common.Entity
 {
-    public class CategoryModel
+    public class Category
     {
         public int CategoryId { get; set; }
 

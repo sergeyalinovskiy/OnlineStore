@@ -119,6 +119,13 @@
     <Content Include="Content\img\picture_Iput.jpg" />
     <Content Include="Content\img\picture_Mechta.jpg" />
     <Content Include="Content\img\picture_ProstoMaria.jpg" />
+    <Content Include="Content\publicity\2.jpg" />
+    <Content Include="Content\publicity\4.jpg" />
+    <Content Include="Content\publicity\5.jpg" />
+    <Content Include="Content\publicity\6.jpg" />
+    <Content Include="Content\publicity\7.jpg" />
+    <Content Include="Content\publicity\8.jpg" />
+    <Content Include="Content\publicity\9.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -146,6 +153,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\PublicityController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -199,7 +207,7 @@
     <Content Include="Views\Basket\Details.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Product\ErrorPartialView.cshtml" />
-    <Content Include="Views\Home\Publicity.cshtml" />
+    <Content Include="Views\Publicity\Publicity.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

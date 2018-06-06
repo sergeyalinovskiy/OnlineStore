@@ -9,7 +9,7 @@
   <xs:element name="GetPublicityListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SA.OnlineStore.WCF" minOccurs="0" name="GetPublicityListResult" nillable="true" type="q1:ArrayOfPublicity" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SA.OnlineStore.WCF" minOccurs="0" name="GetPublicityListResult" nillable="true" type="q1:ArrayOfPublicityService" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -17,11 +17,29 @@
         private readonly ISearchService _searchService;
         public SearchController(IProductService productService, ISeasonService seasonService, ICategoryService categoryService,ISearchService searchService)
         {
-            _productService = productService;
+            if (productService == null)
+            {
+                throw new ArgumentNullException("productService");
+            }
+            if (searchService == null)
+            {
+                throw new ArgumentNullException("searchService");
+            }
+            if (categoryService == null)
+            {
+                throw new ArgumentNullException("categoryService");
+            }
+            if (searchService == null)
+            {
+                throw new ArgumentNullException("searchService");
+            }
+       
+             _productService = productService;
             _seasonService = seasonService;
             _categoryService = categoryService;
             _searchService = searchService;
         }
+        
 
         public ActionResult Index(string category)
         {
@@ -98,7 +116,7 @@
             return PartialView(products);
         }
 
-        public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<ProductModel> modelList)
+        public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<Product> modelList)
         {
             List<ProductViewModel> convertProductList = new List<ProductViewModel>();
 
@@ -109,7 +127,7 @@
             return convertProductList;
         }
 
-        public ProductViewModel ConvertToViewModel(ProductModel model)
+        public ProductViewModel ConvertToViewModel(Product model)
         {
             var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.SeasonId).FirstOrDefault();
             var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.CategoryId).FirstOrDefault();

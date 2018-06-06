@@ -18,7 +18,7 @@
         {
             _commonLogger = commonLogger;
         }
-        public List<SeasonModel> GetSeasonList()
+        public List<Season> GetSeasonList()
         {
             using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
             {
@@ -32,23 +32,31 @@
                 {
                     _commonLogger.Info("Error connection SeassonRepository");
                 }
-                var reader = command.ExecuteReader();
-                List<SeasonModel> productList = new List<SeasonModel>();
-                if (reader.HasRows)
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    List<Season> productList = new List<Season>();
+                    try
                     {
-                        productList.Add(ParseToSeason(reader));
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                productList.Add(ParseToSeason(reader));
+                            }
+                        }
                     }
+                    catch (Exception)
+                    {
+                        _commonLogger.Info("Error reader SeassonRepository/GetSeasonList");
+                    }
+                    return productList;
                 }
-                reader.Close();
-                return productList;
             }
         }
 
-        private SeasonModel ParseToSeason(SqlDataReader reader)
+        private Season ParseToSeason(SqlDataReader reader)
         {
-            return new SeasonModel()
+            return new Season()
             {
                 SeasonId = (int)reader["Id"],
                 SeasonName = reader["Name"].ToString()

@@ -21,6 +21,12 @@
 
             For<IRepository<Basket>>().Use<BasketRepository>();
             For<IRepository<Order>>().Use<OrderRepository>();
+
+            For<IRepository<User>>().Use<UserRepository>();
+            For<IRepository<Role>>().Use<RoleRepository>();
+
+            For<IRepository<Phone>>().Use<PhoneRepository>();
+            For<IRepository<Email>>().Use<EmailRepository>();
         }
     }
 }

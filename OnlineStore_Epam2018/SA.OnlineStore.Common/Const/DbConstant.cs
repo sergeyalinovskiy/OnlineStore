@@ -50,6 +50,28 @@
             public const string GetProductsInBaskets = "GetProductsInBaskets";
             public const string GetProductsInBasketsByBasketId = "GetProductsInBasketsByBasketId";
 
+
+
+            //User
+            public const string SaveUser = "SaveUser";
+            public const string SaveUserEmail = "SaveUserEmail";
+            public const string SaveUserPhone = "SaveUserPhone";
+            public const string SaveUserRole = "SaveUserRole";
+
+            public const string GetUserList = "GetUserList";
+            public const string GetUserListByUserId = "GetUserListByUserId";
+
+            public const string GetRoles = "GetRoles";
+            public const string GetPhonesByUserId = "GetPhonesByUserId";
+            public const string GetEmailsByUserId = "GetEmailsByUserId";
+            public const string GetEmailsList = "GetEmailsList";
+            public const string GetPhonesList = "GetPhonesList";
+
+
+            public const string DeleteUserByUserId = "DeleteUserByUserId";
+            public const string DeletePhoneByUserId = "DeletePhoneByUserId";
+            public const string DeleteEmailByUserId = "DeleteEmailByUserId";
+
         }
     }
 }

@@ -27,24 +27,25 @@
             _realization = realization;
         }
 
-        private ChannelFactory<INewWebService> _channel = new
-               ChannelFactory<INewWebService>(new BasicHttpBinding(), new EndpointAddress("http://localhost:51702/NewWebService.svc"));
+        //private ChannelFactory<INewWebService> _channel = new
+        //       ChannelFactory<INewWebService>(new BasicHttpBinding(), new EndpointAddress("http://localhost:51702/NewWebService.svc"));
 
         //private readonly INewWebService _service;
 
+        private NewServiceReference.INewWebService _service;
 
-        //private INewWebService CreateChannel()
-        //{
-        //    string absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "SA.OnlineStore.DataAccess.dll.config");
+        private NewServiceReference.INewWebService CreateChannel()
+        {
+            string absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "app.config");
 
-        //    Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(
-        //        new ExeConfigurationFileMap { ExeConfigFilename = absolutePath }, ConfigurationUserLevel.None);
+            Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(
+                new ExeConfigurationFileMap { ExeConfigFilename = absolutePath }, ConfigurationUserLevel.None);
 
-        //    ConfigurationChannelFactory<INewWebService> channelFactory =
-        //              new ConfigurationChannelFactory<INewWebService>("BasicHttpBinding_INewWebService", configuration, null);
+            ConfigurationChannelFactory<NewServiceReference.INewWebService> channelFactory =
+                      new ConfigurationChannelFactory<NewServiceReference.INewWebService>("BasicHttpBinding_INewWebService", configuration, null);
 
-        //    return channelFactory.CreateChannel();
-        //}
+            return channelFactory.CreateChannel();
+        }
 
 
 
@@ -52,7 +53,8 @@
         {
             try
             {
-                INewWebService chanel = _channel.CreateChannel();/*CreateChannel();*/
+                //INewWebService chanel = _channel.CreateChannel();/*CreateChannel();*/
+                var chanel = CreateChannel();
                 List<Publicity> publicityList = ConvertToPublicityWcfList(chanel.GetPublicityList());
                 return publicityList;
             }

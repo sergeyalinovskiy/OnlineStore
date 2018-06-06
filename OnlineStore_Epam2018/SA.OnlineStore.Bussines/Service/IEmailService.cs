@@ -10,5 +10,6 @@ namespace SA.OnlineStore.Bussines.Service
     public interface IEmailService
     {
         IEnumerable<Email> GetEmailsByUserId(int id);
+        IEnumerable<Email> GetEmailList();
     }
 }

@@ -11,6 +11,12 @@ namespace SA.OnlineStore.Bussines.Service
     {
         User GetUserById(int id);
 
+        void DeleteUserByUserId(int id);
+
+        IEnumerable<User> GetUsersList();
+
+        void SaveUser(User model);
+
         User GetUserByLogin(string login);
     }
 }

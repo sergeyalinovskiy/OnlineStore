@@ -313,7 +313,6 @@
                     prod = item;
                 }
             }
-
             int countProductInBasket = _orderService.GetOrderList().Where(m => m.User.UserId == 1).Count();
             int trigger = 0;
             foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 1))

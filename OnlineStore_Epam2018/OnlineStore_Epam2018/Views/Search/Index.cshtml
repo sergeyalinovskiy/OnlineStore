@@ -1,0 +1,74 @@
+﻿@model OnlineStore_Epam2018.Models.ProductViewModel
+
+@{
+    AjaxOptions options = new AjaxOptions()
+    {
+        UpdateTargetId = "tabledata",
+        Url = Url.Action("OrdersData")
+    };
+}
+<h2>Поиск</h2>
+<body>
+</body>
+@using (Ajax.BeginForm("OrderData", "Search", options, htmlAttributes: new { @id = "id" }))
+{
+    <table style="float:initial";>
+        <tr>
+            <th>
+                Имя
+            </th>
+            <th>
+                Продукты
+            </th>
+            <th>
+                Сезон
+            </th>
+            <th>
+                Цена
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.EditorFor(m=>m.Name)
+            </th>
+            <th>
+                @Html.DropDownListFor(m=>m.CategoryName, new SelectList(Model.CategoryList.Where(m => m.ParentId!=0).Select(m => m.CategoryName)), "Все", htmlAttributes: new { @class = "form-control selectlist" })
+            </th>
+            <th>
+                @Html.DropDownListFor(m=>m.SeasonName, new SelectList(Model.SeasonList.Select(m=>m.SeasonName)), "Все", htmlAttributes: new { @class = "form-control selectlist" })
+            </th>
+            <th>
+                @Html.DropDownList("sort", new SelectList(new[] { "цена по убыванию", "цена по возрастанию" }), "Все", htmlAttributes: new { @class = "form-control selectlist" })
+            </th>
+            <th>
+                <input type="submit" value="Найти" />
+            </th>
+        </tr>
+    </table>
+
+    <table cellpadding="6">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Имя</th>
+                <th>Категория</th>
+                <th>Сезон</th>
+                <th>Описание</th>
+                <th>Колличество</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody id="tabledata">
+            @Html.Action("OrdersData","Search" ,new { category = Model, season = Model, sort = Model, searchName = Model })
+        </tbody>
+    </table>
+    <button>
+        @Html.ActionLink("Go back", "Index", "Product")
+    </button>
+}
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+    <p>
+      
+    </p>

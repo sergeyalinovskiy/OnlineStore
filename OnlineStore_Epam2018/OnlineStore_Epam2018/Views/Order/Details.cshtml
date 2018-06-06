@@ -1,0 +1,58 @@
+﻿@model OnlineStore_Epam2018.Models.OrderViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Информация о заказе</h2>
+
+<div>
+    <h4>OrderViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductListId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductListId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOrder)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

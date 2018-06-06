@@ -1,0 +1,46 @@
+﻿@model IEnumerable<OnlineStore_Epam2018.Models.CategoryViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Категории</h2>
+
+<p>
+    @Html.RouteLink("Добавить новую категорию", new { controller = "Category", action = "Create" }, new { @class = "btn btn-default" })
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParentId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParentId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CategoryId }) |
+            @Html.ActionLink("Details", "Details", new {  id=item.CategoryId  }) |
+            @Html.ActionLink("Delete", "Delete", new {  id=item.CategoryId})
+        </td>
+    </tr>
+}
+
+</table>

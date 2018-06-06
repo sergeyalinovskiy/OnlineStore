@@ -119,13 +119,6 @@
     <Content Include="Content\img\picture_Iput.jpg" />
     <Content Include="Content\img\picture_Mechta.jpg" />
     <Content Include="Content\img\picture_ProstoMaria.jpg" />
-    <Content Include="Content\publicity\2.jpg" />
-    <Content Include="Content\publicity\4.jpg" />
-    <Content Include="Content\publicity\5.jpg" />
-    <Content Include="Content\publicity\6.jpg" />
-    <Content Include="Content\publicity\7.jpg" />
-    <Content Include="Content\publicity\8.jpg" />
-    <Content Include="Content\publicity\9.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -208,6 +201,8 @@
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Product\ErrorPartialView.cshtml" />
     <Content Include="Views\Publicity\Publicity.cshtml" />
+    <Content Include="Views\Publicity\Publicity2.cshtml" />
+    <Content Include="Views\Publicity\Publicity3.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -217,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\publicity\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SA.OnlineStore.Bussines\SA.OnlineStore.Bussines.csproj">

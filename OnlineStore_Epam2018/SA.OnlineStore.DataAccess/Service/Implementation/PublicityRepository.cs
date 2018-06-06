@@ -21,7 +21,6 @@
         public PublicityRepository(CommonLogger commonLogger)
         {
             _commonLogger = commonLogger;
-
         }
 
         private ChannelFactory<INewWebService> _channel = new
@@ -43,9 +42,6 @@
         //    return channelFactory.CreateChannel();
         //}
 
-         
-
-
         public IEnumerable<Publicity> GetDefaultList()
         {
             List<Publicity> listPublicity = new List<Publicity>()
@@ -54,23 +50,23 @@
                  {
                      Id = 100,
                      Name = "Реклама отсутствует",
-                     Text = "Нет соединения с сервисом",
-                     Picture="x"
+                     Text = ""
+                     //Picture="x"
                 },
-                 new Publicity()
-                 {
-                     Id = 101,
-                     Name = "Реклама отсутствует",
-                     Text = "Нет соединения с сервисом",
-                     Picture="x"
-                },
-                  new Publicity()
-                 {
-                     Id = 102,
-                     Name = "Реклама отсутствует",
-                     Text = "Нет соединения с сервисом",
-                     Picture="x"
-                }
+                // new Publicity()
+                // {
+                //     Id = 101,
+                //     Name = "Реклама отсутствует",
+                //     Text = "Нет соединения с сервисом",
+                //     Picture="x"
+                //},
+                //  new Publicity()
+                // {
+                //     Id = 102,
+                //     Name = "Реклама отсутствует",
+                //     Text = "Нет соединения с сервисом",
+                //     Picture="x"
+                //}
             };
             return listPublicity;
         }

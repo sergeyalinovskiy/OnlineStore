@@ -1,5 +1,6 @@
 ﻿using OnlineStore_Epam2018.Models;
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Convert;
 using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace OnlineStore_Epam2018.Controllers
                 Id = model.Id,
                 Name = model.Name,
                 Text = model.Text,
-                Picture = model.Picture
+                Picture = PictureConverter.byteArrayToImage(model.Picture)
             };
         }
     }

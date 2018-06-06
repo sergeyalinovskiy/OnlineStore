@@ -21,7 +21,10 @@
             List<string> categoryNames = new List<string>();
             foreach(Category item in _categoryRepository.GetCategoryList())
             {
-                categoryNames.Add(item.CategoryName);
+                if (item.ParentId != 0)
+                {
+                    categoryNames.Add(item.CategoryName);
+                }
             }
             return categoryNames;
         }
@@ -34,11 +37,6 @@
         public void DeleteCategoryByCategoryId(int Id)
         {
             _categoryRepository.Delete(Id);
-        }
-
-        public void EditCategory(Category model)
-        {
-            throw new NotImplementedException();   //!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         public Category GetCategory(int Id)

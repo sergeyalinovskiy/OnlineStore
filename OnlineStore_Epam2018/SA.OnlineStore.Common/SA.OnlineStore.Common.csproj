@@ -71,7 +71,9 @@
     <Compile Include="Entity\ProductList.cs" />
     <Compile Include="Entity\Product.cs" />
     <Compile Include="Entity\Publicity.cs" />
+    <Compile Include="Entity\Role.cs" />
     <Compile Include="Entity\Season.cs" />
+    <Compile Include="Entity\UserLogin.cs" />
     <Compile Include="Logger\CommonLogger.cs" />
     <Compile Include="Logger\ICommonLogger.cs" />
     <Compile Include="Logger\Logger.cs" />

@@ -3,6 +3,6 @@
 @foreach (OnlineStore_Epam2018.Models.CategoryViewModel item in Model)
 {
     <p>
-        @Html.RouteLink(item.CategoryName, new { controller = "Product", action = "CategoryList2", id = item.CategoryId }, new { @class = "btn btn-default" })
+        @Html.RouteLink(item.CategoryName, new { controller = "Product", action = "IndexSearch", id = item.CategoryId }, new { @class = "btn btn-default" })
     </p>
 }

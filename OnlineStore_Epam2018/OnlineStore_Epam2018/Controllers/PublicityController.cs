@@ -4,6 +4,7 @@ using SA.OnlineStore.Common.Convert;
 using SA.OnlineStore.Common.Entity;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,7 +20,7 @@ namespace OnlineStore_Epam2018.Controllers
         {
             if (publicityService == null)
             {
-                throw new ArgumentNullException("publicityService");
+               throw new ArgumentNullException("publicityService");
             }
            
             _publicityService = publicityService;
@@ -33,17 +34,17 @@ namespace OnlineStore_Epam2018.Controllers
         
         public ActionResult Publicity()
         {
-            try
-            {
-                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());//hfp,bn 
+            //try
+            //{
+                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());
                 return PartialView(publicity);
-            }
-            catch
-            {
-                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetDefaultList());
-                return PartialView(publicity);
+            //}
+            //catch
+            //{
+            //    IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetDefaultList());
+            //    return PartialView(publicity);
 
-            }
+            //}
         }
 
         public IEnumerable<PublicityViewModel> ConvertToPublicityViewModelList(IEnumerable<Publicity> modelList)
@@ -63,9 +64,11 @@ namespace OnlineStore_Epam2018.Controllers
             {
                 Id = model.Id,
                 Name = model.Name,
-                Text = model.Text,
-                Picture = model.Picture
+                Picture = Convert.ToBase64String(model.Picture),
+                Text = model.Text
+               
             };
         }
+
     }
 }

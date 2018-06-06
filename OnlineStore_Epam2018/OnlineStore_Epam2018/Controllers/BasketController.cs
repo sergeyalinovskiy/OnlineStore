@@ -52,17 +52,17 @@
         {
             if (this.ModelState.IsValid)
             {
-                //try
-                //{
+                try
+                {
                     var prod = ConvertToProductListModel(model);
                     _basketService.EditProductListInBox(prod);
                    
                     return RedirectToAction("Details", new { Id = model.Id });
-                //}
-                //catch (Exception)
-                //{
-                //    this.ModelState.AddModelError("", "Internal Exceptions");
-                //}
+                }
+                catch (Exception)
+                {
+                    this.ModelState.AddModelError("", "Internal Exceptions");
+                }
             }
             return View();
         }

@@ -11,47 +11,53 @@
     public class BasketService : IBasketService
     {
         private readonly IRepository<Basket> _basketRepository;
+
         public BasketService(IRepository<Basket> basketRepository)
         {
             _basketRepository = basketRepository;
         }
-        //public static List<Basket> productsInBox = new List<Basket>()
-        //{
-        //    new Basket()
-        //    {
-        //        Id=1,
-        //        ProductId=1,
-        //        ProductName="Инструкция по посадке и уходу",
-        //        Count=1
-        //    }
-        //};
 
         public void DeleteProductInBoxById(int Id)         
         {
-            _basketRepository.Delete(Id);
+            if (Id > 0)
+            {
+                _basketRepository.Delete(Id);
+            }
         }
 
-        Basket p = new Basket();
-
-        public void SaveProductListInBox(Basket model)   //dont working!!!!!!!!!!
+        public void SaveProductListInBox(Basket model)   
         {
-            _basketRepository.Create(model);
+            if (model != null)
+            {
+                _basketRepository.Create(model);
+            }
+            
         }
              
 
         public void EditProductListInBox(Basket model)
         {
-            _basketRepository.Update(model);
+            if (model != null)
+            {
+                _basketRepository.Update(model);
+            }
         }
 
         public Basket GetProductInBox(int Id)
         {
+            if (Id < 1)
+            {
+                return null;
+            }
             return _basketRepository.GetById(Id);
         }
 
         public void AddNewItemInBox(Basket product)
         {
-            _basketRepository.Create(product);
+            if (product != null)
+            {
+                _basketRepository.Create(product);
+            }
         }
 
         public IEnumerable<Basket> GetProductListInBox()

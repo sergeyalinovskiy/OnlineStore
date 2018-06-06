@@ -32,16 +32,26 @@
 
         public void Create(Category model)
         {
-            _categoryRepository.Create(model);
+            if (model != null)
+            {
+                _categoryRepository.Create(model);
+            }
         }
 
         public void DeleteCategoryByCategoryId(int Id)
         {
-            _categoryRepository.Delete(Id);
+            if (Id > 0)
+            {
+                _categoryRepository.Delete(Id);
+            }
         }
 
         public Category GetCategory(int Id)
         {
+            if (Id < 1)
+            {
+                return null;
+            }
             return _categoryRepository.GetById(Id);
         }
 
@@ -52,7 +62,10 @@
 
         public void SaveCategory(Category model)
         {
-            _categoryRepository.Update(model);
+            if (model != null)
+            {
+                _categoryRepository.Update(model);
+            }
         }
 
     }

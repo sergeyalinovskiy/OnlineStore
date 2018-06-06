@@ -173,7 +173,7 @@
                 _connection.Open();
                 var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteProductByProductId);
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
-                _realization.ExecCommand(command);
+                command.ExecuteNonQuery();
             }
             catch (Exception exeption)
             {

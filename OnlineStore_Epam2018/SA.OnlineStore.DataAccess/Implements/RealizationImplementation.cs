@@ -29,7 +29,15 @@ namespace SA.OnlineStore.DataAccess.Implements
             IDataParameter sqlParametr = cmd.CreateParameter();
 
             sqlParametr.DbType = paramType;
-            sqlParametr.ParameterName = (parametrName.StartsWith("@")) ? parametrName : "@" + parametrName;
+
+            if (parametrName.StartsWith("@"))
+            {
+                sqlParametr.ParameterName = parametrName;
+            }
+            else
+            {
+                sqlParametr.ParameterName= "@" + parametrName;
+            }
             sqlParametr.Value = value;
             
             cmd.Parameters.Add(sqlParametr);
@@ -39,11 +47,6 @@ namespace SA.OnlineStore.DataAccess.Implements
         {
             var value = reader.GetValue(reader.GetOrdinal(fieldName));
             return (T)value;
-        }
-
-        public void ExecCommand(IDbCommand command)
-        {
-            command.ExecuteNonQuery();
         }
 
         public DataTable CreateTable(string tableName)

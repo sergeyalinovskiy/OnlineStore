@@ -18,7 +18,7 @@ namespace OnlineStore_Epam2018.Controllers
             _userService = userService;
             _commonLogger = commonLogger;
         }
-        // GET: User
+
         public ActionResult GetUser(int id)
         {
             if (id <= 0)

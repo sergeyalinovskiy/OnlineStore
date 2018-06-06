@@ -254,10 +254,5 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }).First();
             return order;
         }
-
-
-
-
-
-        }
+     }
 }

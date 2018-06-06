@@ -116,15 +116,12 @@ D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\Microsof
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\Microsoft.VisualBasic.Core.targets
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\Microsoft.Win32.Primitives.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.AppContext.dll
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Collections.Immutable.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Console.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Diagnostics.Process.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Diagnostics.StackTrace.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.Compression.dll
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
-D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.Primitives.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.Pipes.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Reflection.Metadata.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Security.AccessControl.dll
@@ -191,3 +188,8 @@ D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineSto
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.dll
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.pdb
 D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.dll.config
+D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Newtonsoft.Json.dll
+D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Newtonsoft.Json.xml
+D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Collections.Immutable.dll
+D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.dll
+D:\111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.Primitives.dll

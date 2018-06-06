@@ -3,6 +3,7 @@
     #region Usings
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Implements;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,59 +11,67 @@
 
     public class OrderService : IOrderService
     {
-        private List<Order> _orders = new List<Order>() {
-            new Order() {Id=1,
-                         UserId =1,
-                         StatusId=1,
-                         Address="qe",
-                         DateOrder=DateTime.Now.Date
-            } ,
-            new Order() {Id=1,
-                         UserId =2,
-                         StatusId=1,
-                         Address="qe",
-                         DateOrder=DateTime.Now.Date
-            } ,
-            new Order() {Id=1,
-                         UserId =3,
-                         StatusId=1,
-                         Address="qe",
-                         DateOrder=DateTime.Now.Date
-            }};
+        private readonly IRepository<Order> _orderRepository;
+        
+        public OrderService(IRepository<Order> orderRepository)
+        {
+            _orderRepository = orderRepository;
+        }
+        //private List<Order> _orders = new List<Order>() {
+        //    new Order() {Id=1,
+        //                 UserId =1,
+        //                 StatusId=1,
+        //                 Address="qe",
+        //                 DateOrder=DateTime.Now.Date
+        //    } ,
+        //    new Order() {Id=1,
+        //                 UserId =2,
+        //                 StatusId=1,
+        //                 Address="qe",
+        //                 DateOrder=DateTime.Now.Date
+        //    } ,
+        //    new Order() {Id=1,
+        //                 UserId =3,
+        //                 StatusId=1,
+        //                 Address="qe",
+        //                 DateOrder=DateTime.Now.Date
+        //    }};
 
         public void DeleteOrderByOrderId(int Id)
         {
-            _orders.RemoveAt(Id);
+            _orderRepository.Delete(Id);
         }
 
         public Order GetOrder(int Id)
         {
-            return _orders.Where(t => t.Id == Id).FirstOrDefault();
+            return _orderRepository.GetAll().Where(t => t.Id == Id).FirstOrDefault();
         }
 
         public IEnumerable<Order> GetOrderList()
         {
-            return _orders;
+            return _orderRepository.GetAll();
         }
 
         public void SaveOrder(Order model)
         {
-            _orders.Add(new Order
+            _orderRepository.Create(model);
+        }
+
+        public void GetDefaultOrder(int id)
+        {
+            Order order = new Order
             {
-                Id = model.Id,
-                UserId=model.UserId,
-                StatusId=model.StatusId,
-                Address=model.Address,
-                DateOrder=model.DateOrder
-            });
+                DateOrder = DateTime.Now,
+                User=new User(){UserId=id } ,
+                StatusOrder =new StatusOrder() {Id=1 },
+                Address = "куда вести?"
+            };
+            _orderRepository.Create(order);
         }
 
         public void EditOrder(Order model)
         {
-            _orders[model.Id].StatusId = model.StatusId;
-            _orders[model.Id].Address = model.Address;
-            _orders[model.Id].DateOrder = model.DateOrder;
-            _orders[model.Id].UserId = model.UserId;
+            _orderRepository.Update(model);
         }
     }
 }

@@ -3,6 +3,7 @@
     #region Usings
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Implements;
     using SA.OnlineStore.DataAccess.Service;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,9 +11,9 @@
 
     public class ProductService : IProductService
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IRepository<Product> _productRepository;
 
-        public ProductService(IProductRepository productRepository)
+        public ProductService(IRepository<Product> productRepository)
         {
             _productRepository = productRepository;
         }
@@ -24,27 +25,27 @@
 
         public void EditProduct(Product model)
         {
-            _productRepository.Save(model);
+            _productRepository.Update(model);
         }
 
         public Product GetProduct(int Id)
         {
-            return _productRepository.Get(Id);
+            return _productRepository.GetById(Id);
         }
 
         public IEnumerable<Product> GetProductLIst()
         {
-            return _productRepository.GetList();
+            return _productRepository.GetAll();
         }
 
         public IEnumerable<Product> GetProductLIstByCategory(int category)
         {
-            return _productRepository.GetList().Where(x => x.CategoryId == category);
+            return _productRepository.GetAll().Where(x => x.Category.CategoryId == category);
         }
 
         public void SaveProduct(Product model)
         {
-            _productRepository.Save(model);
+            _productRepository.Create(model);
         }
     }
 }

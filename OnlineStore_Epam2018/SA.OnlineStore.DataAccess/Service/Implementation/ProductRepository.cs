@@ -4,231 +4,266 @@
     using SA.OnlineStore.Common.Const;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
+    using SA.OnlineStore.DataAccess.Implements;
     using SA.OnlineStore.DataAccess.Service;
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     #endregion
 
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : IRepository<Product>
     {
         private readonly ICommonLogger _commonLogger;
-        public ProductRepository(ICommonLogger commonLogger)
+        private readonly IRealizationImplementation _realization;
+
+        private readonly SqlConnection _connection;
+
+        public ProductRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
             _commonLogger = commonLogger;
+            
+            _realization = realization;
+            _connection = _realization.GetConnection();
         }
 
-        public void Delete(int Id)
-        {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
-            {
-
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.DeleteProductByProductId, connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    try
-                    {
-                        connection.Open();
-                    }
-                    catch (System.Exception)
-                    {
-                        _commonLogger.Info("Error connection with DB ProductRepository/Delete");
-                        throw;
-                    }
-
-                    SqlParameter nameParam = new SqlParameter
-                    {
-                        ParameterName = "Id",
-                        Value = Id
-                    };
-                    command.Parameters.Add(nameParam);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public Product Get(int Id)
-        {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.GetProductByProductId, connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    SqlParameter nameParam = new SqlParameter
-                    {
-                        ParameterName = "Id",
-                        Value = Id
-                    };
-                    command.Parameters.Add(nameParam);
-                
-                try
-                {
-                    connection.Open();
-                }
-                catch (System.Exception)
-                {
-                    _commonLogger.Info("Error connection with DB ProductRepository/Get");
-                    
-                }
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    Product product = null;
-                    try
-                    {
-                        if (reader.Read())
-                        {
-                            product = this.ParseToProduct(reader);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error reader with DB ProductRepository/Get");
-                        throw;
-                    }
-                    return product;
-                    }
-                }
-            }
-        }
-
-        public void Save(Product model)
-        {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                }
-                catch (System.Exception)
-                {
-                    _commonLogger.Info("Error connection with DB ProductRepository/Save");
-                    throw;
-                }
-
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.SaveProduct, connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                    SqlParameter paramId = new SqlParameter
-                    {
-                        ParameterName = "Id",
-                        Value = model.Id
-                    };
-                    SqlParameter paramName = new SqlParameter
-                    {
-                        ParameterName = "Name",
-                        Value = model.Name
-                    };
-                    SqlParameter paramCategory = new SqlParameter
-                    {
-                        ParameterName = "CategoryId",
-                        Value = model.CategoryId
-                    };
-                    SqlParameter paramSeason = new SqlParameter
-                    {
-                        ParameterName = "SeasonsId",
-                        Value = model.SeasonId
-                    };
-                    SqlParameter paramPicture = new SqlParameter
-                    {
-                        ParameterName = "Picture",
-                        Value = model.Picture
-                    };
-                    SqlParameter paramDescription = new SqlParameter
-                    {
-                        ParameterName = "Description",
-                        Value = model.Description
-                    };
-                    SqlParameter paramCount = new SqlParameter
-                    {
-                        ParameterName = "Count",
-                        Value = model.Count
-                    };
-                    SqlParameter paramPrice = new SqlParameter
-                    {
-                        ParameterName = "Price",
-                        Value = model.Price
-                    };
-
-                    command.Parameters.Add(paramId);
-                    command.Parameters.Add(paramName);
-                    command.Parameters.Add(paramCategory);
-                    command.Parameters.Add(paramSeason);
-                    command.Parameters.Add(paramPicture);
-                    command.Parameters.Add(paramDescription);
-                    command.Parameters.Add(paramCount);
-                    command.Parameters.Add(paramPrice);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public List<Product> GetList()
-        {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.GetProductList, connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    try
-                    {
-                        connection.Open();
-                    }
-                    catch (System.Exception)
-                    {
-                        _commonLogger.Info("Error connection with DB ProductRepository/GetList");
-                        throw;
-                    }
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        List<Product> productList = new List<Product>();
-                        try
-                        {
-                            if (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    productList.Add(ParseToProduct(reader));
-                                }
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            _commonLogger.Info("Error reader with DB ProductRepository/GetList");
-                            throw;
-                        }
-                        return productList;
-                    }
-                }
-            }
-        }
-
-        private Product ParseToProduct(SqlDataReader reader)
+        public void Create(Product item)
         {
             try
             {
-                return new Product()
+                _connection.Open();
+                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveProduct);
+                command.Parameters.Add(new SqlParameter
                 {
-                    Id = int.Parse(reader["Id"].ToString()),
-                    Name = reader["Name"].ToString(),
-                    CategoryId = (int)reader["CategoryId"],
-                    SeasonId = (int)reader["SeasonsId"],
-                    Picture = reader["Picture"].ToString(),
-                    Description = reader["Description"].ToString(),
-                    Count = (int)reader["Count"],
-                    Price = (int)reader["Price"]
-                };
+                    ParameterName = "Id",
+                    Value = item.Id
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Name",
+                    Value = item.Name
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "CategoryId",
+                    Value = item.Category.CategoryId
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "SeasonsId",
+                    Value = item.Season.SeasonId
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Picture",
+                    Value = item.Picture
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Description",
+                    Value = item.Description
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Count",
+                    Value = item.Count
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Price",
+                    Value = item.Price
+                });
+                command.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception exeption)
             {
-                _commonLogger.Info("Input model is notValid ProductRepository/ParseToProduct");
-                var model = new Product();
-                model = null;
-                return model;
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
             }
         }
+        public void Update(Product item)
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveProduct);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = item.Id
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Name",
+                    Value = item.Name
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "CategoryId",
+                    Value = item.Category.CategoryId
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "SeasonsId",
+                    Value = item.Season.SeasonId
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Picture",
+                    Value = item.Picture
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Description",
+                    Value = item.Description
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Count",
+                    Value = item.Count
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Price",
+                    Value = item.Price
+                });
+                command.ExecuteNonQuery();
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            };
+        }
+        public Product GetById(int id)
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductListByProductId);
+                _realization.AddParametr(command,"Id", id, DbType.Int32);
+                var productTable = _realization.CreateTable("Products");
+                productTable = _realization.FillInTable(productTable, command);
+                var @product = FillEntity(productTable);
+                return @product; 
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+        public void Delete(int id)
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteProductByProductId);
+                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                _realization.ExecCommand(command);
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+        public IReadOnlyCollection<Product> GetAll()
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetProducts);
+                var productTable = _realization.CreateTable("Products");
+                productTable = _realization.FillInTable(productTable, command);
+                var list = CreateListFromTable(productTable);
+                return list;
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
+
+        private List<Product> CreateListFromTable(DataTable table)
+        {
+            List<Product> productsList = new List<Product>();
+            var list = table.AsEnumerable().Select(m =>
+             {
+                 return new Product()
+                 {
+                     Id = m.Field<int>("Id"),
+                     Name = m.Field<string>("Name"),
+                     Category = new Category()
+                     {
+                         CategoryId = m.Field<int>("CategoryId"),
+                         CategoryName = m.Field<string>("CategoryName"),
+                         ParentId = m.Field<int>("ParentId")
+                     },
+                     Season = new Season()
+                     {
+                         SeasonId = m.Field<int>("SeasonsId"),
+                         SeasonName = m.Field<string>("SeasonsName")
+                     },
+                     Picture = m.Field<string>("Picture"),
+                     Description = m.Field<string>("Description"),
+                     Count = m.Field<int>("Count"),
+                     Price = m.Field<int>("Price")
+                 };
+             }).ToList();
+            return list;
+        }
+
+        private Product FillEntity(DataTable table)
+        {
+            var product = table.AsEnumerable().Select(m =>
+            {
+                return new Product()
+                {
+                    Id = m.Field<int>("Id"),
+                    Name = m.Field<string>("Name"),
+                    Category = new Category()
+                    {
+                        CategoryId = m.Field<int>("CategoryId"),
+                        CategoryName = m.Field<string>("CategoryName"),
+                        ParentId = m.Field<int>("ParentId")
+                    },
+                    Season = new Season()
+                    {
+                        SeasonId = m.Field<int>("SeasonsId"),
+                        SeasonName = m.Field<string>("SeasonsName")
+                    },
+                    Picture = m.Field<string>("Picture"),
+                    Description = m.Field<string>("Description"),
+                    Count = m.Field<int>("Count"),
+                    Price = m.Field<int>("Price")
+                };
+            }).First();
+            return product;
+        }
+
     }
 }

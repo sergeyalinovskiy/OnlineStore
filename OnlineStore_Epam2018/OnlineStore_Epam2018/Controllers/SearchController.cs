@@ -45,14 +45,14 @@
         {
             var viewModel = new ProductViewModel()
             {
-                CategoryNameList = _categoryService.CategoryNameList(),
-                SeasonNameList = _seasonService.SeasonNameList()
+                CategoryList = _categoryService.GetCategoryList(),
+                SeasonList = _seasonService.GetSeasonList()
             };
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult OrdersData(ProductViewModel model)
+        public ActionResult OrdersData(ProductViewModel model,string sort)
         {
             IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
             if (!string.IsNullOrEmpty(model.CategoryName))
@@ -64,18 +64,17 @@
             {
                 products = products.Where(p => p.SeasonName == model.SeasonName);
             }
+
+            if (!string.IsNullOrEmpty(sort))
             {
-                //if (!string.IsNullOrEmpty(sort))
-                //{
-                //    if (sort == "цена по убыванию")
-                //    {
-                //        products = products.OrderByDescending(p => p.Price);
-                //    }
-                //    if (sort == "цена по возрастанию")
-                //    {
-                //        products = products.OrderBy(p => p.Price);
-                //    }
-                //}
+                if (sort == "цена по убыванию")
+                {
+                    products = products.OrderByDescending(p => p.Price);
+                }
+                if (sort == "цена по возрастанию")
+                {
+                    products = products.OrderBy(p => p.Price);
+                }
             }
 
             if (!String.IsNullOrEmpty(model.Name))
@@ -88,34 +87,7 @@
         public ActionResult OrdersData(string category, string season, string sort, string searchName)
         {
             IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
-            {
-                //if (!string.IsNullOrEmpty(category))
-                //{
-                //    products = products.Where(p => p.CategoryName == category);
-                //}
-
-                //if (!string.IsNullOrEmpty(season))
-                //{
-                //    products = products.Where(p => p.SeasonName == season);
-                //}
-
-                //if (!string.IsNullOrEmpty(sort))
-                //{
-                //    if (sort == "цена по убыванию")
-                //    {
-                //        products = products.OrderByDescending(p => p.Price);
-                //    }
-                //    if (sort == "цена по возрастанию")
-                //    {
-                //        products = products.OrderBy(p => p.Price);
-                //    }
-                //}
-
-                //if (!String.IsNullOrEmpty(searchName))
-                //{
-                //    products = products.Where(p => p.Name == searchName);
-                //}
-            }
+           
             return PartialView(products);
         }
 
@@ -132,8 +104,8 @@
 
         public ProductViewModel ConvertToViewModel(Product model)
         {
-            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.SeasonId).FirstOrDefault();
-            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.CategoryId).FirstOrDefault();
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
             return new ProductViewModel()
             {
                 Id = model.Id,

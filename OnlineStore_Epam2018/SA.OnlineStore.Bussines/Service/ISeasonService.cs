@@ -8,6 +8,6 @@
     public interface ISeasonService
     {
         IEnumerable<Season> GetSeasonList();
-        IEnumerable<string> SeasonNameList();
+        //IEnumerable<string> SeasonNameList();
     }
 }

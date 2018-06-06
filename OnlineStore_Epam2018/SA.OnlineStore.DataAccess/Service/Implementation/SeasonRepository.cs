@@ -4,65 +4,83 @@
     using SA.OnlineStore.Common.Const;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
+    using SA.OnlineStore.DataAccess.Implements;
     using SA.OnlineStore.DataAccess.Service;
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     #endregion
 
-    public class SeasonRepository : ISeasonRepository
+    public class SeasonRepository : IRepository<Season>
     {
         private readonly ICommonLogger _commonLogger;
+        private readonly IRealizationImplementation _realization;
+        private readonly SqlConnection _connection;
 
-        public SeasonRepository(ICommonLogger commonLogger)
+        public SeasonRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
             _commonLogger = commonLogger;
-        }
-        public List<Season> GetSeasonList()
-        {
-            using (SqlConnection connection = new SqlConnection(DbConstant.connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(DbConstant.Command.GetSeasonList, connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    try
-                    {
-                        connection.Open();
-                    }
-                    catch (Exception)
-                    {
-                        _commonLogger.Info("Error connection SeassonRepository");
-                    }
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        List<Season> productList = new List<Season>();
-                        try
-                        {
-                            if (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    productList.Add(ParseToSeason(reader));
-                                }
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            _commonLogger.Info("Error reader SeassonRepository/GetSeasonList");
-                        }
-                        return productList;
-                    }
-                }
-            }
+            _realization = realization;
+            _connection = _realization.GetConnection();
         }
 
-        private Season ParseToSeason(SqlDataReader reader)
+        public void Create(Season item)
         {
-            return new Season()
-            {
-                SeasonId = (int)reader["Id"],
-                SeasonName = reader["Name"].ToString()
-            };
+            throw new NotImplementedException();
         }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<Season> GetAll()
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetSeasonList);
+                var seasonssTable = _realization.CreateTable("Seasons");
+                seasonssTable = _realization.FillInTable(seasonssTable, command);
+                var list = ParseToSeasonList(seasonssTable);
+                return list;
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+
+        }
+           
+        public Season GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Season item)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<Season> ParseToSeasonList(DataTable table)
+        {
+            var list = table.AsEnumerable().Select(m =>
+            {
+                return new Season()
+                {
+                    SeasonId = m.Field<int>("Id"),
+                    SeasonName = m.Field<string>("Name"),
+
+                };
+            }).ToList();
+            return list;
+        }     
     }
 }

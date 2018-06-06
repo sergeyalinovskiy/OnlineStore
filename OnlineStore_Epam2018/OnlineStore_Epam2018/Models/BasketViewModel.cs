@@ -2,7 +2,7 @@
 
 namespace OnlineStore_Epam2018.Models
 {
-    public class ProductListViewModel
+    public class BasketViewModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Укажите имя")]
@@ -12,5 +12,8 @@ namespace OnlineStore_Epam2018.Models
         [Display(Name = "Колличество")]
         [Required(ErrorMessage = "Выберите колличество")]
         public int Count { get; set; }
+        public int Price { get; set; }
+        public int OrderId { get; set; }
+        public string Picture { get; set; }
     }
 }

@@ -41,10 +41,11 @@ namespace OnlineStore_Epam2018.Controllers
             }
             catch
             {
-                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetDefaultList());
+                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());
                 return PartialView(publicity);
 
             }
+           
         }
 
         public IEnumerable<PublicityViewModel> ConvertToPublicityViewModelList(IEnumerable<Publicity> modelList)

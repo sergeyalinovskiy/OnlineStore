@@ -12,7 +12,9 @@
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
-        private readonly ICommonLogger _myLoger;
+        public CategoryController()
+        {
+        }
         public CategoryController(ICategoryService categoryService, ICommonLogger commonLogger)
         {
             if (categoryService == null)

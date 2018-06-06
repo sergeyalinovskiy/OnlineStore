@@ -53,6 +53,7 @@
                 {
                     var order = this.ConvertToBusinesModel(model);
                     this._orderService.SaveOrder(order);
+                    
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -99,9 +100,15 @@
             return new Order()
             {
                 Id = model.Id,
-                UserId = model.UserId,
+                User=new User()
+                {
+                    UserId = model.UserId
+                },
                 Address = model.Address,
-                StatusId = model.StatusId,
+                StatusOrder =new StatusOrder()
+                {
+                    Id= model.StatusId
+                }, 
                 DateOrder = model.DateOrder
             };
         }
@@ -111,9 +118,9 @@
             return new OrderViewModel()
             {
                 Id = model.Id,
-                UserId=model.UserId,
+                UserId=model.User.UserId,
                 Address=model.Address,
-                StatusId=model.StatusId,
+                StatusId=model.StatusOrder.Id,
                 DateOrder=model.DateOrder
             };
         }

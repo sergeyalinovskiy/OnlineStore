@@ -1,8 +1,11 @@
 ﻿namespace SA.OnlineStore.DataAccess
 {
+    using SA.OnlineStore.Common.Entity;
     #region Usings
     using SA.OnlineStore.DataAccess.Components;
+    using SA.OnlineStore.DataAccess.Implements;
     using SA.OnlineStore.DataAccess.Service;
+    using SA.OnlineStore.DataAccess.Service.Implementation;
     using StructureMap.Configuration.DSL;
     #endregion
 
@@ -10,10 +13,14 @@
     {
         public DataAccessDependencyRegistry()
         {
-            For<IPublicityRepository>().Use<PublicityRepository>();
-            For<IProductRepository>().Use<ProductRepository>();
-            For<ICategoryRepository>().Use<CategoryRepository>();
-            For<ISeasonRepository>().Use<SeasonRepository>();
+            For<IRepository<Publicity>>().Use<PublicityRepository>();
+            For<IRepository<Product>>().Use<ProductRepository>();
+            For<IRepository<Category>>().Use<CategoryRepository>();
+            For<IRepository<Season>>().Use<SeasonRepository>();
+            For<IRealizationImplementation>().Use<RealizationImplementation>();
+
+            For<IRepository<Basket>>().Use<BasketRepository>();
+            For<IRepository<Order>>().Use<OrderRepository>();
         }
     }
 }

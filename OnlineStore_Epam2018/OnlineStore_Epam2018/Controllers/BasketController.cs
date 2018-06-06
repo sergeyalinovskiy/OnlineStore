@@ -6,114 +6,135 @@
     using SA.OnlineStore.Common.Entity;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     #endregion
 
     public class BasketController : Controller
     {
-        private readonly IProductListService _productListService;
+        private readonly IBasketService _basketService;
                 
         public BasketController()
         {
 
         }
 
-        public BasketController(IProductListService productListService)
+        public BasketController(IBasketService productListService)
         {
             if (productListService == null)
             {
                 throw new NullReferenceException("productListService");
             }
-            _productListService = productListService;
+            _basketService = productListService;
         }
 
         public ActionResult Delete(int Id)
         {
-            _productListService.DeleteProductInBoxById(Id);
+            _basketService.DeleteProductInBoxById(Id);
             return RedirectToAction("Index");
         }
         
-        public ActionResult Save(ProductListViewModel model)
+        public ActionResult Save(BasketViewModel model)
         {
-            ProductList prodInBascet = ConvertToProductListModel(model);
-            _productListService.SaveProductListInBox(prodInBascet);
+            Basket prodInBasket = ConvertToProductListModel(model);
+            _basketService.SaveProductListInBox(prodInBasket);
             return View("Index");
         }
 
         public ActionResult Edit(int Id)
         {
-            var product = this.ConvertToProductViewModel(_productListService.GetProductListInBox(Id));
+            var product = this.ConvertToProductViewModel(_basketService.GetProductInBox(Id));
             return View(product);
         }
 
         [HttpPost]
-        public ActionResult Edit(ProductListViewModel model)
+        public ActionResult Edit(BasketViewModel model)
         {
             if (this.ModelState.IsValid)
             {
-                try
-                {
-                    var prod = this.ConvertToProductListModel(model);
-                    this._productListService.SaveProductListInBox(prod);
+                //try
+                //{
+                    var prod = ConvertToProductListModel(model);
+                    _basketService.EditProductListInBox(prod);
                    
                     return RedirectToAction("Details", new { Id = model.Id });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+                //}
+                //catch (Exception)
+                //{
+                //    this.ModelState.AddModelError("", "Internal Exceptions");
+                //}
             }
             return View();
         }
 
         public ActionResult Details(int id)
         {
-            ProductListViewModel product = this.ConvertToProductViewModel(_productListService.GetProductListInBox(id));
+            BasketViewModel product = this.ConvertToProductViewModel(_basketService.GetProductInBox(id));
             return View(product);
         }
 
         public ActionResult Index()
         {
-            var products = ConvertToProductListViewModelList(_productListService.GetProductListInBox());
+            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox());
             return View(products);
         }
-        
-        public ProductListViewModel ConvertToProductViewModel(ProductList model)
+
+        public ActionResult OrderDetails(int id)
         {
-            return new ProductListViewModel
+            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.Order.Id == id));
+           
+            return View(products);
+        }
+
+        public BasketViewModel ConvertToProductViewModel(Basket model)
+        {
+            return new BasketViewModel
             {
                 Id = model.Id,
-                ProductId = model.ProductId,
-                ProductName = model.ProductName,
-                Count = model.Count
+                OrderId = model.Order.Id,
+                ProductId = model.Product.Id,
+                ProductName = model.Product.Name,
+                Count = model.Count,
+                Price = model.Product.Price
+
             };
         }
 
-        public ProductList ConvertToProductListModel(ProductListViewModel model)
+        public Basket ConvertToProductListModel(BasketViewModel model)
         {
-            return new ProductList
+            return new Basket
             {
                 Id = model.Id,
-                ProductId = model.ProductId,
-                ProductName = model.ProductName,
-                Count = model.Count
+                Order= new Order()
+                {
+                    Id = model.OrderId,
+                },
+                Product= new Product()
+                {
+                    Id = model.ProductId,
+                    Name=model.ProductName,
+                    Price = model.Price
+                },
+                Count = model.Count,
             };
         }
 
-        public ProductListViewModel ConvertToProductListViewModel(ProductList model)
+        public BasketViewModel ConvertToProductListViewModel(Basket model)
         {
-            return new ProductListViewModel
+            return new BasketViewModel
             {
                 Id = model.Id,
-                ProductId = model.ProductId,
-                ProductName= model.ProductName,
-                Count= model.Count
+                OrderId = model.Order.Id,
+                ProductId = model.Product.Id,
+                ProductName = model.Product.Name,
+                Count = model.Count,
+                Price = model.Product.Price
             };
         }
 
-        public IEnumerable<ProductListViewModel> ConvertToProductListViewModelList(IEnumerable<ProductList> modelList)
+        public List<BasketViewModel> ConvertToProductListViewModelList(IEnumerable<Basket> modelList)
         {
-            List<ProductListViewModel> convertProductList = new List<ProductListViewModel>();
+            List<BasketViewModel> convertProductList = new List<BasketViewModel>();
 
             foreach (var item in modelList)
             {

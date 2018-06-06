@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace SA.OnlineStore.Bussines.Service
 {
-    public interface IPhoneService
+    public  interface IRoleService
     {
-        IEnumerable<Phone> GetPhnesByUserId(int id);
-        IEnumerable<Phone> GetPhoneList();
+        Role GetRoleById(int id);
+        
+        IEnumerable<Role> GetRoleList();
+
     }
 }

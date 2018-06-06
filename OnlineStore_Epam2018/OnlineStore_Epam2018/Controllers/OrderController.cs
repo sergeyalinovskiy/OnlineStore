@@ -12,21 +12,30 @@
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, IUserService userService, IRoleService roleService)
         {
             if (orderService == null)
             {
                 throw new NullReferenceException("orderService");
             }
+            if (userService == null)
+            {
+                throw new NullReferenceException("userService");
+            }
             _orderService = orderService;
+            _userService = userService;
+            _roleService = roleService;
         }
 
         public OrderController()
         {
            
         }
-     
+
+
         public ActionResult Index()
         {
             var ordersList = this._orderService.GetOrderList().Select(o => this.ConvertToViewModel(o));

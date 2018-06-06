@@ -136,6 +136,11 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\mainScript.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
@@ -168,6 +173,7 @@
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\PublicityViewModel.cs" />
     <Compile Include="Models\SeasonViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -207,7 +213,12 @@
     <Content Include="Views\Publicity\Publicity.cshtml" />
     <Content Include="Views\Product\CategoryList.cshtml" />
     <Content Include="Views\Basket\OrderDetails.cshtml" />
+    <Content Include="Views\Basket\UserInfo.cshtml" />
     <None Include="Views\Product\SubCategoryList.cshtml" />
+    <Content Include="Views\User\GetUserList.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -220,7 +231,6 @@
     <Folder Include="Content\publicity\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Phone\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SA.OnlineStore.Bussines\SA.OnlineStore.Bussines.csproj">

@@ -9,7 +9,7 @@
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int ProductListId { get; set; }
+        //public int ProductListId { get; set; }
         [Required(ErrorMessage = "Укажите адрес доставки")]
         [Display(Name = "Адрес")]
         public string Address { get; set; }

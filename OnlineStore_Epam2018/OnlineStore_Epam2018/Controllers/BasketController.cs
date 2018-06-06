@@ -13,19 +13,34 @@
     public class BasketController : Controller
     {
         private readonly IBasketService _basketService;
-                
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
+        private readonly IOrderService _orderService;
+
+
         public BasketController()
         {
 
         }
 
-        public BasketController(IBasketService productListService)
+        public BasketController(IBasketService productListService, IUserService userService, IRoleService roleService, IOrderService orderService)
         {
             if (productListService == null)
             {
                 throw new NullReferenceException("productListService");
             }
+            if (userService == null)
+            {
+                throw new NullReferenceException("userService");
+            }
+            if (roleService == null)
+            {
+                throw new NullReferenceException("roleService");
+            }
             _basketService = productListService;
+            _userService = userService;
+            _roleService = roleService;
+            _orderService = orderService;
         }
 
         public ActionResult Delete(int Id)
@@ -84,6 +99,29 @@
             var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.Order.Id == id));
            
             return View(products);
+        }
+
+        public ActionResult UserInfo(int id)
+        {
+            var user = ConvertUserToViewModel(_userService.GetUserById(id));
+
+            return PartialView(user);
+        }
+
+        public UserViewModel ConvertUserToViewModel(User model)
+        {
+            var role = _roleService.GetRoleList().Where(c => c.RoleId == model.Role.RoleId).FirstOrDefault();
+            return new UserViewModel()
+            {
+                UserId = model.UserId,
+                Login = model.Login,
+                Password = model.Password,
+                Name = model.Name,
+                LastName = model.LastName,
+                EmailAddress = model.Email.EmailAddress,
+                PhoneNumber = model.Phone.PhoneNumber,
+                RoleName = role.Name
+            };
         }
 
         public BasketViewModel ConvertToProductViewModel(Basket model)

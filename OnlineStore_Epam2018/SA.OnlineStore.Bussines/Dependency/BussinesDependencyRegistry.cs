@@ -20,6 +20,7 @@
             For<IUserService>().Use<UserService>();
             For<IEmailService>().Use<EmailService>();
             For<IPhoneService>().Use<PhoneService>();
+            For<IRoleService>().Use<RoleService>();
         }
     }
 }

@@ -313,9 +313,9 @@
                     prod = item;
                 }
             }
-            int countProductInBasket = _orderService.GetOrderList().Where(m => m.User.UserId == 1).Count();
+            int countProductInBasket = _orderService.GetOrderList().Where(m => m.User.UserId == 31).Count();
             int trigger = 0;
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 1))
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 31))
             {
                 if (order.StatusOrder.Id != 1)
                 {
@@ -324,12 +324,12 @@
             }
             if (countProductInBasket == trigger)
             {
-                _orderService.GetDefaultOrder(1);
+                _orderService.GetDefaultOrder(31);
             }
 
             int orderId = 1;
 
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 1))
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 31))
             {
                 if (order.StatusOrder.Id == 1)
                 {

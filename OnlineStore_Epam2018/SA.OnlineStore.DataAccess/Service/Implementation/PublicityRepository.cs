@@ -32,17 +32,17 @@
 
         //private readonly INewWebService _service;
 
-        private NewServiceReference.INewWebService _service;
+        private ServiceReferenceWCF.INewWebService _service;
 
-        private NewServiceReference.INewWebService CreateChannel()
+        private ServiceReferenceWCF.INewWebService CreateChannel()
         {
-            string absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "app.config");
+            string absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath,"app.config");
 
             Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(
                 new ExeConfigurationFileMap { ExeConfigFilename = absolutePath }, ConfigurationUserLevel.None);
 
-            ConfigurationChannelFactory<NewServiceReference.INewWebService> channelFactory =
-                      new ConfigurationChannelFactory<NewServiceReference.INewWebService>("BasicHttpBinding_INewWebService", configuration, null);
+            ConfigurationChannelFactory<ServiceReferenceWCF.INewWebService> channelFactory =
+                      new ConfigurationChannelFactory<ServiceReferenceWCF.INewWebService>("BasicHttpBinding_INewWebService", configuration, null);
 
             return channelFactory.CreateChannel();
         }

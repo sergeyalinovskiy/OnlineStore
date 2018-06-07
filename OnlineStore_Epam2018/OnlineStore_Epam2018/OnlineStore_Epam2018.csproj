@@ -212,8 +212,9 @@
     <Content Include="Views\Product\ErrorPartialView.cshtml" />
     <Content Include="Views\Publicity\Publicity.cshtml" />
     <Content Include="Views\Product\CategoryList.cshtml" />
-    <Content Include="Views\Basket\OrderDetails.cshtml" />
-    <Content Include="Views\Basket\UserInfo.cshtml" />
+    <Content Include="Views\Order\OrderDetails.cshtml" />
+    <Content Include="Views\Order\UserInfo.cshtml" />
+    <Content Include="Views\Order\OrderInfo.cshtml" />
     <None Include="Views\Product\SubCategoryList.cshtml" />
     <Content Include="Views\User\GetUserList.cshtml" />
     <Content Include="Views\User\Create.cshtml" />

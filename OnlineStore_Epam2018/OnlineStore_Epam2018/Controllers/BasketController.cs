@@ -17,7 +17,6 @@
         private readonly IRoleService _roleService;
         private readonly IOrderService _orderService;
 
-
         public BasketController()
         {
 
@@ -94,35 +93,7 @@
             return View(products);
         }
 
-        public ActionResult OrderDetails(int id)
-        {
-            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.Order.Id == id));
-           
-            return View(products);
-        }
-
-        public ActionResult UserInfo(int id)
-        {
-            var user = ConvertUserToViewModel(_userService.GetUserById(id));
-
-            return PartialView(user);
-        }
-
-        public UserViewModel ConvertUserToViewModel(User model)
-        {
-            var role = _roleService.GetRoleList().Where(c => c.RoleId == model.Role.RoleId).FirstOrDefault();
-            return new UserViewModel()
-            {
-                UserId = model.UserId,
-                Login = model.Login,
-                Password = model.Password,
-                Name = model.Name,
-                LastName = model.LastName,
-                EmailAddress = model.Email.EmailAddress,
-                PhoneNumber = model.Phone.PhoneNumber,
-                RoleName = role.Name
-            };
-        }
+       
 
         public BasketViewModel ConvertToProductViewModel(Basket model)
         {
@@ -134,7 +105,6 @@
                 ProductName = model.Product.Name,
                 Count = model.Count,
                 Price = model.Product.Price
-
             };
         }
 
@@ -153,7 +123,7 @@
                     Name=model.ProductName,
                     Price = model.Price
                 },
-                Count = model.Count,
+                Count = model.Count
             };
         }
 
@@ -166,7 +136,8 @@
                 ProductId = model.Product.Id,
                 ProductName = model.Product.Name,
                 Count = model.Count,
-                Price = model.Product.Price
+                Price = model.Product.Price,
+                Picture=model.Product.Picture
             };
         }
 

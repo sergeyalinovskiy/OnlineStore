@@ -72,6 +72,9 @@
             public const string DeletePhoneByUserId = "DeletePhoneByUserId";
             public const string DeleteEmailByUserId = "DeleteEmailByUserId";
 
+
+            public const string GetUserByLogin = "GetUserByLogin";
+
         }
     }
 }

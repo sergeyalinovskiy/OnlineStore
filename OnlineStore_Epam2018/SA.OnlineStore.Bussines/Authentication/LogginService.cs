@@ -6,7 +6,7 @@ using System.Web.Security;
 
 namespace SA.OnlineStore.Bussines.Authentication
 {
-    public class LogginService
+    public class LogginService : ILoginService
     {
         public void Login(string login, string password)
         {

@@ -36,7 +36,7 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = item.Id
+                    Value = null
                 });
                 command.Parameters.Add(new SqlParameter
                 {

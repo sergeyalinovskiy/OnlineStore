@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using SA.OnlineStore.Common.Entity;
 using SA.OnlineStore.DataAccess.Implements;
+using SA.OnlineStore.DataAccess.Service;
 
 namespace SA.OnlineStore.Bussines.Service.Implementation
 {
      public  class UserService : IUserService
     {
-        private readonly IRepository<User> _userRepository;
-        public UserService(IRepository<User> userRepository)
+        private readonly IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

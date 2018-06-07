@@ -29,7 +29,6 @@ namespace OnlineStore_Epam2018.Controllers
             return Json(emailsData, JsonRequestBehavior.AllowGet);
         }
 
-
         public ActionResult Index()
         {
             return View();

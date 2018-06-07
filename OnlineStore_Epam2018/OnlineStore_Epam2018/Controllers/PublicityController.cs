@@ -33,23 +33,23 @@ namespace OnlineStore_Epam2018.Controllers
         
         public ActionResult Publicity()
         {
-            try
-            {
+            //try
+            //{
                 IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());
                 return PartialView(publicity);
-            }
-            catch
-            {
-                List<Publicity> list = new List<Publicity>();
-                list.Add(new Publicity()
-                {
-                    Id = 11,
-                    Name = "Реклама на сайте",
-                    Picture = PictureConverter.ImageToByteArray(PictureConverter.GetImg("D:\\111\\OnlineStore\\OnlineStore_Epam2018\\OnlineStore_Epam2018\\Content\\img\\picture_BelSladkoe.jpg")),
-                    Text = "отсутствует"
-                });
-                return PartialView(ConvertToPublicityViewModelList(list));
-            }
+            //}
+            //catch
+            //{
+            //    List<Publicity> list = new List<Publicity>();
+            //    list.Add(new Publicity()
+            //    {
+            //        Id = 11,
+            //        Name = "Реклама на сайте",
+            //        Picture = PictureConverter.ImageToByteArray(PictureConverter.GetImg("D:\\1111\\OnlineStore\\OnlineStore_Epam2018\\OnlineStore_Epam2018\\Content\\img\\picture_BelSladkoe.jpg")),
+            //        Text = "отсутствует"
+            //    });
+            //    return PartialView(ConvertToPublicityViewModelList(list));
+            //}
            
         }
 

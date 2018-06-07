@@ -5,6 +5,7 @@
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     #endregion
@@ -14,8 +15,9 @@
         private readonly IOrderService _orderService;
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly IBasketService _basketService;
 
-        public OrderController(IOrderService orderService, IUserService userService, IRoleService roleService)
+        public OrderController(IOrderService orderService, IUserService userService, IRoleService roleService, IBasketService basketService)
         {
             if (orderService == null)
             {
@@ -28,13 +30,13 @@
             _orderService = orderService;
             _userService = userService;
             _roleService = roleService;
+            _basketService = basketService;
         }
 
         public OrderController()
         {
            
         }
-
 
         public ActionResult Index()
         {
@@ -47,7 +49,72 @@
             var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
             return View(order);
         }
+
+
+        public ActionResult OrderDetails(int id)
+        {
+            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.Order.Id == id));
+
+            return View(products);
+        }
+        public BasketViewModel ConvertToProductListViewModel(Basket model)
+        {
+            return new BasketViewModel
+            {
+                Id = model.Id,
+                OrderId = model.Order.Id,
+                ProductId = model.Product.Id,
+                ProductName = model.Product.Name,
+                Count = model.Count,
+                Price = model.Product.Price,
+                Picture = model.Product.Picture
+            };
+        }
+
+        public List<BasketViewModel> ConvertToProductListViewModelList(IEnumerable<Basket> modelList)
+        {
+            List<BasketViewModel> convertProductList = new List<BasketViewModel>();
+
+            foreach (var item in modelList)
+            {
+                convertProductList.Add(ConvertToProductListViewModel(item));
+            }
+            return convertProductList;
+        }
+
+        public ActionResult OrderInfo(int id)
+        {
+            var product = ConvertToViewModel(_orderService.GetOrder(id));
+            return PartialView(product);
+        }
         
+        public ActionResult UserInfo(int id)
+        {
+            int userId = 0;
+            foreach (var a in _orderService.GetOrderList().Where(m => m.Id == id))
+            {
+                userId = a.User.UserId;
+            }
+            var user = ConvertUserToViewModel(_userService.GetUserById(userId));
+            return PartialView(user);
+        }
+
+        public UserViewModel ConvertUserToViewModel(User model)
+        {
+            var role = _roleService.GetRoleList().Where(c => c.RoleId == model.Role.RoleId).FirstOrDefault();
+            return new UserViewModel()
+            {
+                UserId = model.UserId,
+                Login = model.Login,
+                Password = model.Password,
+                Name = model.Name,
+                LastName = model.LastName,
+                EmailAddress = model.Email.EmailAddress,
+                PhoneNumber = model.Phone.PhoneNumber,
+                RoleName = role.Name
+            };
+        }
+
         public ActionResult Create()
         {
             return View();

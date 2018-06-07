@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace SA.OnlineStore.DataAccess.Service.Implementation
 {
-    public class UserRepository : IRepository<User>
+    internal class UserRepository : IUserRepository
     {
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
@@ -113,6 +113,29 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 var list =ParsToUserList(userTable);
                 return @list;
 
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
+        public User GetByLogin(string login)
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetUserByLogin);
+                _realization.AddParametr(command, "Login", login, DbType.String);
+                var userTable = _realization.CreateTable("User");
+                userTable = _realization.FillInTable(userTable, command);
+                var @user = ParsToUser(userTable);
+                return @user;
             }
             catch (Exception exeption)
             {

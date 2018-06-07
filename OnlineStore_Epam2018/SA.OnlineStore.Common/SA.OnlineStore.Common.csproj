@@ -80,7 +80,7 @@
     <Compile Include="Entity\Season.cs" />
     <Compile Include="Entity\StatusOrder.cs" />
     <Compile Include="Entity\User.cs" />
-    <Compile Include="Entity\UserLogin.cs" />
+    <Compile Include="Entity\Login.cs" />
     <Compile Include="Logger\CommonLogger.cs" />
     <Compile Include="Logger\ICommonLogger.cs" />
     <Compile Include="Logger\Logger.cs" />

@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SA.OnlineStore.DataAccess.NewServiceReference {
+namespace SA.OnlineStore.DataAccess.ServiceReferenceWCF {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="NewServiceReference.INewWebService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReferenceWCF.INewWebService")]
     public interface INewWebService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/INewWebService/GetPublicityList", ReplyAction="http://tempuri.org/INewWebService/GetPublicityListResponse")]
@@ -23,12 +23,12 @@ namespace SA.OnlineStore.DataAccess.NewServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface INewWebServiceChannel : SA.OnlineStore.DataAccess.NewServiceReference.INewWebService, System.ServiceModel.IClientChannel {
+    public interface INewWebServiceChannel : SA.OnlineStore.DataAccess.ServiceReferenceWCF.INewWebService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class NewWebServiceClient : System.ServiceModel.ClientBase<SA.OnlineStore.DataAccess.NewServiceReference.INewWebService>, SA.OnlineStore.DataAccess.NewServiceReference.INewWebService {
+    public partial class NewWebServiceClient : System.ServiceModel.ClientBase<SA.OnlineStore.DataAccess.ServiceReferenceWCF.INewWebService>, SA.OnlineStore.DataAccess.ServiceReferenceWCF.INewWebService {
         
         public NewWebServiceClient() {
         }

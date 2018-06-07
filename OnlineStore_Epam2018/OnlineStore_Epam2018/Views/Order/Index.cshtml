@@ -46,7 +46,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.RouteLink("Подробнее", new { controller = "Basket", action = "OrderDetails", id = item.Id}, new { @class = "btn btn-default" })
+                @Html.RouteLink("Подробнее", new { controller = "Order", action = "OrderDetails", id = item.Id}, new { @class = "btn btn-default" })
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>

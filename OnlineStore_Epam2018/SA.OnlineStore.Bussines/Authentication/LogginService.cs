@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SA.OnlineStore.Common.Entity;
+using SA.OnlineStore.DataAccess.Service;
 using System;
 using System.Web;
 using System.Web.Security;
@@ -8,13 +9,18 @@ namespace SA.OnlineStore.Bussines.Authentication
 {
     public class LogginService : ILoginService
     {
+        private readonly IUserRepository _userRepository;
+        public LogginService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
         public void Login(string login, string password)
         {
             if (IsValidUser(login, password))
             {
                 var user = GetUser(login);
                 var userData = JsonConvert.SerializeObject(user);
-                var ticket = new FormsAuthenticationTicket(1, user.Name, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData);
+                var ticket = new FormsAuthenticationTicket(1, user.Login, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData);
                 var encryptTicket = FormsAuthentication.Encrypt(ticket);
                 var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket);
                 HttpContext.Current.Response.Cookies.Add(cookie);
@@ -28,7 +34,8 @@ namespace SA.OnlineStore.Bussines.Authentication
 
         private bool IsValidUser(string login, string password)
         {
-            if (login == password)
+            var user = GetUser(login);
+            if (user.Password==password && user!=null)
             {
                 return true;
             }
@@ -37,19 +44,7 @@ namespace SA.OnlineStore.Bussines.Authentication
 
         private User GetUser(string login)
         {
-            Role role = new Role
-            {
-                RoleId = 1,
-                Name = "admin"
-            };
-
-            User user = new User()
-            {
-                UserId = 1,
-                Name = login,
-              //  Roles = new Role[] { role }
-            };
-
+            var user = _userRepository.GetByLogin(login);
             return user;
         }
     }

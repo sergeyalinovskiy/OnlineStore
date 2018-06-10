@@ -63,14 +63,11 @@
         {
             try
             {
-                _realization.GetConnection().Open();
+                _connection.Open();
                 var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteCategoryByCategoryId);
-                command.Parameters.Add(new SqlParameter
-                {
-                    ParameterName = "Id",
-                    Value = id
-                });
+                _realization.AddParametr(command, "Id", id, DbType.Int32);
                 command.ExecuteNonQuery();
+              
             }
             catch (Exception exeption)
             {
@@ -79,7 +76,7 @@
             }
             finally
             {
-                _realization.GetConnection().Close();
+                _connection.Close();
             }
         }
 

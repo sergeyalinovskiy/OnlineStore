@@ -20,7 +20,7 @@
             For<IRealizationImplementation>().Use<RealizationImplementation>();
 
             For<IRepository<Basket>>().Use<BasketRepository>();
-            For<IRepository<Order>>().Use<OrderRepository>();
+            For<IOrderRepository>().Use<OrderRepository>();
 
             For<IUserRepository>().Use<UserRepository>();
             For<IRepository<Role>>().Use<RoleRepository>();

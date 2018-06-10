@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SA.OnlineStore.Common.Entity;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStore_Epam2018.Models
 {
@@ -9,5 +11,9 @@ namespace OnlineStore_Epam2018.Models
         [Display(Name = "Категория")]
         public string CategoryName { get; set; }
         public int ParentId { get; set; }
+        public string NewCategoryName { get; set; }
+        public string ParentCategoryName { get; set; }
+        public IEnumerable<Category> CategoryList { get; set; }
+
     }
 }

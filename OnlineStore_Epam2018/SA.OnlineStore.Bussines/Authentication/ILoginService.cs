@@ -11,7 +11,5 @@ namespace SA.OnlineStore.Bussines.Authentication
     {
         void Login(string login, string password);
         void Logout();
-        //bool IsValidUser(string login, string password);
-        //User GetUser(string login);
     }
 }

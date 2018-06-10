@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace SA.OnlineStore.DataAccess.Service.Implementation
 {
 
-    public class OrderRepository : IRepository<Order>
+    public class OrderRepository : IOrderRepository
     {
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
@@ -72,6 +72,29 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
+        public IEnumerable<StatusOrder> GetStatusOrder()
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetStatusOrder);
+                var orderStatusTable = _realization.CreateTable("OrderStatus");
+                orderStatusTable = _realization.FillInTable(orderStatusTable, command);
+                var list = CreateStatusOrderListFromTable(orderStatusTable);
+                return list;
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+    
+
         public void Delete(int id)
         {
             try
@@ -104,7 +127,6 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetOrdersList);
-
                 var orderTable = _realization.CreateTable("Orders");
                 orderTable = _realization.FillInTable(orderTable, command);
                 var list = CreateListFromTable(orderTable);
@@ -145,6 +167,35 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
+
+
+        public void SaveDefaultOrder(int userId)
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveDefaultOrder);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "UserId",
+                    Value = userId
+                });
+                command.ExecuteNonQuery();
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
+
+
+
         public void Update(Order item)
         {
             try
@@ -183,6 +234,20 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             {
                 _connection.Close();
             }
+        }
+
+        private List<StatusOrder> CreateStatusOrderListFromTable(DataTable table)
+        {
+            var list = table.AsEnumerable().Select(m =>
+            {
+                return new StatusOrder()
+                {
+                    Id = m.Field<int>("Id"),
+                    StatusOrderName = m.Field<string>("Name")
+                };
+               
+            }).ToList();
+            return list;
         }
 
         private List<Order> CreateListFromTable(DataTable table)

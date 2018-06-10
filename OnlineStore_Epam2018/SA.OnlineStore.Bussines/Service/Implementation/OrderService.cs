@@ -4,6 +4,7 @@
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.DataAccess.Implements;
+    using SA.OnlineStore.DataAccess.Service;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,31 +12,12 @@
 
     public class OrderService : IOrderService
     {
-        private readonly IRepository<Order> _orderRepository;
+        private readonly IOrderRepository _orderRepository;
         
-        public OrderService(IRepository<Order> orderRepository)
+        public OrderService(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
         }
-        //private List<Order> _orders = new List<Order>() {
-        //    new Order() {Id=1,
-        //                 UserId =1,
-        //                 StatusId=1,
-        //                 Address="qe",
-        //                 DateOrder=DateTime.Now.Date
-        //    } ,
-        //    new Order() {Id=1,
-        //                 UserId =2,
-        //                 StatusId=1,
-        //                 Address="qe",
-        //                 DateOrder=DateTime.Now.Date
-        //    } ,
-        //    new Order() {Id=1,
-        //                 UserId =3,
-        //                 StatusId=1,
-        //                 Address="qe",
-        //                 DateOrder=DateTime.Now.Date
-        //    }};
 
         public void DeleteOrderByOrderId(int Id)
         {
@@ -64,19 +46,9 @@
             }
         }
 
-        public void GetDefaultOrder(int id)
+        public void SaveDefaultOrder(int id)
         {
-            if (id > 0)
-            {
-                Order order = new Order
-                {
-                    DateOrder = DateTime.Now,
-                    User = new User() { UserId = id },
-                    StatusOrder = new StatusOrder() { Id = 1 },
-                    Address = "куда вести?"
-                };
-                _orderRepository.Create(order);
-            }
+             _orderRepository.SaveDefaultOrder(id);
         }
 
         public void EditOrder(Order model)
@@ -85,6 +57,12 @@
             {
                 _orderRepository.Update(model);
             }
+        }
+
+        public IEnumerable<StatusOrder> GetStatusOrders()
+        {
+            var orderStatus = _orderRepository.GetStatusOrder();
+            return orderStatus;
         }
     }
 }

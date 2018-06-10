@@ -1,7 +1,9 @@
 ﻿@model OnlineStore_Epam2018.Models.OrderViewModel
 
-        
 
+<div class="col-md-12">
+    
+    <div class="col-md-4">
         <dt>
             @Html.DisplayNameFor(model => model.Address)
         </dt>
@@ -9,14 +11,17 @@
         <dd>
             @Html.DisplayFor(model => model.Address)
         </dd>
-
+    </div>
+    <div class="col-md-4">
         <dt>
-            @Html.DisplayNameFor(model => model.StatusId)
+            @Html.DisplayNameFor(model => model.Status.StatusOrderName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StatusId)
+            @Html.DisplayFor(model => model.Status.StatusOrderName)
         </dd>
+    </div>
+    <div class="col-md-4">
 
         <dt>
             @Html.DisplayNameFor(model => model.DateOrder)
@@ -25,4 +30,13 @@
         <dd>
             @Html.DisplayFor(model => model.DateOrder)
         </dd>
+        <p></p>
+    </div>
+</div>
+
+
+
+
+
+
 

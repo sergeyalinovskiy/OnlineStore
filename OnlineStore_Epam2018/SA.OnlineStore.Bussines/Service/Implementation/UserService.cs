@@ -36,7 +36,7 @@ namespace SA.OnlineStore.Bussines.Service.Implementation
 
         public User GetUserByLogin(string login)
         {
-            throw new NotImplementedException();
+           return  _userRepository.GetByLogin(login);
         }
 
         public IEnumerable<User> GetUsersList()

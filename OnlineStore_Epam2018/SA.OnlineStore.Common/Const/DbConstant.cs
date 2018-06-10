@@ -34,6 +34,10 @@
             public const string DeleteOrderByOrderId = "DeleteOrderByOrderId";
             public const string UpdateOrder = "UpdateOrder";
 
+            public const string SaveDefaultOrder = "SaveDefaultOrder";
+
+
+            public const string GetStatusOrder = "GetStatusOrder";
 
             public const string GetOrdersListById = "GetOrdersListById";
             public const string GetOrdersList = "GetOrdersList";
@@ -43,7 +47,7 @@
             public const string GetBasketByOrderId = "GetBasketByOrderId";
             public const string GetBasketById = "GetBasketById";
             public const string SaveProductInBasket = "SaveProductInBasket";
-            public const string SaveNewProductInBasket = "SaveNewProductInBasket2";
+            public const string SaveNewProductInBasket = "SaveNewProductInBasket4";
             public const string DeleteProductInBasketById = "DeleteProductInBasketById";
             public const string GetBaskets = "GetBaskets";
 

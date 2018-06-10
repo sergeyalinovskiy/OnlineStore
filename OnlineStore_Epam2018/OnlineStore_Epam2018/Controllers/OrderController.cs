@@ -40,7 +40,9 @@
 
         public ActionResult Index()
         {
-            var ordersList = this._orderService.GetOrderList().Select(o => this.ConvertToViewModel(o));
+            var user = HttpContext.User.Identity.Name;
+            int userId = _userService.GetUserByLogin(user).UserId;
+            var ordersList = _orderService.GetOrderList().Select(o => this.ConvertToViewModel(o)).Where(m=>m.UserId==userId);
             return View(ordersList);
         }
         
@@ -140,8 +142,11 @@
             return View();
         }
 
+
+
         public ActionResult Edit(int Id)
         {
+
             var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
             return View(order);
         }
@@ -154,7 +159,7 @@
                 try
                 {
                     var order = this.ConvertToBusinesModel(model);
-                    this._orderService.EditOrder(order);
+                    this._orderService.SaveOrder(order);
                     return RedirectToAction("Detail", new { Id = model.Id });
                 }
                 catch(Exception)
@@ -173,6 +178,7 @@
 
         private Order ConvertToBusinesModel(OrderViewModel model)
         {
+            var status = _orderService.GetStatusOrders().Where(m => m.StatusOrderName == model.Status.StatusOrderName).FirstOrDefault(); 
             return new Order()
             {
                 Id = model.Id,
@@ -183,7 +189,8 @@
                 Address = model.Address,
                 StatusOrder =new StatusOrder()
                 {
-                    Id= model.StatusId
+                    Id= status.Id,
+                    StatusOrderName=status.StatusOrderName
                 }, 
                 DateOrder = model.DateOrder
             };
@@ -191,12 +198,17 @@
 
         private OrderViewModel ConvertToViewModel(Order model)
         {
+            var status = _orderService.GetStatusOrders().Where(m => m.Id== model.StatusOrder.Id).FirstOrDefault(); ;
             return new OrderViewModel()
             {
                 Id = model.Id,
-                UserId=model.User.UserId,
-                Address=model.Address,
-                StatusId=model.StatusOrder.Id,
+                UserId = model.User.UserId,
+                Address = model.Address,
+                Status = new StatusOrder()
+                {
+                    Id = model.Id,
+                    StatusOrderName=status.StatusOrderName
+                },
                 DateOrder=model.DateOrder
             };
         }

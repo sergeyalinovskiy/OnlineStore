@@ -3,17 +3,13 @@
 @{
     ViewBag.Title = "OrderDetails";
 }
-<p>
-    @Html.ActionLink("Оформить заказ", "Create")
-</p>
 
 @Html.Action("UserInfo", "Order", 0)
-
 
 @Html.Action("OrderInfo", "Order", 1)
 
 
-<h5>Продукты в заказе:</h5>
+<h6>Продукты в заказе:</h6>
 <table class="table">
     <tr>
         <th>
@@ -22,9 +18,6 @@
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.ProductId)
-            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Count)
         </th>
@@ -42,10 +35,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.ProductId)
-                </td>*@
+            </td> 
             <td>
                 @Html.DisplayFor(modelItem => item.Count)
             </td>
@@ -59,5 +49,4 @@
             </td>
         </tr>
     }
-
-</table>
+    </table>

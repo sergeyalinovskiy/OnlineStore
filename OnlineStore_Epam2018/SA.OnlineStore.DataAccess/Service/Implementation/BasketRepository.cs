@@ -36,6 +36,11 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 var command = _realization.GetCommand(_connection, DbConstant.Command.SaveNewProductInBasket);
                 command.Parameters.Add(new SqlParameter
                 {
+                    ParameterName = "Id",
+                    Value = 1
+                });
+                command.Parameters.Add(new SqlParameter
+                {
                     ParameterName = "ProductId",
                     Value = item.Product.Id
                 });

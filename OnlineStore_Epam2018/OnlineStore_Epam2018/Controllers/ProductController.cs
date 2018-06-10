@@ -8,6 +8,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     #endregion
 
@@ -19,8 +20,10 @@
         private readonly IBasketService _basketService;
         private readonly ICommonLogger _myLoger;
         private readonly IOrderService _orderService;
+        private readonly IUserService _userService;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IBasketService basketService, ICommonLogger myLoger, IOrderService orderService)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService,
+                                                                IBasketService basketService, ICommonLogger myLoger, IOrderService orderService, IUserService userService)
         {
             try
             {
@@ -46,6 +49,7 @@
                 _basketService = basketService;
                 _orderService = orderService;
                 _myLoger = myLoger;
+                _userService = userService;
             }
             catch (NullReferenceException)
             {
@@ -77,18 +81,13 @@
             {
                 return RedirectToAction("Index", "Error");
             }
-
             AddProductInBox(id);
             return View();
         }
 
         public ActionResult IndexSearch(int id)
         {
-            if (id < 1)
-            {
-                return RedirectToAction("Index", "Error");
-            }
-            IEnumerable<Product> productList = _productService.GetProductLIst();
+         IEnumerable<Product> productList = _productService.GetProductLIst();
             if (id != 0)
             {
                 productList = productList.Where(m => m.Category.CategoryId == id);
@@ -131,7 +130,6 @@
                     return View("Index", list);
                 }
             }
-
             IEnumerable<ProductViewModel> list2 = ConvertListToViewModel(productList);
             return View("Index", list2);
         }
@@ -139,14 +137,12 @@
         public ActionResult CategoryList()
         {
             var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m=>m.ParentId==0));
-
             return PartialView(categorys);
         }
 
         public ActionResult SubCategoryList(int id)
         {
             var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m => m.ParentId == id));
-
             return PartialView("SubCategoryList",categorys);
         }
         
@@ -176,7 +172,6 @@
             }
             model.CategoryList = _categoryService.GetCategoryList();
             model.SeasonList = _seasonService.GetSeasonList();
-
             return View(model);
         }
 
@@ -304,7 +299,10 @@
 
         public void AddProductInBox(int id)
         {
-           
+            var user = HttpContext.User.Identity.Name;
+            User user2 = _userService.GetUserByLogin(user);
+           int userId= user2.UserId;
+
             Product prod = new Product();
             foreach (Product item in _productService.GetProductLIst())
             {
@@ -313,9 +311,12 @@
                     prod = item;
                 }
             }
-            int countProductInBasket = _orderService.GetOrderList().Where(m => m.User.UserId == 31).Count();
+
+            //int id = HttpContext.Request.Cookies["Name"].Value
+            //COUNToRDERS
+            int countProductInBasket = _orderService.GetOrderList().Where(m => m.User.UserId == userId).Count();
             int trigger = 0;
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 31))
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == userId))
             {
                 if (order.StatusOrder.Id != 1)
                 {
@@ -324,12 +325,12 @@
             }
             if (countProductInBasket == trigger)
             {
-                _orderService.GetDefaultOrder(31);
+                _orderService.SaveDefaultOrder(userId);
             }
 
             int orderId = 1;
 
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 31))
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == userId))
             {
                 if (order.StatusOrder.Id == 1)
                 {

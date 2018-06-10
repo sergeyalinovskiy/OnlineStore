@@ -1,4 +1,5 @@
 ﻿using OnlineStore_Epam2018.Models;
+using OnlineStore_Epam2018.RoleAttribut;
 using SA.OnlineStore.Bussines.Service;
 using SA.OnlineStore.Common.Entity;
 using SA.OnlineStore.Common.Logger;
@@ -25,7 +26,7 @@ namespace OnlineStore_Epam2018.Controllers
             _phoneService = phoneService;
             _roleService = roleService;
         }
-
+         [Admin]
         public ActionResult Create()
         {
             var viewModel = new UserViewModel()
@@ -53,7 +54,7 @@ namespace OnlineStore_Epam2018.Controllers
 
             return View(model);
         }
-
+        [Admin]
         public ActionResult GetUser(int id)
         {
             if (id <= 0)
@@ -65,12 +66,21 @@ namespace OnlineStore_Epam2018.Controllers
             return View();
         }
 
+        public ActionResult GetUserAutorithationInfo()
+        {
+            var userr = HttpContext.User.Identity.Name;
+            int userId = _userService.GetUserByLogin(userr).UserId;
+            var user = ConvertToViewModel(_userService.GetUserById(userId));
+
+            return View(user);
+        }
+        [Admin]
         public ActionResult GetUserList()
         {
             var users = ConvertListToViewModel(_userService.GetUsersList());
             return View(users);
         }
-
+        [Admin]
         public ActionResult Delete (int id)
         {
             _userService.DeleteUserByUserId(id);

@@ -153,6 +153,7 @@
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PhoneController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -168,6 +169,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\BasketViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Models\SeasonViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleAttribut\Admin.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -215,11 +218,13 @@
     <Content Include="Views\Order\OrderDetails.cshtml" />
     <Content Include="Views\Order\UserInfo.cshtml" />
     <Content Include="Views\Order\OrderInfo.cshtml" />
+    <Content Include="Views\Login\Entrance.cshtml" />
     <None Include="Views\Product\SubCategoryList.cshtml" />
     <Content Include="Views\User\GetUserList.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\GetUserAutorithationInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

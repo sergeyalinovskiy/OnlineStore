@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.Address)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StatusId)
+            @Html.DisplayNameFor(model => model.Status.StatusOrderName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateOrder)
@@ -39,7 +39,7 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StatusId)
+                @Html.DisplayFor(modelItem => item.Status.StatusOrderName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOrder)

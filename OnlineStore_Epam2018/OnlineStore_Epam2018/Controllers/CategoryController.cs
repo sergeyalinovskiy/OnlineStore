@@ -7,6 +7,7 @@
     using SA.OnlineStore.Common.Logger;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     #endregion
     public class CategoryController : Controller
@@ -26,13 +27,17 @@
 
         public ActionResult Index()
         {
-            var viewModel= ConvertToListViewModel(_categoryService.GetCategoryList());
+            var viewModel = ConvertToListViewModel(_categoryService.GetCategoryList());
             return View(viewModel);
         }
 
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new CategoryViewModel()
+            {
+                CategoryList = _categoryService.GetCategoryList()
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -68,7 +73,7 @@
 
         public ActionResult Edit(int Id)
         {
-            var category = this.ConvertToViewModel(this._categoryService.GetCategory(Id));
+            var category = ConvertToViewModel(_categoryService.GetCategory(Id));
             return View(category);
         }
 
@@ -103,21 +108,23 @@
 
         public CategoryViewModel ConvertToViewModel(Category model)
         {
+            var category = _categoryService.GetCategoryList().Where(m => m.ParentId == model.ParentId).FirstOrDefault();
             return new CategoryViewModel()
             {
                 CategoryId= model.CategoryId,
                 CategoryName = model.CategoryName,
-                ParentId= model.ParentId
+                ParentId= model.ParentId,
+                ParentCategoryName=category.CategoryName
             };
         }
 
         public Category ConvertToBussinesModel(CategoryViewModel model)
         {
+            var category = _categoryService.GetCategoryList().Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
             return new Category()
             {
-                CategoryId = model.CategoryId,
-                CategoryName = model.CategoryName,
-                ParentId = model.ParentId
+                CategoryName = model.NewCategoryName,
+                ParentId = category.CategoryId
             };
         }
     }

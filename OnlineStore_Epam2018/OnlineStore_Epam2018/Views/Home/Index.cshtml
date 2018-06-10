@@ -61,6 +61,13 @@
     </text_Board>
 
 
+    <dvi>
+        @HttpContext.Current.User.Identity.Name
+        @HttpContext.Current.User.IsInRole("admin")
+        @Html.RouteLink("Logout", new { controller = "Login", action = "Logout" }, new { @class = "btn btn-default" })
+    </dvi>
+
+
     <h3>Перейти к каталогу:</h3>
 
     @Html.RouteLink("Go To Products List", new { controller = "Product", action = "Index" }, new { @class = "btn btn-default" })

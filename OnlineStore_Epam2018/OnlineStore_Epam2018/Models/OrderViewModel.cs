@@ -1,5 +1,6 @@
 ﻿namespace OnlineStore_Epam2018.Models
 {
+    using SA.OnlineStore.Common.Entity;
     #region Usings
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -13,7 +14,7 @@
         [Required(ErrorMessage = "Укажите адрес доставки")]
         [Display(Name = "Адрес")]
         public string Address { get; set; }
-        public int StatusId { get; set; }
+        public StatusOrder Status { get; set; }
         [Required(ErrorMessage = "Укажите дату")]
         [Display(Name = "Дата")]
         public DateTime DateOrder { get; set; }

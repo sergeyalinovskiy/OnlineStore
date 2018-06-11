@@ -41,7 +41,7 @@
 
             public const string GetOrdersListById = "GetOrdersListById";
             public const string GetOrdersList = "GetOrdersList";
-
+            
 
             //basket
             public const string GetBasketByOrderId = "GetBasketByOrderId";
@@ -53,7 +53,7 @@
 
             public const string GetProductsInBaskets = "GetProductsInBaskets";
             public const string GetProductsInBasketsByBasketId = "GetProductsInBasketsByBasketId";
-
+            public const string UpdateProductCountInBasket = "UpdateProductCountInBasket";
 
 
             //User

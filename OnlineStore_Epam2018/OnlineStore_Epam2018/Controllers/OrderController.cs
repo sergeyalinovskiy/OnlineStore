@@ -2,6 +2,7 @@
 {
     #region Usings
     using OnlineStore_Epam2018.Models;
+    using OnlineStore_Epam2018.RoleAttribut;
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
     using System;
@@ -38,6 +39,7 @@
            
         }
 
+        [UserFilter]
         public ActionResult Index()
         {
             var user = HttpContext.User.Identity.Name;
@@ -45,14 +47,21 @@
             var ordersList = _orderService.GetOrderList().Select(o => this.ConvertToViewModel(o)).Where(m=>m.UserId==userId);
             return View(ordersList);
         }
-        
+        [Editor]
+        public ActionResult GetAllOrders()
+        {
+           
+            var ordersList = ConvertToViewModelList(_orderService.GetOrderList());
+            return View(ordersList);
+        }
+        [UserFilter]
         public ActionResult Details(int Id)
         {
             var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
             return View(order);
         }
 
-
+        [UserFilter]
         public ActionResult OrderDetails(int id)
         {
             var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.Order.Id == id));
@@ -83,13 +92,13 @@
             }
             return convertProductList;
         }
-
+        [UserFilter]
         public ActionResult OrderInfo(int id)
         {
             var product = ConvertToViewModel(_orderService.GetOrder(id));
             return PartialView(product);
         }
-        
+        [UserFilter]
         public ActionResult UserInfo(int id)
         {
             int userId = 0;
@@ -142,7 +151,7 @@
             return View();
         }
 
-
+        [UserFilter]
 
         public ActionResult Edit(int Id)
         {
@@ -169,6 +178,8 @@
             }
             return View();
         }
+
+        [UserFilter]
 
         public ActionResult Delete(int Id)
         {
@@ -211,6 +222,15 @@
                 },
                 DateOrder=model.DateOrder
             };
+        }
+        private List<OrderViewModel> ConvertToViewModelList(IEnumerable<Order> list)
+        {
+            List<OrderViewModel> orders = new List<OrderViewModel>();
+            foreach (Order item in list)
+            {
+                orders.Add(ConvertToViewModel(item));
+            }
+            return orders;
         }
     }
 }

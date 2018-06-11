@@ -19,5 +19,7 @@ namespace OnlineStore_Epam2018.Models
         public int OrderId { get; set; }
         [Display(Name = "Картинка")]
         public string Picture { get; set; }
+        [Display(Name = "Категория")]
+        public string Category { get; set; }
     }
 }

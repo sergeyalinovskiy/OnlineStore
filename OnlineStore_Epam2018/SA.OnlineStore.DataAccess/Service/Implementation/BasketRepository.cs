@@ -143,7 +143,12 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveProductInBasket);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.UpdateProductCountInBasket);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = item.Id
+                 });
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "ProductId",
@@ -151,10 +156,16 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 });
                 command.Parameters.Add(new SqlParameter
                 {
+                    ParameterName = "OrderId",
+                    Value = item.Order.Id
+                });
+                command.Parameters.Add(new SqlParameter
+                {
                     ParameterName = "Count",
                     Value = item.Count
                 });
-                
+
+
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)

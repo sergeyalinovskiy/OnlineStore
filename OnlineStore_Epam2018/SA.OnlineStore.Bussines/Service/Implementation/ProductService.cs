@@ -2,6 +2,7 @@
 {
     #region Usings
     using SA.OnlineStore.Bussines.Service;
+    using SA.OnlineStore.Common.Cache;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.DataAccess.Implements;
     using SA.OnlineStore.DataAccess.Service;
@@ -11,11 +12,13 @@
 
     public class ProductService : IProductService
     {
+        private readonly IStoreCache _cache;
         private readonly IRepository<Product> _productRepository;
 
-        public ProductService(IRepository<Product> productRepository)
+        public ProductService(IRepository<Product> productRepository, IStoreCache cache)
         {
             _productRepository = productRepository;
+            _cache = cache;
         }
 
         public void DeleteProductByProductId(int Id) 
@@ -45,7 +48,13 @@
 
         public IEnumerable<Product> GetProductLIst()
         {
-            return _productRepository.GetAll();
+            IReadOnlyCollection<Product> list = _cache.GetCache("ProductCache");
+            if (list == null)
+            {
+                 list = _productRepository.GetAll();
+                _cache.Create("ProductCache", list, 30);
+            }
+            return list;
         }
 
         public IEnumerable<Product> GetProductLIstByCategory(int category)

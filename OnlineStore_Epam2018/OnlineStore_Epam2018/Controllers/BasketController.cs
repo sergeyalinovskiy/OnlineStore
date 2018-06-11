@@ -45,7 +45,7 @@
         public ActionResult Delete(int Id)
         {
             _basketService.DeleteProductInBoxById(Id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Order");
         }
         
         public ActionResult Save(BasketViewModel model)
@@ -104,7 +104,8 @@
                 ProductId = model.Product.Id,
                 ProductName = model.Product.Name,
                 Count = model.Count,
-                Price = model.Product.Price
+                Price = model.Product.Price,
+                Category=model.Product.Category.CategoryName
             };
         }
 
@@ -121,7 +122,11 @@
                 {
                     Id = model.ProductId,
                     Name=model.ProductName,
-                    Price = model.Price
+                    Price = model.Price,
+                    Category = new Category()
+                    {
+                        CategoryName=model.Category
+                    }
                 },
                 Count = model.Count
             };

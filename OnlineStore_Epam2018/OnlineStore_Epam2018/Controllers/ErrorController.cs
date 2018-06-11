@@ -21,5 +21,11 @@
             Response.StatusCode = 500;
             return View();
         }
+        public ActionResult AccessPrivilegeError()
+        {
+            Response.StatusCode = 401;
+
+            return RedirectToAction("Entrance","Login");
+        }
     }
 }

@@ -57,6 +57,10 @@
             </dl>
         </div>
         <p>
-            @Html.ActionLink("Edit", "Edit", new { Productid = Model.Id }) |
-            @Html.ActionLink("Back to List", "Index")
+
+            @if (@HttpContext.Current.User.IsInRole("editor") || @HttpContext.Current.User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { Productid = Model.Id }) 
+            }
+                @Html.ActionLink("Back to List", "Index")
         </p>

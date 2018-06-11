@@ -2,6 +2,7 @@
 {
     #region Usings
     using OnlineStore_Epam2018.Models;
+    using OnlineStore_Epam2018.RoleAttribut;
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
@@ -75,6 +76,7 @@
             return View("Index", productList);
         }
 
+        [UserFilter]
         public ActionResult AddInBox(int id)
         {
             if (id <= 0)
@@ -145,7 +147,9 @@
             var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m => m.ParentId == id));
             return PartialView("SubCategoryList",categorys);
         }
+
         
+        [Editor]
         public ActionResult Create()
         {
             var viewModel = new ProductViewModel()
@@ -187,13 +191,15 @@
                 return RedirectToAction("Index", "Error");
             }
         }
-
+      
+        [Editor]
         public ActionResult Delete(int id)
         {
             _productService.DeleteProductByProductId(id);
             return RedirectToAction("Index");
         }
 
+        [Editor]
         public ActionResult Edit(int ProductId)
         {
             var product = this.ConvertToViewModel(this._productService.GetProduct(ProductId));

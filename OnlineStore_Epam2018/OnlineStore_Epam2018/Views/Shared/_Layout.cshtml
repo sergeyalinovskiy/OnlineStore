@@ -21,24 +21,54 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Саженцы Могилев", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Продукты", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Поиск", "Index", "Search", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Заказы", "Index", "Order", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Категории", "Index", "Category", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Корзина", "Index", "Basket", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Users", "GetUserList", "User", new { area = "" }, new { @class = "navbar-brand" })
 
+                <div class="navbar-collapse st" >
+                    <ul class="nav navbar-nav">
+                       <li> @Html.ActionLink("Саженцы Могилев", "Index", "Home")</li>
+                       <li> @Html.ActionLink("Продукты", "Index", "Product")</li>
+                       <li> @Html.ActionLink("Поиск", "Index", "Search")</li>
 
+                        
+                   @if( HttpContext.Current.User.IsInRole("user"))
+                    {
+                         <li>@Html.ActionLink("Заказы", "Index", "Order") </li>
+                          
+                    }
+                    @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin"))
+                    {
+                        <li> @Html.ActionLink("Заказы", "GetAllOrders", "Order")</li>
+                    }
 
-                @Html.ActionLink("Войти", "Entrance", "Login", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Выйти", "Logout", "Login", new { area = "" }, new { @class = "navbar-brand" })
+                    @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin"))
+                    {
+                       
+                         <li> @Html.ActionLink("Категории", "Index", "Category")</li>
+                         
+                    }
 
-
+                    @if (HttpContext.Current.User.IsInRole("admin"))
+                    {
+                         <li> @Html.ActionLink("Users", "GetUserList", "User")</li>
+                    }
+                     @if (HttpContext.Current.User.IsInRole("user"))
+                    {
+                         <li> @Html.ActionLink("Профиль", "GetUserAutorithationInfo", "User")</li>
+                    }
+                        </ul>
+                
+                    <ul class="nav navbar-nav" style="float: right">
+                    @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin") || HttpContext.Current.User.IsInRole("user"))
+                    {
+                        <li>  @Html.ActionLink("Выйти", "Logout", "Login")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Войти", "Entrance", "Login") </li>
+                    }
+                    </ul>
+             </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
-            </div>
+           
         </div>
     </div>
 

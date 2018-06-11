@@ -1,4 +1,5 @@
 ﻿using OnlineStore_Epam2018.Models;
+using OnlineStore_Epam2018.RoleAttribut;
 using SA.OnlineStore.Bussines.Authentication;
 using System.Web.Mvc;
 
@@ -26,6 +27,7 @@ namespace OnlineStore_Epam2018.Controllers
 
 
         }
+        [Logged]
         public ActionResult Logout()
         {
             _loginService.Logout();

@@ -301,3 +301,11 @@ D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineSt
 D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.pdb
 D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.Collections.Immutable.dll
 D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\roslyn\System.IO.FileSystem.dll
+D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\app.config
+D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\2.jpg
+D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\4.jpg
+D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\5.jpg
+D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\6.jpg
+D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\7.jpg
+D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\8.jpg
+D:\1111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\9.jpg

@@ -2,6 +2,7 @@
 {
     #region Usings
     using OnlineStore_Epam2018.Models;
+    using OnlineStore_Epam2018.RoleAttribut;
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
@@ -24,13 +25,15 @@
             }
             _categoryService = categoryService;
         }
-
+        
+        [Editor]
         public ActionResult Index()
         {
             var viewModel = ConvertToListViewModel(_categoryService.GetCategoryList());
             return View(viewModel);
         }
 
+        [Editor]
         public ActionResult Create()
         {
             var viewModel = new CategoryViewModel()
@@ -58,13 +61,14 @@
             }
             return View();
         }
-
+        [Editor]
         public ActionResult Details(int id)
         {
             CategoryViewModel category = ConvertToViewModel(_categoryService.GetCategory(id));
             return View(category);
         }
-
+       
+        [Editor]
         public ActionResult Delete(int id)
         {
             _categoryService.DeleteCategoryByCategoryId(id);

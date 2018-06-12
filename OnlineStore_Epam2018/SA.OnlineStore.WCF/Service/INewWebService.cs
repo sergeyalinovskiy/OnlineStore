@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SA.OnlineStore.WCF;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace SA.OnlineStore.WCF

@@ -22,7 +22,7 @@
         @Html.DisplayFor(modelItem => item.Count)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Price)
+        @Html.DisplayFor(modelItem => item.Price) руб.
     </td>
     <td>
         @Html.RouteLink("Подробнее", new { controller = "Product", action = "Details", id = item.Id })

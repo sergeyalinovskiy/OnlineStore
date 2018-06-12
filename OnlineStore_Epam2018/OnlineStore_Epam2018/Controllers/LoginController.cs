@@ -13,7 +13,6 @@ namespace OnlineStore_Epam2018.Controllers
             _loginService = loginService;
         }
 
-
         public ActionResult Entrance()
         {
             return View();
@@ -24,8 +23,6 @@ namespace OnlineStore_Epam2018.Controllers
         {
             _loginService.Login(model.Login, model.Password);
             return RedirectToAction("Index", "Home");
-
-
         }
         [Logged]
         public ActionResult Logout()

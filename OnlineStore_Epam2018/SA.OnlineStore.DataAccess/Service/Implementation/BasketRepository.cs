@@ -124,8 +124,8 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
                 var basketTable = _realization.CreateTable("Basket");
                 basketTable = _realization.FillInTable(basketTable, command);
-                var @basket = ParseToBasket(basketTable);
-                return @basket;
+                var basket = ParseToBasket(basketTable);
+                return basket;
             }
             catch (Exception exeption)
             {
@@ -177,11 +177,7 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             {
                 _connection.Close();
             };
-        }
-
-
-
-        
+        }   
 
 
         private List<Basket> ParseToBasketList(DataTable table)
@@ -210,10 +206,7 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                     {
                        Id = m.Field<int>("ProductId"),
                         Name = m.Field<string>("Name"),
-                        Category= new Category()
-                        {
-                            CategoryId=m.Field<int>("CategoryId")
-                        },
+                       
                         Season = new Season()
                         {
                             SeasonId = m.Field<int>("SeasonsId")
@@ -222,7 +215,12 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                         Description=m.Field<string>("Description"),
                         Price=m.Field<int>("Price"),
                     },
-                  Count=m.Field<int>("Count")
+                    Category = new Category()
+                    {
+                        CategoryId = m.Field<int>("CategoryId"),
+                        CategoryName = m.Field<string>("CategoryName")
+                    },
+                    Count =m.Field<int>("Count")
                 };
             }).ToList();
             return list;
@@ -253,17 +251,19 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                     {
                         Id = m.Field<int>("ProductId"),
                         Name = m.Field<string>("Name"),
-                        Category = new Category()
-                        {
-                            CategoryId = m.Field<int>("CategoryId")
-                        },
+                       
                         Season = new Season()
-                        {
+                        { 
                             SeasonId = m.Field<int>("SeasonsId")
                         },
                         Picture = m.Field<string>("Picture"),
                         Description = m.Field<string>("Description"),
                         Price = m.Field<int>("Price"),
+                    },
+                    Category = new Category()
+                    {
+                        CategoryId = m.Field<int>("CategoryId"),
+                        CategoryName = m.Field<string>("CategoryName")
                     },
                     Count = m.Field<int>("Count")
                 };

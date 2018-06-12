@@ -78,7 +78,8 @@
                 ProductName = model.Product.Name,
                 Count = model.Count,
                 Price = model.Product.Price,
-                Picture = model.Product.Picture
+                Picture = model.Product.Picture,
+                Category=model.Category.CategoryName
             };
         }
 
@@ -169,9 +170,39 @@
                 {
                     var order = this.ConvertToBusinesModel(model);
                     this._orderService.SaveOrder(order);
-                    return RedirectToAction("Detail", new { Id = model.Id });
+                    return RedirectToAction("GetAllOrders");
                 }
                 catch(Exception)
+                {
+                    this.ModelState.AddModelError("", "Internal Errors");
+                }
+            }
+            return View();
+        }
+
+        [UserFilter]
+
+        public ActionResult EditUserOrder(int Id)
+        {
+
+            var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
+            
+            return View(order);
+        }
+
+        [HttpPost]
+        public ActionResult EditUserOrder(OrderViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                try
+                {
+                    model.Status.Id = 2;
+                    var order = this.ConvertToBusinesModel(model);
+                    this._orderService.SaveOrder(order);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
                 {
                     this.ModelState.AddModelError("", "Internal Errors");
                 }
@@ -189,7 +220,6 @@
 
         private Order ConvertToBusinesModel(OrderViewModel model)
         {
-            var status = _orderService.GetStatusOrders().Where(m => m.StatusOrderName == model.Status.StatusOrderName).FirstOrDefault(); 
             return new Order()
             {
                 Id = model.Id,
@@ -200,8 +230,7 @@
                 Address = model.Address,
                 StatusOrder =new StatusOrder()
                 {
-                    Id= status.Id,
-                    StatusOrderName=status.StatusOrderName
+                    Id= model.Status.Id
                 }, 
                 DateOrder = model.DateOrder
             };
@@ -217,12 +246,24 @@
                 Address = model.Address,
                 Status = new StatusOrder()
                 {
-                    Id = model.Id,
-                    StatusOrderName=status.StatusOrderName
+                    Id = model.StatusOrder.Id,
+                    StatusOrderName = model.StatusOrder.StatusOrderName
                 },
-                DateOrder=model.DateOrder
+                DateOrder = model.DateOrder,
+                StatusOrders = ConvertToViewModelList(_orderService.GetStatusOrders())
             };
         }
+
+        private List<StatusOrder> ConvertToViewModelList(IEnumerable<StatusOrder> list)
+        {
+            List<StatusOrder> statuses = new List<StatusOrder>();
+            foreach (StatusOrder item in list)
+            {
+                statuses.Add(item);
+            }
+            return statuses;
+        }
+
         private List<OrderViewModel> ConvertToViewModelList(IEnumerable<Order> list)
         {
             List<OrderViewModel> orders = new List<OrderViewModel>();

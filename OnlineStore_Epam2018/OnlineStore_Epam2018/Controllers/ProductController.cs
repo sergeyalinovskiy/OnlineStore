@@ -147,7 +147,6 @@
             var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m => m.ParentId == id));
             return PartialView("SubCategoryList",categorys);
         }
-
         
         [Editor]
         public ActionResult Create()
@@ -200,9 +199,9 @@
         }
 
         [Editor]
-        public ActionResult Edit(int ProductId)
+        public ActionResult Edit(int id)
         {
-            var product = this.ConvertToViewModel(this._productService.GetProduct(ProductId));
+            var product = this.ConvertToViewModel(this._productService.GetProduct(id));
             return View(product);
         }
 

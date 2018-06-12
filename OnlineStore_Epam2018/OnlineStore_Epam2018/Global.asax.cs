@@ -36,6 +36,25 @@ namespace OnlineStore_Epam2018
             var logger = container.GetInstance<ICommonLogger>();
 
             logger.Info(exception.Message + "   " + exception.StackTrace);
+
+            if (exception is HttpException h)
+            {
+                switch (h.GetHttpCode())
+                {
+                    case 404:
+                        Response.Redirect("~/Error/NotFound");
+                        break;
+                    case 500:
+                        Response.Redirect("~/Error/ServerError");
+                        break;
+                    case 401:
+                        Response.Redirect("~/Login/Entrance");
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)

@@ -146,6 +146,35 @@ namespace OnlineStore_Epam2018.Controllers
             return View(user);
         }
 
+
+
+        public ActionResult EditUserAutorithationInfo(int id)
+        {
+            var user = ConvertToViewModel(this._userService.GetUserById(id));
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditUserAutorithationInfo(UserViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                try
+                {
+                    var user = this.ConvertToBussinesModel(model);
+                    _userService.SaveUser(user);
+                    return RedirectToAction("GetUserAutorithationInfo", new { Id = model.UserId });
+                }
+                catch (Exception)
+                {
+                    this.ModelState.AddModelError("", "Internal Exceptions");
+                }
+            }
+            return View();
+        }
+
+
+
         public ActionResult Edit(int id)
         {
             var user = ConvertToViewModel(this._userService.GetUserById(id));

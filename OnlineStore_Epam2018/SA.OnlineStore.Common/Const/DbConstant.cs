@@ -6,6 +6,7 @@
 
     public static class DbConstant
     {
+        public const string FolderName = "11111";
         public static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         public static class Command
         {

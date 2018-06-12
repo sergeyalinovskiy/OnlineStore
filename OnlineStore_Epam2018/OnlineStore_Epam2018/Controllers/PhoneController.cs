@@ -28,7 +28,6 @@ namespace OnlineStore_Epam2018.Controllers
             return Json(phonesData, JsonRequestBehavior.AllowGet);
         }
 
-
         public ActionResult Index()
         {
             return View();

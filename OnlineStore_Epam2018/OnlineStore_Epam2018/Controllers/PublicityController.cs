@@ -1,5 +1,6 @@
 ﻿using OnlineStore_Epam2018.Models;
 using SA.OnlineStore.Bussines.Service;
+using SA.OnlineStore.Common.Const;
 using SA.OnlineStore.Common.Convert;
 using SA.OnlineStore.Common.Entity;
 using System;
@@ -45,7 +46,7 @@ namespace OnlineStore_Epam2018.Controllers
             {
             Id = 11,
                     Name = "Реклама на сайте",
-                    Picture = PictureConverter.ImageToByteArray(PictureConverter.GetImg("D:\\1111\\OnlineStore\\OnlineStore_Epam2018\\OnlineStore_Epam2018\\Content\\img\\picture_BelSladkoe.jpg")),
+                    Picture = PictureConverter.ImageToByteArray(PictureConverter.GetImg("D:\\" + DbConstant.FolderName + "\\OnlineStore\\OnlineStore_Epam2018\\OnlineStore_Epam2018\\Content\\img\\picture_BelSladkoe.jpg")),
                     Text = "отсутствует"
                 });
                 return PartialView(ConvertToPublicityViewModelList(list));

@@ -104,8 +104,7 @@
                 ProductId = model.Product.Id,
                 ProductName = model.Product.Name,
                 Count = model.Count,
-                Price = model.Product.Price,
-                Category=model.Product.Category.CategoryName
+                Category=model.Category.CategoryName
             };
         }
 
@@ -126,6 +125,7 @@
                     Category = new Category()
                     {
                         CategoryName=model.Category
+
                     }
                 },
                 Count = model.Count
@@ -142,7 +142,8 @@
                 ProductName = model.Product.Name,
                 Count = model.Count,
                 Price = model.Product.Price,
-                Picture=model.Product.Picture
+                Picture=model.Product.Picture,
+                Category=model.Category.CategoryName
             };
         }
 

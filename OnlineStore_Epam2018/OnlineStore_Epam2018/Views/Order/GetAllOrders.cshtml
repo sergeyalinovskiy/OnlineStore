@@ -9,7 +9,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserId)
+           Номер заказа
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Address)
@@ -26,7 +26,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
+            @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Address)
@@ -40,7 +40,7 @@
         <td>
         @if (@HttpContext.Current.User.IsInRole("admin"))
         {
-                @Html.RouteLink("Указать адрес доставки", new { controller = "Order", action = "Edit", id = item.Id }, new { @class = "btn btn-default" }) 
+                @Html.RouteLink("Изменить статус заказа", new { controller = "Order", action = "Edit", id = item.Id }, new { @class = "btn btn-default" }) 
         }
                 @Html.RouteLink("Открыть", new { controller = "Order", action = "OrderDetails", id = item.Id }, new { @class = "btn btn-default" }) 
         </td>

@@ -4,22 +4,16 @@
     ViewBag.Title = "GetUserList";
 }
 
-<h2>GetUserList</h2>
+<h2>Все пользователи</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.RouteLink("Добавить пользователя", new { controller = "User", action = "Create" }, new { @class = "btn btn-default" })
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
+    <tr>       
         <th>
             @Html.DisplayNameFor(model => model.Login)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
+        </th>        
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -28,26 +22,14 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RoleName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </th>
+        </th>       
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Login)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -59,15 +41,9 @@
             @Html.DisplayFor(modelItem => item.RoleName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailAddress)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.UserId }) |w
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })    
+            @Html.RouteLink("Изменить", new { controller = "User", action = "Edit", id = item.UserId }, new { @class = "btn btn-default" })
+            @Html.RouteLink("Подробнее", new { controller = "User", action = "Details", id = item.UserId }, new { @class = "btn btn-default" })
+            @Html.RouteLink("удалить", new { controller = "User", action = "Delete", id = item.UserId }, new { @class = "btn btn-default" })
         </td>
     </tr>
 }

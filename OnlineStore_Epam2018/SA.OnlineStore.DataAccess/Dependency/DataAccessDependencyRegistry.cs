@@ -14,17 +14,14 @@
         public DataAccessDependencyRegistry()
         {
             For<IRepository<Publicity>>().Use<PublicityRepository>();
-            For<IRepository<Product>>().Use<ProductRepository>();
+            For<IProductRepository>().Use<ProductRepository>();
             For<IRepository<Category>>().Use<CategoryRepository>();
             For<IRepository<Season>>().Use<SeasonRepository>();
             For<IRealizationImplementation>().Use<RealizationImplementation>();
-
             For<IRepository<Basket>>().Use<BasketRepository>();
             For<IOrderRepository>().Use<OrderRepository>();
-
             For<IUserRepository>().Use<UserRepository>();
             For<IRepository<Role>>().Use<RoleRepository>();
-
             For<IRepository<Phone>>().Use<PhoneRepository>();
             For<IRepository<Email>>().Use<EmailRepository>();
         }

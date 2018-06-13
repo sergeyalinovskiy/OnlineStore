@@ -53,7 +53,7 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CategoryName)
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SeasonName)
@@ -62,9 +62,12 @@
                         @Html.DisplayFor(modelItem => item.Price) руб.
                     </td>
                     <td>
+                           @if (@HttpContext.Current.User.IsInRole("user") )
+                           {
                         <p>
                             @Html.RouteLink("Добавить в карзину", new { controller = "Product", action = "AddInBox", id = item.Id }, new { @class = "btn btn-default" })
                         </p>
+                           }
                         <p>
                             @Html.RouteLink("Подробнее", new { controller = "Product", action = "Details", id = item.Id }, new { @class = "btn btn-default" })
                         </p>

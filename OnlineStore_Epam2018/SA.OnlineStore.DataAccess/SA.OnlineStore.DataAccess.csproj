@@ -72,6 +72,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service\IOrderRepository.cs" />
+    <Compile Include="Service\IProductRepository.cs" />
     <Compile Include="Service\IRepository.cs" />
     <Compile Include="Implements\RealizationImplementation.cs" />
     <Compile Include="Service\Implementation\BasketRepository.cs" />

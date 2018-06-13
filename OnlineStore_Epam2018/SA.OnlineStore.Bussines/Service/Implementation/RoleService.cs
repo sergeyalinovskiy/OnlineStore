@@ -17,7 +17,11 @@ namespace SA.OnlineStore.Bussines.Service.Implementation
         }
         public Role GetRoleById(int id)
         {
-            return _roleRepository.GetById(id);
+            if (id < 1)
+            {
+                return null;
+            }
+                return _roleRepository.GetById(id);
         }
 
         public IEnumerable<Role> GetRoleList()

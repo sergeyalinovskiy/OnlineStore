@@ -1,7 +1,7 @@
 ﻿@model OnlineStore_Epam2018.Models.UserViewModel
 
 <div>
-    <h4>UserViewModel</h4>
+    <h2>Профиль</h2>
     <hr />
     <dl class="dl-horizontal">
       
@@ -50,6 +50,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Редактировать", "EditUserAutorithationInfo", new { id = Model.UserId } )
+    @Html.RouteLink("Редактировать",  new {controller="User", action= "EditUserAutorithationInfo", id = Model.UserId }, new { @class = "btn btn-default" })
   
 </p>

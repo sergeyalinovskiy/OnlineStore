@@ -4,15 +4,14 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать пользователя</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>UserViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -86,10 +85,9 @@
         </div>
     </div>
 }
+@Html.RouteLink("Назад", new { controller = "User", action = "GetUserList"}, new { @class = "btn btn-default" })
 
-<div>
-    @Html.ActionLink("Back to List", "GetUserList")
-</div>
+
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

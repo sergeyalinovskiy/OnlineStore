@@ -8,11 +8,11 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
-<body>
+<body >
     <div id="header">
         @*<div class="tittle">OnlineStore</div>*@
     </div>
-  
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -22,53 +22,53 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <div class="navbar-collapse st" >
+                <div class="navbar-collapse st">
                     <ul class="nav navbar-nav">
-                       <li> @Html.ActionLink("Саженцы Могилев", "Index", "Home")</li>
-                       <li> @Html.ActionLink("Продукты", "Index", "Product")</li>
-                       <li> @Html.ActionLink("Поиск", "Index", "Search")</li>
+                        <li> @Html.ActionLink("Саженцы Могилев", "Index", "Home")</li>
+                        <li> @Html.ActionLink("Продукты", "Index", "Product")</li>
+                        <li> @Html.ActionLink("Поиск", "Index", "Search")</li>
 
-                        
-                   @if( HttpContext.Current.User.IsInRole("user"))
-                    {
-                         <li>@Html.ActionLink("Заказы", "Index", "Order") </li>
-                          
-                    }
-                    @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin"))
-                    {
-                        <li> @Html.ActionLink("Заказы", "GetAllOrders", "Order")</li>
-                    }
 
-                    @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin"))
-                    {
-                       
-                         <li> @Html.ActionLink("Категории", "Index", "Category")</li>
-                         
-                    }
+                        @if (HttpContext.Current.User.IsInRole("user"))
+                        {
+                            <li>@Html.ActionLink("Заказы", "Index", "Order") </li>
 
-                    @if (HttpContext.Current.User.IsInRole("admin"))
-                    {
-                         <li> @Html.ActionLink("Users", "GetUserList", "User")</li>
-                    }
-                     @if (HttpContext.Current.User.IsInRole("user"))
-                    {
-                         <li> @Html.ActionLink("Профиль", "GetUserAutorithationInfo", "User")</li>
-                    }
-                        </ul>
-                
-                    <ul class="nav navbar-nav" style="float: right">
-                    @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin") || HttpContext.Current.User.IsInRole("user"))
-                    {
-                        <li>  @Html.ActionLink("Выйти", "Logout", "Login")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Войти", "Entrance", "Login") </li>
-                    }
+                        }
+                        @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin"))
+                        {
+                            <li> @Html.ActionLink("Заказы", "GetAllOrders", "Order")</li>
+                        }
+
+                        @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin"))
+                        {
+
+                            <li> @Html.ActionLink("Категории", "Index", "Category")</li>
+
+                        }
+
+                        @if (HttpContext.Current.User.IsInRole("admin"))
+                        {
+                            <li> @Html.ActionLink("Users", "GetUserList", "User")</li>
+                        }
+                        @if (HttpContext.Current.User.IsInRole("user"))
+                        {
+                            <li> @Html.ActionLink("Профиль", "GetUserAutorithationInfo", "User")</li>
+                        }
                     </ul>
-             </div>
+
+                    <ul class="nav navbar-nav" style="float: right">
+                        @if (HttpContext.Current.User.IsInRole("editor") || HttpContext.Current.User.IsInRole("admin") || HttpContext.Current.User.IsInRole("user"))
+                        {
+                            <li>  @Html.ActionLink("Выйти", "Logout", "Login")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Войти", "Entrance", "Login") </li>
+                        }
+                    </ul>
+                </div>
             </div>
-           
+
         </div>
     </div>
 

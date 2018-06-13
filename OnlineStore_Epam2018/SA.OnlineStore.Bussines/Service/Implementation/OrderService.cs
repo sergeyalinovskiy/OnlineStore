@@ -21,7 +21,10 @@
 
         public void DeleteOrderByOrderId(int Id)
         {
-            _orderRepository.Delete(Id);
+            if (Id > 0)
+            {
+                _orderRepository.Delete(Id);
+            }
         }
 
         public Order GetOrder(int Id)
@@ -48,7 +51,10 @@
 
         public void SaveDefaultOrder(int id)
         {
-             _orderRepository.SaveDefaultOrder(id);
+            if (id > 0)
+            {
+                _orderRepository.SaveDefaultOrder(id);
+            }
         }
 
         public void EditOrder(Order model)

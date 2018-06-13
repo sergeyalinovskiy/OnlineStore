@@ -24,7 +24,8 @@
         private readonly IUserService _userService;
 
         public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService,
-                                                                IBasketService basketService, ICommonLogger myLoger, IOrderService orderService, IUserService userService)
+                                                                                IBasketService basketService, ICommonLogger myLoger, 
+                                                                                           IOrderService orderService, IUserService userService)
         {
             try
             {
@@ -165,7 +166,7 @@
         {
             if (this.ModelState.IsValid)
             {
-                var product = this.ConvertToBussinesModel(model);
+                var product = this.ConvertToBussinesCreateModel(model);
                 _productService.SaveProduct(product);
                 return RedirectToAction("Index");
             }
@@ -208,18 +209,16 @@
         [HttpPost]
         public ActionResult Edit(ProductViewModel model)
         {
-            if (this.ModelState.IsValid)
+            
+            try
             {
-                try
-                {
-                    var product = this.ConvertToBussinesModel(model);
-                    _productService.SaveProduct(product);
-                    return RedirectToAction("Details", new { Id = model.Id });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+                var product = this.ConvertToBussinesModel(model);
+                _productService.SaveProduct(product);
+                return RedirectToAction("Details", new { Id = model.Id });
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError("", "Internal Exceptions");
             }
             return View();
         }
@@ -256,6 +255,7 @@
             };
         }
 
+
         public ProductViewModel ConvertToViewModel(Product model)
         {
             var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
@@ -264,20 +264,25 @@
             {
                 Id = model.Id,
                 Name = model.Name,
-
-                CategoryName = category.CategoryName,
+                Category = new Category
+                {
+                    CategoryId = model.Category.CategoryId,
+                    CategoryName = model.Category.CategoryName
+                },
                 SeasonName = season.SeasonName,
                 Picture = model.Picture,
                 Description = model.Description,
                 Count = model.Count,
-                Price = model.Price
+                Price = model.Price,
+                CategoryList = _categoryService.GetCategoryList(),
+                SeasonList = _seasonService.GetSeasonList()
             };
         }
 
         public Product ConvertToBussinesModel(ProductViewModel model)
         {
-            var season = _seasonService.GetSeasonList().Where(s => s.SeasonName == model.SeasonName).FirstOrDefault();
-            var category = _categoryService.GetCategoryList().Where(c => c.CategoryName == model.CategoryName).FirstOrDefault();
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
             return new Product()
             {
                 Id = model.Id,
@@ -298,6 +303,32 @@
                 Price = model.Price,
                 Description = model.Description
                 
+            };
+        }
+
+        public Product ConvertToBussinesCreateModel(ProductViewModel model)
+        {
+            var season = _seasonService.GetSeasonList().Where(s => s.SeasonName == model.SeasonName).FirstOrDefault();
+            var category = _categoryService.GetCategoryList().Where(c => c.CategoryName == model.CategoryName).FirstOrDefault();
+            return new Product()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Category = new Category()
+                {
+                    CategoryId = category.CategoryId,
+                    CategoryName = category.CategoryName,
+                    ParentId = category.ParentId
+                },
+                Season = new Season()
+                {
+                    SeasonId = season.SeasonId,
+                    SeasonName = season.SeasonName
+                },
+                Count = model.Count,
+                Picture = model.Picture,
+                Price = model.Price,
+                Description = model.Description
             };
         }
         #endregion

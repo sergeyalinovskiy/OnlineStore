@@ -27,8 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
-        
+                @Html.DropDownListFor(m => m.Category.CategoryId, new SelectList(Model.CategoryList.Where(m => m.ParentId!=0), "CategoryId", "CategoryName"), Model.CategoryList.Where(x => x.CategoryId == Model.Category.CategoryId).Select(m => m.CategoryName))
                 @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SeasonName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SeasonName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(m => m.Season.SeasonId, new SelectList(Model.SeasonList, "SeasonId", "SeasonName"), Model.SeasonList.Where(x => x.SeasonId == Model.Season.SeasonId).Select(m => m.SeasonName))
                 @Html.ValidationMessageFor(model => model.SeasonName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -81,6 +80,5 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+        @Html.RouteLink("Назад", new { controller = "Product", action = "Index" }, new { @class = "btn btn-default" })
+

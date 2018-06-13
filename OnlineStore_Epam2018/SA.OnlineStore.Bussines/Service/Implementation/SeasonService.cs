@@ -21,15 +21,5 @@
         {
             return _seasonRepository.GetAll();
         }
-
-        //public IEnumerable<Season> SeasonNameList()
-        //{
-        //    List<Season> seasonNames = new List<Season>();
-        //    foreach (Season item in _seasonRepository.GetAll())
-        //    {
-        //        seasonNames.Add(item.SeasonName);
-        //    }
-        //    return seasonNames;
-        //}
     }
 }

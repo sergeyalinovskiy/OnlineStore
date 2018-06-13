@@ -13,7 +13,7 @@
     using System.Linq;
     #endregion
 
-    public class ProductRepository : IRepository<Product>
+    public class ProductRepository : IProductRepository
     {
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
@@ -23,7 +23,7 @@
         public ProductRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
             _commonLogger = commonLogger;
-            
+
             _realization = realization;
             _connection = _realization.GetConnection();
         }
@@ -33,7 +33,7 @@
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveProduct);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveProduct);
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
@@ -91,7 +91,7 @@
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveProduct);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveProduct);
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
@@ -150,11 +150,11 @@
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductListByProductId);
-                _realization.AddParametr(command,"Id", id, DbType.Int32);
+                _realization.AddParametr(command, "Id", id, DbType.Int32);
                 var productTable = _realization.CreateTable("Products");
                 productTable = _realization.FillInTable(productTable, command);
-                var @product = FillEntity(productTable);
-                return @product; 
+                var @product = ParseToEntity(productTable);
+                return @product;
             }
             catch (Exception exeption)
             {
@@ -166,12 +166,60 @@
                 _connection.Close();
             }
         }
+
+        public List<Product> SearchProducts(string name, int category, int minValue, int maxValue)
+        {
+            try
+            {
+                _connection.Open();
+                var command = _realization.GetCommand(_connection, DbConstant.Command.SearchProducts);
+                _realization.AddParametr(command, "Name", name, DbType.String);
+                _realization.AddParametr(command, "CategoryId", category, DbType.Int32);
+                _realization.AddParametr(command, "PriceMin", minValue, DbType.Int32);
+                _realization.AddParametr(command, "PriceMax", maxValue, DbType.Int32);
+                var productTable = _realization.CreateTable("Products");
+                productTable = _realization.FillInTable(productTable, command);
+                //var @product = CreateListFromTable(productTable);
+                var list = productTable.AsEnumerable().Select(m =>
+                {
+                    return new Product()
+                    {
+                        Id = m.Field<int>("Id"),
+                        Name = m.Field<string>("Name"),
+                        Category = new Category()
+                        {
+                            CategoryId = m.Field<int>("CategoryId")
+                        },
+                        Season = new Season()
+                        {
+                            SeasonId = m.Field<int>("SeasonsId")
+                        },
+                        Picture = m.Field<string>("Picture"),
+                        Description = m.Field<string>("Description"),
+                        Count = m.Field<int>("Count"),
+                        Price = m.Field<int>("Price")
+                    };
+                }).ToList();
+                return list;
+            }
+            catch (Exception exeption)
+            {
+                _commonLogger.Info(exeption.Message);
+                throw new Exception();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
+
         public void Delete(int id)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteProductByProductId);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.DeleteProductByProductId);
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
                 command.ExecuteNonQuery();
             }
@@ -194,6 +242,7 @@
                 var productTable = _realization.CreateTable("Products");
                 productTable = _realization.FillInTable(productTable, command);
                 var list = CreateListFromTable(productTable);
+
                 return list;
             }
             catch (Exception exeption)
@@ -207,6 +256,37 @@
             }
         }
 
+
+
+
+        private List<Product> CreateListFromTable2(DataTable table)
+        {
+            List<Product> productsList = new List<Product>();
+            var list = table.AsEnumerable().Select(m =>
+            {
+                return new Product()
+                {
+                    Id = m.Field<int>("Id"),
+                    Name = m.Field<string>("Name"),
+                    Category = new Category()
+                    {
+                        CategoryId = m.Field<int>("CategoryId"),
+                        CategoryName = m.Field<string>("CategoryName"),
+                        ParentId = m.Field<int>("ParentId")
+                    },
+                    Season = new Season()
+                    {
+                        SeasonId = m.Field<int>("SeasonsId"),
+                        SeasonName = m.Field<string>("SeasonsName")
+                    },
+                    Picture = m.Field<string>("Picture"),
+                    Description = m.Field<string>("Description"),
+                    Count = m.Field<int>("Count"),
+                    Price = m.Field<int>("Price")
+                };
+            }).ToList();
+            return list;
+        }
 
         private List<Product> CreateListFromTable(DataTable table)
         {
@@ -237,7 +317,7 @@
             return list;
         }
 
-        private Product FillEntity(DataTable table)
+        private Product ParseToEntity(DataTable table)
         {
             var product = table.AsEnumerable().Select(m =>
             {

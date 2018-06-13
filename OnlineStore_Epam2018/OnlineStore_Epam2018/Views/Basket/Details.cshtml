@@ -7,27 +7,22 @@
 <h2>Изменения</h2>
 
 <div>
-    <h4>ProductListViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.ProductName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.ProductName)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Count)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Count)
         </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }) 
+    @Html.RouteLink("Изменить", new {controller="Basket", action= "Edit" , id = Model.Id }) 
 </p>

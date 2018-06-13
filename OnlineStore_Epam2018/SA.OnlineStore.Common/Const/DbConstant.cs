@@ -24,8 +24,9 @@
 
             //prod
             public const string GetProducts = "GetProducts";
-
             public const string GetProductListByProductId = "GetProductListByProductId";
+
+            public const string SearchProducts = "SearchProducts";
 
 
             //Order
@@ -56,7 +57,6 @@
             public const string GetProductsInBasketsByBasketId = "GetProductsInBasketsByBasketId";
             public const string UpdateProductCountInBasket = "UpdateProductCountInBasket";
 
-
             //User
             public const string SaveUser = "SaveUser";
             public const string SaveUserEmail = "SaveUserEmail";
@@ -72,11 +72,9 @@
             public const string GetEmailsList = "GetEmailsList";
             public const string GetPhonesList = "GetPhonesList";
 
-
             public const string DeleteUserByUserId = "DeleteUserByUserId";
             public const string DeletePhoneByUserId = "DeletePhoneByUserId";
             public const string DeleteEmailByUserId = "DeleteEmailByUserId";
-
 
             public const string GetUserByLogin = "GetUserByLogin";
 

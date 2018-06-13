@@ -38,22 +38,26 @@ namespace OnlineStore_Epam2018.Controllers
             return View(viewModel);
         }
 
+
         [HttpPost]
         public ActionResult Create(UserViewModel model)
         {
             if (this.ModelState.IsValid)
             {
-                var product = this.ConvertToBussinesModel(model);
-                _userService.SaveUser(product);
+                var user = this.ConvertToBussinesModel(model);
+                _userService.SaveUser(user);
                 return RedirectToAction("GetUserList");
             }
             else
             {
                 ModelState.AddModelError("", "Exception");
             }
-
+            model.Roles = _roleService.GetRoleList();
             return View(model);
         }
+
+
+
         [Admin]
         public ActionResult GetUser(int id)
         {

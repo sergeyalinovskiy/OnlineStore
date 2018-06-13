@@ -9,11 +9,15 @@
 
     public class OrderViewModel
     {
+      
+        [Display(Name = "Номер заказа")]
         public int Id { get; set; }
+        [Display(Name = "Номер пользователя")]
         public int UserId { get; set; }
         [Required(ErrorMessage = "Укажите адрес доставки")]
         [Display(Name = "Адрес")]
         public string Address { get; set; }
+        [Display(Name = "Статус заказа")]
         public StatusOrder Status { get; set; }
         [Required(ErrorMessage = "Укажите дату")]
         [Display(Name = "Дата")]

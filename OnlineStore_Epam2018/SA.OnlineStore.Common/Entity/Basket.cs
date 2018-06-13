@@ -7,6 +7,5 @@
         public Product Product { get; set; }
         public int Count { get; set; }
         public Category Category { get; set; }
-
     }
 }

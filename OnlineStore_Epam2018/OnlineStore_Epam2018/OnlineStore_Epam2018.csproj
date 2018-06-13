@@ -116,6 +116,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\111.jpg" />
+    <Content Include="Content\img\apple.png" />
+    <Content Include="Content\img\apple2.png" />
+    <Content Include="Content\img\apple3.png" />
     <Content Include="Content\img\picture_BelSladkoe.jpg" />
     <Content Include="Content\img\picture_default.jpg" />
     <Content Include="Content\img\picture_Elena.jpg" />
@@ -125,7 +129,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Log.config.xml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -143,6 +146,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\mainScript.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\SearchScript.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

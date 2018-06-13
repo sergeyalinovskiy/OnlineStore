@@ -18,7 +18,7 @@ namespace SA.OnlineStore.Bussines.Service.Implementation
 
         public IEnumerable<Phone> GetPhnesByUserId(int id)
         {
-            throw new NotImplementedException();
+             throw new NotImplementedException();
         }
 
         public IEnumerable<Phone> GetPhoneList()

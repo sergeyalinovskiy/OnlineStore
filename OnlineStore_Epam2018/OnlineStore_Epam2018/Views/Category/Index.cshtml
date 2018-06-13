@@ -33,12 +33,20 @@
             @Html.DisplayFor(modelItem => item.CategoryName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ParentId)
+            @*@if (item.ParentId != 0)
+            {
+            @Html.DisplayFor(modelItem => item.CategoryList.Where(m => m.CategoryId == item.ParentId).Select(m => m.CategoryName));
+            }
+            else
+            {*@
+                @Html.DisplayFor(modelItem => item.ParentId)
+            @*}*@
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CategoryId }) |
-            @Html.ActionLink("Details", "Details", new {  id=item.CategoryId  }) |
-            @Html.ActionLink("Delete", "Delete", new {  id=item.CategoryId})
+            @Html.RouteLink("Изменить", new { controller = "Category", action = "Edit", id = item.CategoryId }, new { @class = "btn btn-default" })
+            @Html.RouteLink("Подробнее", new { controller = "Category", action = "Details", id = item.CategoryId }, new { @class = "btn btn-default" })
+            @Html.RouteLink("Удалить", new { controller = "Category", action = "Delete", id = item.CategoryId }, new { @class = "btn btn-default" })
+
         </td>
     </tr>
 }

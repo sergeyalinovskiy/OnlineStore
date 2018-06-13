@@ -13,9 +13,9 @@
     public class ProductService : IProductService
     {
         private readonly IStoreCache _cache;
-        private readonly IRepository<Product> _productRepository;
+        private readonly IProductRepository _productRepository;
 
-        public ProductService(IRepository<Product> productRepository, IStoreCache cache)
+        public ProductService(IProductRepository productRepository, IStoreCache cache)
         {
             _productRepository = productRepository;
             _cache = cache;
@@ -25,6 +25,7 @@
         {
             if (Id > 0)
             {
+                _cache.Delete("ProductCache");
                 _productRepository.Delete(Id);
             }
         }
@@ -33,6 +34,7 @@
         {
             if (model != null)
             {
+                _cache.Delete("ProductCache");
                 _productRepository.Update(model);
             }
         }
@@ -51,7 +53,7 @@
             IReadOnlyCollection<Product> list = _cache.GetCache("ProductCache");
             if (list == null)
             {
-                 list = _productRepository.GetAll();
+                list = _productRepository.GetAll();
                 _cache.Create("ProductCache", list, 30);
             }
             return list;
@@ -66,12 +68,25 @@
             return _productRepository.GetAll().Where(x => x.Category.CategoryId == category);
         }
 
-        public void SaveProduct(Product model)
+        public bool SaveProduct(Product model)
         {
             if (model != null)
             {
+                _cache.Delete("ProductCache");
                 _productRepository.Create(model);
+                return true;
             }
+            return false;
+        }
+
+        public List<Product> SearchProducts(string name, int category, int minValue, int maxValue)
+        {
+            if ( name==null|| category < 0 || minValue <0 || maxValue < 0)
+            {
+                return null;
+            }
+            var resultLIst = _productRepository.SearchProducts(name, category, minValue, maxValue);
+            return resultLIst;
         }
     }
 }

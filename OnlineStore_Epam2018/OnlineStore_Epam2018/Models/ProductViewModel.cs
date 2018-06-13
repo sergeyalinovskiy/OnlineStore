@@ -31,7 +31,10 @@
         [Required(ErrorMessage = "Установите цену")]
         public int Price { get; set; }
 
+        public Category Category { get; set; }
         public IEnumerable<Season> SeasonList { get; set; }
+        public Season Season { get; set; }
         public IEnumerable<Category> CategoryList { get; set; }
+        public IEnumerable<Role> RoleList { get; set; }
     }
 }

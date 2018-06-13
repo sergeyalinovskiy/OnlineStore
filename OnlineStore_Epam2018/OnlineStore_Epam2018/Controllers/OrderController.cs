@@ -198,6 +198,7 @@
                 try
                 {
                     model.Status.Id = 2;
+                    model.DateOrder = DateTime.Now;
                     var order = this.ConvertToBusinesModel(model);
                     this._orderService.SaveOrder(order);
                     return RedirectToAction("Index");
@@ -238,7 +239,7 @@
 
         private OrderViewModel ConvertToViewModel(Order model)
         {
-            var status = _orderService.GetStatusOrders().Where(m => m.Id== model.StatusOrder.Id).FirstOrDefault(); ;
+            //var status = _orderService.GetStatusOrders().Where(m => m.Id== model.StatusOrder.Id).FirstOrDefault(); 
             return new OrderViewModel()
             {
                 Id = model.Id,

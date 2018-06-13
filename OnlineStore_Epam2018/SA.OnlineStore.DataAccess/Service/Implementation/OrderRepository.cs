@@ -167,8 +167,6 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-
-
         public void SaveDefaultOrder(int userId)
         {
             try
@@ -179,6 +177,11 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 {
                     ParameterName = "UserId",
                     Value = userId
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "DateOrder",
+                    Value = DateTime.Now
                 });
                 command.ExecuteNonQuery();
             }
@@ -192,9 +195,6 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
                 _connection.Close();
             }
         }
-
-
-
 
         public void Update(Order item)
         {

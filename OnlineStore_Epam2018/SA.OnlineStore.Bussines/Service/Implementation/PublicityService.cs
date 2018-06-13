@@ -16,17 +16,7 @@
         {
             _publicityRepository = publicityRepository;
         }
-
-        //public PublicityModel GetPublicity()
-        //{
-        //    PublicityModel publicity = _publicityRepository.GetPublicity();
-        //    return publicity;
-        //}       
-        //public IEnumerable<Publicity> GetDefaultList()
-        //{
-        //    IEnumerable<Publicity> resultList = _publicityRepository.GetDefaultList();
-        //    return resultList;
-        //}
+  
         public IEnumerable<Publicity> GetPublicityList()
         {
             IEnumerable<Publicity> resultList = _publicityRepository.GetAll();

@@ -46,11 +46,9 @@
         [HttpPost]
         public ActionResult Create(CategoryViewModel model)
         {
-            if (this.ModelState.IsValid)
-            {
                 try
                 {
-                    var category = this.ConvertToBussinesModel(model);
+                    var category = this.ConvertToNewBussinesModel(model);
                     _categoryService.SaveCategory(category);
                     return RedirectToAction("Index");
                 }
@@ -58,7 +56,6 @@
                 {
                     this.ModelState.AddModelError("", "Internal Exceptions");
                 }
-            }
             return View();
         }
         [Editor]
@@ -84,20 +81,17 @@
         [HttpPost]
         public ActionResult Edit(CategoryViewModel model)
         {
-            if (this.ModelState.IsValid)
+            try
             {
-                try
-                {
-                    var category = this.ConvertToBussinesModel(model);
-                    this._categoryService.SaveCategory(category);
-                    return RedirectToAction("Details", new { Id = model.CategoryId });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+                var category = this.ConvertToBussinesModel(model);
+                this._categoryService.SaveCategory(category);
+                return RedirectToAction("Details", new { Id = model.CategoryId });
             }
-            return View();
+            catch (Exception)
+            {
+                this.ModelState.AddModelError("", "Internal Exceptions");
+            }
+        return View();
         }
 
         public List<CategoryViewModel> ConvertToListViewModel(IEnumerable<Category> modelList)
@@ -127,7 +121,18 @@
             var category = _categoryService.GetCategoryList().Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
             return new Category()
             {
-                CategoryName = model.NewCategoryName,
+                CategoryId=model.CategoryId,
+                CategoryName = model.CategoryName,
+                ParentId = category.ParentId
+            };
+        }
+
+        public Category ConvertToNewBussinesModel(CategoryViewModel model)
+        {
+            var category = _categoryService.GetCategoryList().Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
+            return new Category()
+            {
+                CategoryName= model.NewCategoryName ,
                 ParentId = category.CategoryId
             };
         }

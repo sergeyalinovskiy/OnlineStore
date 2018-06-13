@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Информация о пользователе</h2>
 
 <div>
-    <h4>UserViewModel</h4>
+   
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -77,6 +77,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new {  id = Model.UserId  }) |
-    @Html.ActionLink("Back to List", "GetUserList")
+    @Html.RouteLink("Изменить", new { controller = "User", action = "Edit", id = Model.UserId }, new { @class = "btn btn-default" })
+    @Html.RouteLink("Назад", new { controller = "User", action = "GetUserList" }, new { @class = "btn btn-default" })
 </p>

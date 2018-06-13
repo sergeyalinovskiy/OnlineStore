@@ -1,6 +1,7 @@
 ﻿using OnlineStore_Epam2018.Models;
 using OnlineStore_Epam2018.RoleAttribut;
 using SA.OnlineStore.Bussines.Authentication;
+using System;
 using System.Web.Mvc;
 
 namespace OnlineStore_Epam2018.Controllers
@@ -21,9 +22,18 @@ namespace OnlineStore_Epam2018.Controllers
         [HttpPost]
         public ActionResult Entrance(LoginViewModel model)
         {
-            _loginService.Login(model.Login, model.Password);
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                _loginService.Login(model.Login, model.Password);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError("", "Internal Exceptions");
+            }
+            return View();
         }
+
         [Logged]
         public ActionResult Logout()
         {

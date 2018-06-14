@@ -14,7 +14,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -23,7 +24,7 @@
             @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
-            <img src="data:image;base64,@item.Picture" style="width:50px; height:auto;" />
+            <img src="data:image;base64,@item.Picture" style="width:50px; height:auto" />
         </td>
 
     </tr>

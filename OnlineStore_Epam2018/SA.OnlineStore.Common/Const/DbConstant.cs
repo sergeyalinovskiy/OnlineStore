@@ -6,6 +6,7 @@
 
     public static class DbConstant
     {
+        public const string FolderName = "11111";
         public static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         public static class Command
         {
@@ -23,8 +24,9 @@
 
             //prod
             public const string GetProducts = "GetProducts";
-
             public const string GetProductListByProductId = "GetProductListByProductId";
+
+            public const string SearchProducts = "SearchProducts";
 
 
             //Order
@@ -34,21 +36,47 @@
             public const string DeleteOrderByOrderId = "DeleteOrderByOrderId";
             public const string UpdateOrder = "UpdateOrder";
 
+            public const string SaveDefaultOrder = "SaveDefaultOrder";
+
+
+            public const string GetStatusOrder = "GetStatusOrder";
 
             public const string GetOrdersListById = "GetOrdersListById";
             public const string GetOrdersList = "GetOrdersList";
-
+            
 
             //basket
             public const string GetBasketByOrderId = "GetBasketByOrderId";
             public const string GetBasketById = "GetBasketById";
             public const string SaveProductInBasket = "SaveProductInBasket";
-            public const string SaveNewProductInBasket = "SaveNewProductInBasket2";
+            public const string SaveNewProductInBasket = "SaveNewProductInBasket4";
             public const string DeleteProductInBasketById = "DeleteProductInBasketById";
             public const string GetBaskets = "GetBaskets";
 
             public const string GetProductsInBaskets = "GetProductsInBaskets";
             public const string GetProductsInBasketsByBasketId = "GetProductsInBasketsByBasketId";
+            public const string UpdateProductCountInBasket = "UpdateProductCountInBasket";
+
+            //User
+            public const string SaveUser = "SaveUser";
+            public const string SaveUserEmail = "SaveUserEmail";
+            public const string SaveUserPhone = "SaveUserPhone";
+            public const string SaveUserRole = "SaveUserRole";
+
+            public const string GetUserList = "GetUserList";
+            public const string GetUserListByUserId = "GetUserListByUserId";
+
+            public const string GetRoles = "GetRoles";
+            public const string GetPhonesByUserId = "GetPhonesByUserId";
+            public const string GetEmailsByUserId = "GetEmailsByUserId";
+            public const string GetEmailsList = "GetEmailsList";
+            public const string GetPhonesList = "GetPhonesList";
+
+            public const string DeleteUserByUserId = "DeleteUserByUserId";
+            public const string DeletePhoneByUserId = "DeletePhoneByUserId";
+            public const string DeleteEmailByUserId = "DeleteEmailByUserId";
+
+            public const string GetUserByLogin = "GetUserByLogin";
 
         }
     }

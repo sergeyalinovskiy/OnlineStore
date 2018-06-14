@@ -1,5 +1,8 @@
 ﻿using log4net;
+using Newtonsoft.Json;
 using OnlineStore_Epam2018.DependencyResolution;
+using SA.OnlineStore.Bussines.Authentication;
+using SA.OnlineStore.Common.Entity;
 using SA.OnlineStore.Common.Logger;
 using System;
 using System.Collections.Generic;
@@ -8,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace OnlineStore_Epam2018
 {
@@ -30,6 +34,35 @@ namespace OnlineStore_Epam2018
             var logger = container.GetInstance<ICommonLogger>();
 
             logger.Info(exception.Message + "   " + exception.StackTrace);
+
+            if (exception is HttpException h)
+            {
+                switch (h.GetHttpCode())
+                {
+                    case 404:
+                        Response.Redirect("~/Error/NotFound");
+                        break;
+                    case 500:
+                        Response.Redirect("~/Error/ServerError");
+                        break;
+                    case 401:
+                        Response.Redirect("~/Login/Entrance");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        {
+            var cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
+            if(cookie != null)
+            {
+                var decryptCookie = FormsAuthentication.Decrypt(cookie.Value);
+                var user = JsonConvert.DeserializeObject<User>(decryptCookie.UserData);
+                HttpContext.Current.User = new UserPrincipal(user);
+            }
         }
     }
 }

@@ -39,6 +39,7 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SA.OnlineStore.WCF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="StructureMap, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -65,55 +66,58 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service\IRepository.cs" />
-    <Compile Include="Implements\RealizationImplementation.cs" />
-    <Compile Include="Service\Implementation\BasketRepository.cs" />
-    <Compile Include="Service\Implementation\CategoryRepository.cs" />
-    <Compile Include="Service\Implementation\EmailRepository.cs" />
-    <Compile Include="Service\Implementation\OrderRepository.cs" />
-    <Compile Include="Service\Implementation\PhoneRepository.cs" />
-    <Compile Include="Service\Implementation\ProductRepository.cs" />
-    <Compile Include="Service\Implementation\PublicityRepository.cs" />
-    <Compile Include="Service\Implementation\RoleRepository.cs" />
-    <Compile Include="Service\Implementation\SeasonRepository.cs" />
-    <Compile Include="Connected Services\NewServiceReference\Reference.cs">
+    <Compile Include="Connected Services\ServiceReferenceWCF\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Repositorys\IOrderRepository.cs" />
+    <Compile Include="Repositorys\IProductRepository.cs" />
+    <Compile Include="Repositorys\IRepository.cs" />
+    <Compile Include="Implements\RealizationImplementation.cs" />
+    <Compile Include="Repositorys\Implementation\BasketRepository.cs" />
+    <Compile Include="Repositorys\Implementation\CategoryRepository.cs" />
+    <Compile Include="Repositorys\Implementation\EmailRepository.cs" />
+    <Compile Include="Repositorys\Implementation\OrderRepository.cs" />
+    <Compile Include="Repositorys\Implementation\PhoneRepository.cs" />
+    <Compile Include="Repositorys\Implementation\ProductRepository.cs" />
+    <Compile Include="Repositorys\Implementation\PublicityRepository.cs" />
+    <Compile Include="Repositorys\Implementation\RoleRepository.cs" />
+    <Compile Include="Repositorys\Implementation\SeasonRepository.cs" />
     <Compile Include="Dependency\DataAccessDependencyRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\Implementation\UserRepository.cs" />
-    <Compile Include="Service\IRealizationImplementation.cs" />
+    <Compile Include="Repositorys\Implementation\UserRepository.cs" />
+    <Compile Include="Repositorys\IRealizationImplementation.cs" />
+    <Compile Include="Repositorys\IUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
-      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceWCF\NewWebService.wsdl" />
+    <None Include="Connected Services\ServiceReferenceWCF\NewWebService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceWCF\NewWebService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceWCF\NewWebService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceWCF\SA.OnlineStore.DataAccess.ServiceReferenceWCF.PublicityService.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Properties\DataSources\SA.OnlineStore.WCF.PublicityService.datasource" />
     <None Include="SA.OnlineStore.DataAccess.dll.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Connected Services\NewServiceReference\NewWebService.wsdl" />
-    <None Include="Connected Services\NewServiceReference\NewWebService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\NewServiceReference\NewWebService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\NewServiceReference\NewWebService2.xsd">
-      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Service\packages.config" />
+    <None Include="Repositorys\packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\NewServiceReference\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SA.OnlineStore.Common\SA.OnlineStore.Common.csproj">
@@ -126,20 +130,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\NewServiceReference\NewWebService.disco" />
+    <WCFMetadataStorage Include="Connected Services\ServiceReferenceWCF\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\NewServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiceReferenceWCF\NewWebService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\NewServiceReference\configuration.svcinfo" />
+    <None Include="Connected Services\ServiceReferenceWCF\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\NewServiceReference\Reference.svcmap">
+    <None Include="Connected Services\ServiceReferenceWCF\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReferenceWCF\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

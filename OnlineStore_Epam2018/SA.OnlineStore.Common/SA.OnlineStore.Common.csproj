@@ -55,6 +55,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,6 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\StoreCache.cs" />
+    <Compile Include="Cache\IStoreCache.cs" />
     <Compile Include="Convert\PictureConverter.cs" />
     <Compile Include="Dependency\CommonDependencyRegistry.cs" />
     <Compile Include="Const\DbConstant.cs" />
@@ -80,7 +83,7 @@
     <Compile Include="Entity\Season.cs" />
     <Compile Include="Entity\StatusOrder.cs" />
     <Compile Include="Entity\User.cs" />
-    <Compile Include="Entity\UserLogin.cs" />
+    <Compile Include="Entity\Login.cs" />
     <Compile Include="Logger\CommonLogger.cs" />
     <Compile Include="Logger\ICommonLogger.cs" />
     <Compile Include="Logger\Logger.cs" />
@@ -92,6 +95,8 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

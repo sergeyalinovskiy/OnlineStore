@@ -8,7 +8,7 @@
     <publicity_Board id="publicityBoard" style="float:left;">
 
 
-        @Html.Action("Publicity","Publicity");
+        @Html.Action("Publicity","Publicity")
 
 
     </publicity_Board>
@@ -59,8 +59,3 @@
             </tr>
         </table>
     </text_Board>
-
-
-    <h3>Перейти к каталогу:</h3>
-
-    @Html.RouteLink("Go To Products List", new { controller = "Product", action = "Index" }, new { @class = "btn btn-default" })

@@ -13,25 +13,43 @@
     public class BasketController : Controller
     {
         private readonly IBasketService _basketService;
-                
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
+        private readonly IOrderService _orderService;
+
         public BasketController()
         {
 
         }
 
-        public BasketController(IBasketService productListService)
+        public BasketController(IBasketService basketListService, IUserService userService, IRoleService roleService, IOrderService orderService)
         {
-            if (productListService == null)
+            if (basketListService == null)
             {
-                throw new NullReferenceException("productListService");
+                throw new NullReferenceException("basketListService");
             }
-            _basketService = productListService;
+            if (userService == null)
+            {
+                throw new NullReferenceException("userService");
+            }
+            if (roleService == null)
+            {
+                throw new NullReferenceException("roleService");
+            }
+            if (orderService == null)
+            {
+                throw new NullReferenceException("orderService");
+            }
+            _basketService = basketListService;
+            _userService = userService;
+            _roleService = roleService;
+            _orderService = orderService;
         }
 
         public ActionResult Delete(int Id)
         {
             _basketService.DeleteProductInBoxById(Id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Order");
         }
         
         public ActionResult Save(BasketViewModel model)
@@ -48,22 +66,18 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(BasketViewModel model)
         {
             if (this.ModelState.IsValid)
             {
-                try
-                {
-                    var prod = ConvertToProductListModel(model);
-                    _basketService.EditProductListInBox(prod);
+                var prod = ConvertToProductListModel(model);
+                _basketService.EditProductListInBox(prod);
                    
-                    return RedirectToAction("Details", new { Id = model.Id });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+                return RedirectToAction("Details", new { Id = model.Id });
+               
             }
+            this.ModelState.AddModelError("", "Internal Exceptions");
             return View();
         }
 
@@ -79,13 +93,6 @@
             return View(products);
         }
 
-        public ActionResult OrderDetails(int id)
-        {
-            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.Order.Id == id));
-           
-            return View(products);
-        }
-
         public BasketViewModel ConvertToProductViewModel(Basket model)
         {
             return new BasketViewModel
@@ -95,8 +102,7 @@
                 ProductId = model.Product.Id,
                 ProductName = model.Product.Name,
                 Count = model.Count,
-                Price = model.Product.Price
-
+                Category=model.Category.CategoryName
             };
         }
 
@@ -113,9 +119,13 @@
                 {
                     Id = model.ProductId,
                     Name=model.ProductName,
-                    Price = model.Price
+                    Price = model.Price,
+                    Category = new Category()
+                    {
+                        CategoryName=model.Category
+                    }
                 },
-                Count = model.Count,
+                Count = model.Count
             };
         }
 
@@ -128,7 +138,9 @@
                 ProductId = model.Product.Id,
                 ProductName = model.Product.Name,
                 Count = model.Count,
-                Price = model.Product.Price
+                Price = model.Product.Price,
+                Picture=model.Product.Picture,
+                Category=model.Category.CategoryName
             };
         }
 

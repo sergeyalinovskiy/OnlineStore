@@ -33,13 +33,11 @@
             {
                 throw new ArgumentNullException("searchService");
             }
-       
-             _productService = productService;
+            _productService = productService;
             _seasonService = seasonService;
             _categoryService = categoryService;
             _searchService = searchService;
         }
-        
 
         public ActionResult Index(string category)
         {
@@ -51,47 +49,26 @@
             return View(viewModel);
         }
 
-        [HttpPost]
-        public ActionResult OrdersData(ProductViewModel model,string sort)
+        [HttpGet]
+        public ActionResult OrdersData(string searchName,int category, int minValue, int maxValue)
         {
-            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
-            if (!string.IsNullOrEmpty(model.CategoryName))
-            {
-                products = products.Where(p => p.CategoryName == model.CategoryName);
-            }
-
-            if (!string.IsNullOrEmpty(model.SeasonName))
-            {
-                products = products.Where(p => p.SeasonName == model.SeasonName);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                if (sort == "цена по убыванию")
-                {
-                    products = products.OrderByDescending(p => p.Price);
-                }
-                if (sort == "цена по возрастанию")
-                {
-                    products = products.OrderBy(p => p.Price);
-                }
-            }
-
-            if (!String.IsNullOrEmpty(model.Name))
-            {
-                products = products.Where(p => p.Name.Contains(model.Name));
-            }
-            return PartialView(products);
-        }
-
-        public ActionResult OrdersData(string category, string season, string sort, string searchName)
-        {
-            IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
+            List<ProductViewModel> products = ConvertToProductViewModelList(_productService.SearchProducts(searchName, category,minValue,maxValue));
            
             return PartialView(products);
         }
 
-        public IEnumerable<ProductViewModel> ConvertToProductViewModelList(IEnumerable<Product> modelList)
+        public List<ProductViewModel> ConvertToProductViewModelList(List<Product> modelList)
+        {
+            List<ProductViewModel> convertProductList = new List<ProductViewModel>();
+
+            foreach (var item in modelList)
+            {
+                convertProductList.Add(ConvertToViewModel(item));
+            }
+            return convertProductList;
+        }
+
+        public List<ProductViewModel> ConvertToProductViewModelList(IEnumerable<Product> modelList)
         {
             List<ProductViewModel> convertProductList = new List<ProductViewModel>();
 

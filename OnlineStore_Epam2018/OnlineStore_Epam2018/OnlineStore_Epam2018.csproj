@@ -116,6 +116,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\111.jpg" />
+    <Content Include="Content\img\apple.png" />
+    <Content Include="Content\img\apple2.png" />
+    <Content Include="Content\img\apple3.png" />
     <Content Include="Content\img\picture_BelSladkoe.jpg" />
     <Content Include="Content\img\picture_default.jpg" />
     <Content Include="Content\img\picture_Elena.jpg" />
@@ -125,7 +129,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Log.config.xml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -136,8 +139,14 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\mainScript.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\SearchScript.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +157,7 @@
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PhoneController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -163,12 +173,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\BasketViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\PublicityViewModel.cs" />
     <Compile Include="Models\SeasonViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleAttribut\Admin.cs" />
+    <Compile Include="RoleAttribut\Editor.cs" />
+    <Compile Include="RoleAttribut\Logged.cs" />
+    <Compile Include="RoleAttribut\UserFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -181,7 +197,6 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Order\Create.cshtml" />
-    <Content Include="Views\Order\Edit.cshtml" />
     <Content Include="Views\Order\Delete.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
@@ -203,11 +218,23 @@
     <Content Include="Views\Basket\Edit.cshtml" />
     <Content Include="Views\Basket\Details.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
-    <Content Include="Views\Product\ErrorPartialView.cshtml" />
     <Content Include="Views\Publicity\Publicity.cshtml" />
     <Content Include="Views\Product\CategoryList.cshtml" />
-    <Content Include="Views\Basket\OrderDetails.cshtml" />
+    <Content Include="Views\Order\OrderDetails.cshtml" />
+    <Content Include="Views\Order\UserInfo.cshtml" />
+    <Content Include="Views\Order\OrderInfo.cshtml" />
+    <Content Include="Views\Login\Entrance.cshtml" />
+    <Content Include="Views\Error\AccessPrivilegeError.cshtml" />
+    <Content Include="Views\Order\GetAllOrders.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Order\EditUserOrder.cshtml" />
     <None Include="Views\Product\SubCategoryList.cshtml" />
+    <Content Include="Views\User\GetUserList.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\GetUserAutorithInfo.cshtml" />
+    <Content Include="Views\User\EditUserAutorithation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -220,7 +247,6 @@
     <Folder Include="Content\publicity\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Phone\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SA.OnlineStore.Bussines\SA.OnlineStore.Bussines.csproj">

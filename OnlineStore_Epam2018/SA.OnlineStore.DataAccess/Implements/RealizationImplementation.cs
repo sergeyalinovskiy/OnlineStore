@@ -1,15 +1,11 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.DataAccess.Service;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Implements
+﻿namespace SA.OnlineStore.DataAccess.Implements
 {
+    #region Usings
+    using SA.OnlineStore.Common.Const;
+    using SA.OnlineStore.DataAccess.Repositorys;
+    using System.Data;
+    using System.Data.SqlClient;
+    #endregion
     public class RealizationImplementation : IRealizationImplementation
     {
         public SqlConnection GetConnection()
@@ -23,32 +19,7 @@ namespace SA.OnlineStore.DataAccess.Implements
             var command = new SqlCommand(storedProcedure, connection) { CommandType = CommandType.StoredProcedure };
             return command;
         }
-
-        public void AddParametr(IDbCommand cmd, string parametrName,object value, DbType paramType)
-        {
-            IDataParameter sqlParametr = cmd.CreateParameter();
-
-            sqlParametr.DbType = paramType;
-
-            if (parametrName.StartsWith("@"))
-            {
-                sqlParametr.ParameterName = parametrName;
-            }
-            else
-            {
-                sqlParametr.ParameterName= "@" + parametrName;
-            }
-            sqlParametr.Value = value;
-            
-            cmd.Parameters.Add(sqlParametr);
-        }
-
-        public T GetFieldValue<T>(IDataReader reader, string fieldName)
-        {
-            var value = reader.GetValue(reader.GetOrdinal(fieldName));
-            return (T)value;
-        }
-
+        
         public DataTable CreateTable(string tableName)
         {
             var table = new DataTable(tableName);

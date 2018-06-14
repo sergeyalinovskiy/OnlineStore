@@ -2,11 +2,13 @@
 {
     #region Usings
     using OnlineStore_Epam2018.Models;
+    using OnlineStore_Epam2018.RoleAttribut;
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     #endregion
     public class CategoryController : Controller
@@ -23,43 +25,51 @@
             }
             _categoryService = categoryService;
         }
-
+        
+        [Editor]
         public ActionResult Index()
         {
-            var viewModel= ConvertToListViewModel(_categoryService.GetCategoryList());
+            var viewModel = ConvertToListViewModel(_categoryService.GetCategoryList());
             return View(viewModel);
         }
 
+        [Editor]
         public ActionResult Create()
         {
-            return View();
+
+            var viewModel = new CategoryViewModel()
+            {
+                CategoryList = _categoryService.GetCategoryList()
+            };
+            return View(viewModel);
+
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(CategoryViewModel model)
-        {
-            if (this.ModelState.IsValid)
-            {
-                try
-                {
-                    var category = this.ConvertToBussinesModel(model);
-                    _categoryService.SaveCategory(category);
-                    return RedirectToAction("Index");
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+    {
+            if (model.NewCategoryName!=null && model.CategoryName!=null)
+            { 
+                var category = this.ConvertToNewBussinesModel(model);
+                _categoryService.SaveCategory(category);
+                return RedirectToAction("Index");
             }
-            return View();
+            else
+            {
+                this.ModelState.AddModelError("", "Internal Exceptions");
+            }
+            model.CategoryList = _categoryService.GetCategoryList();
+            return View(model);
         }
-
+        [Editor]
         public ActionResult Details(int id)
         {
             CategoryViewModel category = ConvertToViewModel(_categoryService.GetCategory(id));
             return View(category);
         }
-
+       
+        [Editor]
         public ActionResult Delete(int id)
         {
             _categoryService.DeleteCategoryByCategoryId(id);
@@ -68,27 +78,25 @@
 
         public ActionResult Edit(int Id)
         {
-            var category = this.ConvertToViewModel(this._categoryService.GetCategory(Id));
+            var category = ConvertToViewModel(_categoryService.GetCategory(Id));
             return View(category);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(CategoryViewModel model)
         {
-            if (this.ModelState.IsValid)
+            try
             {
-                try
-                {
-                    var category = this.ConvertToBussinesModel(model);
-                    this._categoryService.SaveCategory(category);
-                    return RedirectToAction("Details", new { Id = model.CategoryId });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+                var category = this.ConvertToBussinesModel(model);
+                this._categoryService.SaveCategory(category);
+                return RedirectToAction("Details", new { Id = model.CategoryId });
             }
-            return View();
+            catch (Exception)
+            {
+                this.ModelState.AddModelError("", "Internal Exceptions");
+            }
+        return View();
         }
 
         public List<CategoryViewModel> ConvertToListViewModel(IEnumerable<Category> modelList)
@@ -103,21 +111,34 @@
 
         public CategoryViewModel ConvertToViewModel(Category model)
         {
+            var category = _categoryService.GetCategoryList().Where(m => m.ParentId == model.ParentId).FirstOrDefault();
             return new CategoryViewModel()
             {
                 CategoryId= model.CategoryId,
                 CategoryName = model.CategoryName,
-                ParentId= model.ParentId
+                ParentId= model.ParentId,
+                ParentCategoryName=category.CategoryName
             };
         }
 
         public Category ConvertToBussinesModel(CategoryViewModel model)
         {
+            var category = _categoryService.GetCategoryList().Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
             return new Category()
             {
-                CategoryId = model.CategoryId,
+                CategoryId=model.CategoryId,
                 CategoryName = model.CategoryName,
-                ParentId = model.ParentId
+                ParentId = category.ParentId
+            };
+        }
+
+        public Category ConvertToNewBussinesModel(CategoryViewModel model)
+        {
+            var category = _categoryService.GetCategoryList().Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
+            return new Category()
+            {
+                CategoryName= model.NewCategoryName ,
+                ParentId = category.CategoryId
             };
         }
     }

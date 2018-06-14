@@ -1,12 +1,12 @@
 ﻿namespace SA.OnlineStore.Bussines.Components
 {
     #region Usings
-    using SA.OnlineStore.Bussines.Service;
-    using SA.OnlineStore.Common.Entity;
-    using SA.OnlineStore.DataAccess.Implements;
-    using SA.OnlineStore.DataAccess.Service;
-    using System;
-    using System.Collections.Generic;
+        using SA.OnlineStore.Bussines.Service;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.DataAccess.Implements;
+        using SA.OnlineStore.DataAccess.Repositorys;
+        using System;
+        using System.Collections.Generic;
     #endregion
 
     public class SeasonService : ISeasonService
@@ -21,15 +21,5 @@
         {
             return _seasonRepository.GetAll();
         }
-
-        //public IEnumerable<Season> SeasonNameList()
-        //{
-        //    List<Season> seasonNames = new List<Season>();
-        //    foreach (Season item in _seasonRepository.GetAll())
-        //    {
-        //        seasonNames.Add(item.SeasonName);
-        //    }
-        //    return seasonNames;
-        //}
     }
 }

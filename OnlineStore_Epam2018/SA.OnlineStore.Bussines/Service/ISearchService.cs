@@ -7,7 +7,5 @@
     public interface ISearchService
     {
         IEnumerable<Product> ProductByCategory(int category);
-        IEnumerable<Product> ProductByPriceUp();
-        IEnumerable<Product> ProductByPriceDown();
     }
 }

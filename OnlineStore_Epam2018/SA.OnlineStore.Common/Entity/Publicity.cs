@@ -1,7 +1,8 @@
-﻿using System.Drawing;
-
-namespace SA.OnlineStore.Common.Entity
+﻿namespace SA.OnlineStore.Common.Entity
 {
+    #region Usings
+        using System.Drawing;
+    #endregion
     public class Publicity
     {
         public int Id { get; set; }

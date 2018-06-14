@@ -22,13 +22,13 @@ namespace OnlineStore_Epam2018.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetEmailsByUserId(int userId)
         {
             var emails = _emailService.GetEmailsByUserId(userId);
             var emailsData = JsonConvert.SerializeObject(emails);
             return Json(emailsData, JsonRequestBehavior.AllowGet);
         }
-
 
         public ActionResult Index()
         {

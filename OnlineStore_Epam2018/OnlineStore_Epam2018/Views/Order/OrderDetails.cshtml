@@ -1,0 +1,63 @@
+﻿@model IEnumerable<OnlineStore_Epam2018.Models.BasketViewModel>
+
+@{
+    ViewBag.Title = "OrderDetails";
+}
+
+@Html.Action("UserInfo", "Order", 0)
+
+@Html.Action("OrderInfo", "Order", 1)
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Picture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="~/Content/img/@item.Picture" width="70" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price) руб.
+            </td>
+            @if (@HttpContext.Current.User.IsInRole("user") || @HttpContext.Current.User.IsInRole("admin"))
+            {
+                <td>
+                    @Html.RouteLink("Открыть", new { controller = "Product", action = "Details", id = item.ProductId }, new { @class = "btn btn-default" }) |
+                    @Html.RouteLink("Изменить количество", new { controller = "Basket", action = "Edit", id = item.Id }, new { @class = "btn btn-default" }) |
+                    @Html.RouteLink("Убрать из заказа", new { controller = "Basket", action = "Delete", id = item.Id }, new { @class = "btn btn-default" })
+                </td>
+            }
+        </tr>
+    }
+</table>
+<a href="#" onclick="history.go(-1); return false;" class="btn btn-default">Назад</a>

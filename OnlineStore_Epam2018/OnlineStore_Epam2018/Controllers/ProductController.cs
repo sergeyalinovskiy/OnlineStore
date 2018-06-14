@@ -2,12 +2,14 @@
 {
     #region Usings
     using OnlineStore_Epam2018.Models;
+    using OnlineStore_Epam2018.RoleAttribut;
     using SA.OnlineStore.Bussines.Service;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     #endregion
 
@@ -17,10 +19,11 @@
         private readonly ICategoryService _categoryService;
         private readonly ISeasonService _seasonService;
         private readonly IBasketService _basketService;
-        private readonly ICommonLogger _myLoger;
         private readonly IOrderService _orderService;
+        private readonly IUserService _userService;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService, IBasketService basketService, ICommonLogger myLoger, IOrderService orderService)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService,
+                                  IBasketService basketService,  IOrderService orderService, IUserService userService)
         {
             try
             {
@@ -40,12 +43,20 @@
                 {
                     throw new ArgumentNullException("seasonService");
                 }
+                if (orderService == null)
+                {
+                    throw new ArgumentNullException("orderService");
+                }
+                if (userService == null)
+                {
+                    throw new ArgumentNullException("userService");
+                }
                 _productService = productService;
                 _categoryService = categoryService;
                 _seasonService = seasonService;
                 _basketService = basketService;
                 _orderService = orderService;
-                _myLoger = myLoger;
+                _userService = userService;
             }
             catch (NullReferenceException)
             {
@@ -71,24 +82,20 @@
             return View("Index", productList);
         }
 
+        [UserFilter]
         public ActionResult AddInBox(int id)
         {
             if (id <= 0)
             {
                 return RedirectToAction("Index", "Error");
             }
-
             AddProductInBox(id);
             return View();
         }
 
-        public ActionResult IndexSearch(int id)
+        public ActionResult NavigationIndex(int id)
         {
-            if (id < 1)
-            {
-                return RedirectToAction("Index", "Error");
-            }
-            IEnumerable<Product> productList = _productService.GetProductLIst();
+         IEnumerable<Product> productList = _productService.GetProductLIst();
             if (id != 0)
             {
                 productList = productList.Where(m => m.Category.CategoryId == id);
@@ -131,7 +138,6 @@
                     return View("Index", list);
                 }
             }
-
             IEnumerable<ProductViewModel> list2 = ConvertListToViewModel(productList);
             return View("Index", list2);
         }
@@ -139,17 +145,16 @@
         public ActionResult CategoryList()
         {
             var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m=>m.ParentId==0));
-
             return PartialView(categorys);
         }
 
         public ActionResult SubCategoryList(int id)
         {
             var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m => m.ParentId == id));
-
             return PartialView("SubCategoryList",categorys);
         }
         
+        [Editor]
         public ActionResult Create()
         {
             var viewModel = new ProductViewModel()
@@ -162,11 +167,12 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(ProductViewModel model)
         {
             if (this.ModelState.IsValid)
             {
-                var product = this.ConvertToBussinesModel(model);
+                var product = this.ConvertToBussinesCreateModel(model);
                 _productService.SaveProduct(product);
                 return RedirectToAction("Index");
             }
@@ -176,15 +182,14 @@
             }
             model.CategoryList = _categoryService.GetCategoryList();
             model.SeasonList = _seasonService.GetSeasonList();
-
             return View(model);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int Id)
         {
-            if (id>0)
+            if (Id>0)
             {
-                ProductViewModel product = ConvertToViewModel(_productService.GetProduct(id));
+                ProductViewModel product = ConvertToViewModel(_productService.GetProduct(Id));
                 return View(product);
             }
             else
@@ -192,36 +197,40 @@
                 return RedirectToAction("Index", "Error");
             }
         }
-
+      
+        [Editor]
         public ActionResult Delete(int id)
         {
             _productService.DeleteProductByProductId(id);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int ProductId)
+        [Editor]
+        public ActionResult Edit(int id)
         {
-            var product = this.ConvertToViewModel(this._productService.GetProduct(ProductId));
+            var product = this.ConvertToViewModel(this._productService.GetProduct(id));
             return View(product);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(ProductViewModel model)
         {
-            if (this.ModelState.IsValid)
+            if (model.Picture!=null && model.Name!=null && model.Description!=null)
             {
-                try
-                {
-                    var product = this.ConvertToBussinesModel(model);
-                    _productService.SaveProduct(product);
-                    return RedirectToAction("Details", new { Id = model.Id });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+                var product = this.ConvertToBussinesModel(model);
+                _productService.SaveProduct(product);
+                return RedirectToAction("Details", new { Id = model.Id });
             }
-            return View();
+            else
+            {
+                ModelState.AddModelError("", "Exception");
+            }
+            
+            model.CategoryList = _categoryService.GetCategoryList();
+            model.SeasonList = _seasonService.GetSeasonList();
+
+            return View(model);
         }
 
         #region Convertation
@@ -256,6 +265,7 @@
             };
         }
 
+
         public ProductViewModel ConvertToViewModel(Product model)
         {
             var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
@@ -264,17 +274,45 @@
             {
                 Id = model.Id,
                 Name = model.Name,
-
-                CategoryName = category.CategoryName,
+                Category = new Category
+                {
+                    CategoryId = model.Category.CategoryId,
+                    CategoryName = model.Category.CategoryName
+                },
                 SeasonName = season.SeasonName,
                 Picture = model.Picture,
                 Description = model.Description,
                 Count = model.Count,
-                Price = model.Price
+                Price = model.Price,
+                CategoryList = _categoryService.GetCategoryList(),
+                SeasonList = _seasonService.GetSeasonList()
             };
         }
 
         public Product ConvertToBussinesModel(ProductViewModel model)
+        {
+            //var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
+            //var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
+            return new Product()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Category=new Category()
+                {
+                    CategoryId= model.CategoryId
+                },
+                Season= new Season()
+                {
+                    SeasonId = model.SeasonId
+                },
+                Count = model.Count,
+                Picture = model.Picture,
+                Price = model.Price,
+                Description = model.Description
+            };
+        }
+
+        public Product ConvertToBussinesCreateModel(ProductViewModel model)
         {
             var season = _seasonService.GetSeasonList().Where(s => s.SeasonName == model.SeasonName).FirstOrDefault();
             var category = _categoryService.GetCategoryList().Where(c => c.CategoryName == model.CategoryName).FirstOrDefault();
@@ -282,29 +320,31 @@
             {
                 Id = model.Id,
                 Name = model.Name,
-                Category=new Category()
+                Category = new Category()
                 {
-                    CategoryId= category.CategoryId,
-                    CategoryName=category.CategoryName,
-                    ParentId=category.ParentId  
+                    CategoryId = category.CategoryId,
+                    CategoryName = category.CategoryName,
+                    ParentId = category.ParentId
                 },
-                Season= new Season()
+                Season = new Season()
                 {
                     SeasonId = season.SeasonId,
-                    SeasonName=season.SeasonName
+                    SeasonName = season.SeasonName
                 },
                 Count = model.Count,
                 Picture = model.Picture,
                 Price = model.Price,
                 Description = model.Description
-                
             };
         }
         #endregion
 
         public void AddProductInBox(int id)
         {
-           
+            var user = HttpContext.User.Identity.Name;
+            User user2 = _userService.GetUserByLogin(user);
+           int userId= user2.UserId;
+
             Product prod = new Product();
             foreach (Product item in _productService.GetProductLIst())
             {
@@ -313,24 +353,24 @@
                     prod = item;
                 }
             }
-
-            int countProductInBasket = _orderService.GetOrderList().Where(m => m.User.UserId == 1).Count();
+         
+            int countUserOrders = _orderService.GetOrderList().Where(m => m.User.UserId == userId).Count();
             int trigger = 0;
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 1))
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == userId))
             {
                 if (order.StatusOrder.Id != 1)
                 {
                     trigger++;
                 }
             }
-            if (countProductInBasket == trigger)
+            if (countUserOrders == trigger)
             {
-                _orderService.GetDefaultOrder(1);
+                _orderService.SaveDefaultOrder(userId);
             }
 
             int orderId = 1;
 
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == 1))
+            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == userId))
             {
                 if (order.StatusOrder.Id == 1)
                 {

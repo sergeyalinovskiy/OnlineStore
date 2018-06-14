@@ -5,73 +5,81 @@
 }
 
 <h3>Каталог товаров</h3>
+    @if (@HttpContext.Current.User.IsInRole("editor") || @HttpContext.Current.User.IsInRole("admin"))
+    {
+    <p>
+        @Html.RouteLink("Добавить новый продукт", new { controller = "Product", action = "Create" }, new { @class = "btn btn-default" })
+    </p>
+    <p>
 
-<p>
-    @Html.RouteLink("Добавить новый продукт", new { controller = "Product", action = "Create" }, new { @class = "btn btn-default" })
-</p>
-<p>
+    </p>
+}
+    <navigation_Board id="navigationBoard" style="float:left;">
+        <table border="1">
+            <h3>Категории</h3>
+            @Html.Action("CategoryList")
 
-</p>
-
-<navigation_Board id="navigationBoard" style="float:left;">
-    <table border="1">
-        <h3>Категории</h3>
-        @Html.Action("CategoryList")
-       
-    </table>
-</navigation_Board>
+        </table>
+    </navigation_Board>
 
 
-<list_Board id="listBoard" style="float:left;">
-    <table class="table">
-        <tr>
-            <th>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SeasonName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <list_Board id="listBoard" style="float:left;">
+        <table class="table">
             <tr>
-                <td>
-                    <img src="~/Content/img/@item.Picture" width="140" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SeasonName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <p>
-                        @Html.RouteLink("Добавить в карзину", new { controller = "Product", action = "AddInBox", id = item.Id }, new { @class = "btn btn-default" })
-                    </p>
-                    <p>
-                        @Html.RouteLink("Подробнее", new { controller = "Product", action = "Details", id = item.Id }, new { @class = "btn btn-default" })
-                    </p>
-                    <p>
-                        @Html.RouteLink("Удалить", new { controller = "Product", action = "Delete", id = item.Id }, new { @class = "btn btn-default" })
-                    </p>
-                </td>
+                <th>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SeasonName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th></th>
             </tr>
-        }
-    </table>
-</list_Board>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/Content/img/@item.Picture" width="140" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SeasonName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price) руб.
+                    </td>
+                    <td>
+                           @if (@HttpContext.Current.User.IsInRole("user") )
+                           {
+                        <p>
+                            @Html.RouteLink("Добавить в карзину", new { controller = "Product", action = "AddInBox", id = item.Id }, new { @class = "btn btn-default" })
+                        </p>
+                           }
+                        <p>
+                            @Html.RouteLink("Подробнее", new { controller = "Product", action = "Details", id = item.Id }, new { @class = "btn btn-default" })
+                        </p>
+
+                        @if (@HttpContext.Current.User.IsInRole("editor") || @HttpContext.Current.User.IsInRole("admin"))
+                        {
+                            <p>
+                                @Html.RouteLink("Удалить", new { controller = "Product", action = "Delete", id = item.Id }, new { @class = "btn btn-default" })
+                            </p>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </list_Board>

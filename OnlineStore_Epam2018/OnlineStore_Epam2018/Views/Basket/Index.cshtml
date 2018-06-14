@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
 }
-
+   
 <h2>Корзина продуктов</h2>
 
 
@@ -24,23 +24,23 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Count)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.ActionLink("Изменить колличество", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить колличество", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
 
-        </td>
-    </tr>
+            </td>
+        </tr>
 
     }
     @Html.RouteLink("Оформить заказ", new { controller = "Order", action = "Create" }, new { @class = "btn btn-default" })

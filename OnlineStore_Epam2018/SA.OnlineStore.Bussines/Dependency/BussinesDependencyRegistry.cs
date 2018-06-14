@@ -1,5 +1,6 @@
 ﻿namespace SA.OnlineStore.Bussines
 {
+    using SA.OnlineStore.Bussines.Authentication;
     #region Usings
     using SA.OnlineStore.Bussines.Components;
     using SA.OnlineStore.Bussines.Service;
@@ -20,6 +21,8 @@
             For<IUserService>().Use<UserService>();
             For<IEmailService>().Use<EmailService>();
             For<IPhoneService>().Use<PhoneService>();
+            For<IRoleService>().Use<RoleService>();
+            For<ILoginService>().Use<LogginService>();
         }
     }
 }

@@ -62,9 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\ILoginService.cs" />
     <Compile Include="Authentication\LogginService.cs" />
-    <Compile Include="Authentication\RoleProvider.cs" />
-    <Compile Include="Authentication\UserPrinciple.cs" />
+    <Compile Include="Authentication\UserPrincipal.cs" />
     <Compile Include="Dependency\BussinesDependencyRegistry.cs" />
     <Compile Include="Service\IEmailService.cs" />
     <Compile Include="Service\Implementation\CategoryService.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Service\Implementation\BasketService.cs" />
     <Compile Include="Service\Implementation\ProductService.cs" />
     <Compile Include="Service\Implementation\PublicityService.cs" />
+    <Compile Include="Service\Implementation\RoleService.cs" />
     <Compile Include="Service\Implementation\SearchSeervice.cs" />
     <Compile Include="Service\Implementation\SeasonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Service\IOrderService.cs" />
     <Compile Include="Service\IProductService.cs" />
     <Compile Include="Service\IPublicityService.cs" />
+    <Compile Include="Service\IRoleService.cs" />
     <Compile Include="Service\ISearchService.cs" />
     <Compile Include="Service\ISeasonService.cs" />
     <Compile Include="Service\IUserService.cs" />

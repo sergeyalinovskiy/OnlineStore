@@ -14,7 +14,7 @@
     {
         private readonly ICommonLogger _myLoger;
 
-        public HomeController(  ICommonLogger myLoger)
+        public HomeController(ICommonLogger myLoger)
         {
             try
             {

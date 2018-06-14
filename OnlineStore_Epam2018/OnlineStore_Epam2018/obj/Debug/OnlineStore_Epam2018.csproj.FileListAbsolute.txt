@@ -381,7 +381,6 @@ D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\System.Web.We
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\System.Web.Webpages.Razor.dll
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\WebActivatorEx.dll
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.DataAccess.dll
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.dll
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.Bussines.pdb
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.Common.pdb
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.Dependency.pdb
@@ -402,14 +401,11 @@ D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\System.Web.We
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\System.Web.Helpers.xml
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\System.Web.Mvc.xml
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.DataAccess.pdb
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.pdb
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\SA.OnlineStore.WCF.dll.config
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.csprojResolveAssemblyReference.cache
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.csproj.CoreCompileInputs.cache
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.csproj.CopyComplete
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.dll
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.pdb
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\app.config
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\2.jpg
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\4.jpg
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\5.jpg
@@ -417,3 +413,4 @@ D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Image
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\7.jpg
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\8.jpg
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\9.jpg
+D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\app.config

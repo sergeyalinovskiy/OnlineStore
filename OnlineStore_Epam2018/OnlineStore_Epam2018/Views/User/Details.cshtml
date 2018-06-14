@@ -78,5 +78,5 @@
 </div>
 <p>
     @Html.RouteLink("Изменить", new { controller = "User", action = "Edit", id = Model.UserId }, new { @class = "btn btn-default" })
-    @Html.RouteLink("Назад", new { controller = "User", action = "GetUserList" }, new { @class = "btn btn-default" })
+    <a href="#" onclick="history.go(-1); return false;" class="btn btn-default">Назад</a>
 </p>

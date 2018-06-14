@@ -60,7 +60,6 @@ namespace OnlineStore_Epam2018
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
             var cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
-
             if(cookie != null)
             {
                 var decryptCookie = FormsAuthentication.Decrypt(cookie.Value);

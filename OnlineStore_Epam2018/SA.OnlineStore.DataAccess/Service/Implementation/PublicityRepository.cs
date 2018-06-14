@@ -5,15 +5,13 @@
     using SA.OnlineStore.Common.Logger;
     using SA.OnlineStore.DataAccess.Implements;
     using SA.OnlineStore.DataAccess.Service;
-    using SA.OnlineStore.WCF;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.IO;
-    using System.ServiceModel;
     using SA.OnlineStore.Common.Convert;
     using System.ServiceModel.Configuration;
-    using System.Web.UI;
+    using SA.OnlineStore.DataAccess.ServiceReferenceWCF;
     #endregion
 
     public class PublicityRepository : IRepository<Publicity>
@@ -32,7 +30,7 @@
 
         //private readonly INewWebService _service;
 
-        private ServiceReferenceWCF.INewWebService _service;
+   
 
         private ServiceReferenceWCF.INewWebService CreateChannel()
         {

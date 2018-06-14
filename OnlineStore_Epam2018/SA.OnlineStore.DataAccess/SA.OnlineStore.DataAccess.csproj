@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServiceReferenceWCF\NewWebService.wsdl" />
@@ -105,10 +105,13 @@
     <None Include="Connected Services\ServiceReferenceWCF\NewWebService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServiceReferenceWCF\SA.OnlineStore.DataAccess.ServiceReferenceWCF.PublicityService.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Properties\DataSources\SA.OnlineStore.WCF.PublicityService.datasource" />
     <None Include="SA.OnlineStore.DataAccess.dll.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Service\packages.config" />

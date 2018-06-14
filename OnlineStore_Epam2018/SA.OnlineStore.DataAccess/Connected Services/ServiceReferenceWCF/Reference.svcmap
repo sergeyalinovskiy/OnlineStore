@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="31078434-9596-4749-a76e-5fe88eec876b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6c75a077-3cd0-4b39-80f0-a19ff83f1bde" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,11 +22,11 @@
     <MetadataSource Address="http://localhost:51702/NewWebService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="NewWebService.wsdl" MetadataType="Wsdl" ID="76f67b66-2210-405d-8b0f-6c9c8d0a763f" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?wsdl" />
-    <MetadataFile FileName="NewWebService.xsd" MetadataType="Schema" ID="ba305e52-c341-4d21-a5ea-e65affd54283" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?xsd=xsd2" />
-    <MetadataFile FileName="NewWebService.disco" MetadataType="Disco" ID="f5342c54-ef9f-4667-8c90-be231acbf47a" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?disco" />
-    <MetadataFile FileName="NewWebService1.xsd" MetadataType="Schema" ID="4b6ec977-0a2c-42c0-9905-5bcc34958d45" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?xsd=xsd0" />
-    <MetadataFile FileName="NewWebService2.xsd" MetadataType="Schema" ID="8ced0dbf-8cdb-439a-b073-6ee4e69bb201" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?xsd=xsd1" />
+    <MetadataFile FileName="NewWebService.wsdl" MetadataType="Wsdl" ID="3d6d0028-eb3d-4bd2-bef4-06b77b92330c" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?wsdl" />
+    <MetadataFile FileName="NewWebService.xsd" MetadataType="Schema" ID="73cfec34-2073-41c9-b848-750524a2fa28" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?xsd=xsd2" />
+    <MetadataFile FileName="NewWebService.disco" MetadataType="Disco" ID="12c2e44d-f7e0-4613-a4b2-20b00630312d" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?disco" />
+    <MetadataFile FileName="NewWebService1.xsd" MetadataType="Schema" ID="1b274a44-877d-423c-af03-dabd95df6ee1" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?xsd=xsd0" />
+    <MetadataFile FileName="NewWebService2.xsd" MetadataType="Schema" ID="eeb3899c-19e0-4bfb-9885-5032919c97ed" SourceId="1" SourceUrl="http://localhost:51702/NewWebService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

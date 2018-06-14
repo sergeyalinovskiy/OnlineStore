@@ -63,12 +63,12 @@
         @Html.RouteLink("Редактировать", new { controller = "Product", action = "Edit", id = Model.Id }, new { @class = "btn btn-default" })
     }
 
-    @Html.RouteLink("Назад к списку продуктов", new { controller = "Product", action = "Index", id = Model.Id }, new { @class = "btn btn-default" })
 
+    <a href="#" onclick="history.go(-1); return false;" class="btn btn-default">Назад</a>
 
-    @if (@HttpContext.Current.User.IsInRole("user") )
+    @if (@HttpContext.Current.User.IsInRole("user"))
     {
         @Html.RouteLink("Добавить в карзину", new { controller = "Product", action = "AddInBox", id = Model.Id }, new { @class = "btn btn-default" })
     }
 
-    </p>
+</p>

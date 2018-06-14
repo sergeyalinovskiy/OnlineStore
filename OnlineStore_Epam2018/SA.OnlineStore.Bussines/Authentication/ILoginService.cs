@@ -9,7 +9,7 @@ namespace SA.OnlineStore.Bussines.Authentication
 {
     public interface ILoginService
     {
-        void Login(string login, string password);
+        bool Login(string login, string password);
         void Logout();
     }
 }

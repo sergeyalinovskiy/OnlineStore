@@ -13,15 +13,29 @@ namespace OnlineStore_Epam2018.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly ICommonLogger _commonLogger;
         private readonly IEmailService _emailService;
         private readonly IPhoneService _phoneService;
         private readonly IRoleService _roleService;
 
-        public UserController(IUserService userService, ICommonLogger commonLogger, IEmailService emailService, IPhoneService phoneService, IRoleService roleService)
+        public UserController(IUserService userService, IEmailService emailService, IPhoneService phoneService, IRoleService roleService)
         {
+            if (userService == null)
+            {
+                throw new ArgumentNullException("userService");
+            }
+            if (emailService == null)
+            {
+                throw new ArgumentNullException("emailService");
+            }
+            if (phoneService == null)
+            {
+                throw new ArgumentNullException("phoneService");
+            }
+            if (roleService == null)
+            {
+                throw new ArgumentNullException("roleService");
+            }
             _userService = userService;
-            _commonLogger = commonLogger;
             _emailService = emailService;
             _phoneService = phoneService;
             _roleService = roleService;
@@ -56,17 +70,13 @@ namespace OnlineStore_Epam2018.Controllers
             return View(model);
         }
 
-
-
         [Admin]
         public ActionResult GetUser(int id)
         {
-            if (id <= 0)
+            if (id >0)
             {
-                _commonLogger.Info("value id in GetUser is not valid");
-            }
             var user = _userService.GetUserById(id);
-
+            }
             return View();
         }
 
@@ -150,8 +160,6 @@ namespace OnlineStore_Epam2018.Controllers
             return View(user);
         }
 
-
-
         public ActionResult EditUserAutorithationInfo(int id)
         {
             var user = ConvertToViewModel(this._userService.GetUserById(id));
@@ -176,8 +184,6 @@ namespace OnlineStore_Epam2018.Controllers
             }
             return View();
         }
-
-
 
         public ActionResult Edit(int id)
         {

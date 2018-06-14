@@ -14,7 +14,7 @@ namespace SA.OnlineStore.Bussines.Authentication
         {
             _userRepository = userRepository;
         }
-        public void Login(string login, string password)
+        public bool Login(string login, string password)
         {
             if (IsValidUser(login, password))
             {
@@ -24,7 +24,9 @@ namespace SA.OnlineStore.Bussines.Authentication
                 var encryptTicket = FormsAuthentication.Encrypt(ticket);
                 var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket);
                 HttpContext.Current.Response.Cookies.Add(cookie);
+                return true;
             }
+            return false;
         }
 
         public void Logout()

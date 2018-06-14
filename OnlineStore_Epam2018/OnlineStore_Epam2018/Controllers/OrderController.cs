@@ -28,6 +28,14 @@
             {
                 throw new NullReferenceException("userService");
             }
+            if (roleService == null)
+            {
+                throw new NullReferenceException("roleService");
+            }
+            if (basketService == null)
+            {
+                throw new NullReferenceException("basketService");
+            }
             _orderService = orderService;
             _userService = userService;
             _roleService = roleService;
@@ -239,7 +247,6 @@
 
         private OrderViewModel ConvertToViewModel(Order model)
         {
-            //var status = _orderService.GetStatusOrders().Where(m => m.Id== model.StatusOrder.Id).FirstOrDefault(); 
             return new OrderViewModel()
             {
                 Id = model.Id,

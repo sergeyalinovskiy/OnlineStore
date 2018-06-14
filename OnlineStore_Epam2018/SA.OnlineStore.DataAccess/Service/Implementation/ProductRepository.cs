@@ -256,9 +256,6 @@
             }
         }
 
-
-
-
         private List<Product> CreateListFromTable2(DataTable table)
         {
             List<Product> productsList = new List<Product>();

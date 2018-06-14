@@ -24,8 +24,7 @@
         private readonly IUserService _userService;
 
         public ProductController(IProductService productService, ICategoryService categoryService, ISeasonService seasonService,
-                                                                                IBasketService basketService, ICommonLogger myLoger, 
-                                                                                           IOrderService orderService, IUserService userService)
+                                  IBasketService basketService,  IOrderService orderService, IUserService userService)
         {
             try
             {
@@ -45,12 +44,19 @@
                 {
                     throw new ArgumentNullException("seasonService");
                 }
+                if (orderService == null)
+                {
+                    throw new ArgumentNullException("orderService");
+                }
+                if (userService == null)
+                {
+                    throw new ArgumentNullException("userService");
+                }
                 _productService = productService;
                 _categoryService = categoryService;
                 _seasonService = seasonService;
                 _basketService = basketService;
                 _orderService = orderService;
-                _myLoger = myLoger;
                 _userService = userService;
             }
             catch (NullReferenceException)

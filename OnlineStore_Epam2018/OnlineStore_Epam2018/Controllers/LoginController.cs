@@ -11,6 +11,10 @@ namespace OnlineStore_Epam2018.Controllers
         private readonly ILoginService _loginService;
         public LoginController(ILoginService loginService)
         {
+            if (loginService == null)
+            {
+                throw new NullReferenceException("loginService");
+            }
             _loginService = loginService;
         }
 
@@ -22,16 +26,16 @@ namespace OnlineStore_Epam2018.Controllers
         [HttpPost]
         public ActionResult Entrance(LoginViewModel model)
         {
-            try
+            if (_loginService.Login(model.Login, model.Password))
             {
                 _loginService.Login(model.Login, model.Password);
                 return RedirectToAction("Index", "Home");
             }
-            catch (Exception)
+            else
             {
                 this.ModelState.AddModelError("", "Internal Exceptions");
             }
-            return View();
+            return View(model);
         }
 
         [Logged]

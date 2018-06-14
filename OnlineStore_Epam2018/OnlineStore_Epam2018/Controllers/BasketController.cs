@@ -22,11 +22,11 @@
 
         }
 
-        public BasketController(IBasketService productListService, IUserService userService, IRoleService roleService, IOrderService orderService)
+        public BasketController(IBasketService basketListService, IUserService userService, IRoleService roleService, IOrderService orderService)
         {
-            if (productListService == null)
+            if (basketListService == null)
             {
-                throw new NullReferenceException("productListService");
+                throw new NullReferenceException("basketListService");
             }
             if (userService == null)
             {
@@ -36,7 +36,11 @@
             {
                 throw new NullReferenceException("roleService");
             }
-            _basketService = productListService;
+            if (orderService == null)
+            {
+                throw new NullReferenceException("orderService");
+            }
+            _basketService = basketListService;
             _userService = userService;
             _roleService = roleService;
             _orderService = orderService;
@@ -66,18 +70,13 @@
         {
             if (this.ModelState.IsValid)
             {
-                try
-                {
-                    var prod = ConvertToProductListModel(model);
-                    _basketService.EditProductListInBox(prod);
+                var prod = ConvertToProductListModel(model);
+                _basketService.EditProductListInBox(prod);
                    
-                    return RedirectToAction("Details", new { Id = model.Id });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
+                return RedirectToAction("Details", new { Id = model.Id });
+               
             }
+            this.ModelState.AddModelError("", "Internal Exceptions");
             return View();
         }
 
@@ -92,8 +91,6 @@
             var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox());
             return View(products);
         }
-
-       
 
         public BasketViewModel ConvertToProductViewModel(Basket model)
         {
@@ -125,7 +122,6 @@
                     Category = new Category()
                     {
                         CategoryName=model.Category
-
                     }
                 },
                 Count = model.Count

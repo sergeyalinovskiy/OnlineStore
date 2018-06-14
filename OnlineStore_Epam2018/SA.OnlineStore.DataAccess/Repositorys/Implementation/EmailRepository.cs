@@ -1,45 +1,44 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using SA.OnlineStore.DataAccess.Implements;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using SA.OnlineStore.Common.Const;
+using SA.OnlineStore.Common.Entity;
+using SA.OnlineStore.Common.Logger;
+using SA.OnlineStore.DataAccess.Implements;
 
-namespace SA.OnlineStore.DataAccess.Service.Implementation
+namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
-    public class PhoneRepository : IRepository<Phone>
+    public class EmailRepository : IRepository<Email>
     {
-
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
 
         private readonly SqlConnection _connection;
 
-        public PhoneRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
+        public EmailRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
             _commonLogger = commonLogger;
             _realization = realization;
             _connection = _realization.GetConnection();
         }
 
-        public void Create(Phone item)
+        public void Create(Email item)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUserPhone);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUserEmail);
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = item.PhoneId
+                    Value = item.EmailId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "Phone",
-                    Value = item.PhoneNumber
+                    ParameterName = "Email",
+                    Value = item.EmailAddress
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -65,7 +64,7 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.DeletePhoneByUserId);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.DeleteEmailByUserId);
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
                 command.ExecuteNonQuery();
             }
@@ -80,16 +79,17 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-        public IReadOnlyCollection<Phone> GetAll()
+        public IReadOnlyCollection<Email> GetAll()
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetPhonesList);
-                var phoneTable = _realization.CreateTable("Phones");
-                phoneTable = _realization.FillInTable(phoneTable, command);
-                var list = ParsToPhoneList(phoneTable);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetEmailsList);
+                var emailTable = _realization.CreateTable("Emails");
+                emailTable = _realization.FillInTable(emailTable, command);
+                var list = ParsToEmailList(emailTable);
                 return @list;
+
             }
             catch (Exception exeption)
             {
@@ -102,17 +102,17 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-        public Phone GetById(int id)
+        public Email GetById(int id)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetPhonesByUserId);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetEmailsByUserId);
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
-                var phoneTable = _realization.CreateTable("Phone");
-                phoneTable = _realization.FillInTable(phoneTable, command);
-                var @phone = ParsToPhone(phoneTable);
-                return @phone;
+                var emailTable = _realization.CreateTable("Email");
+                emailTable = _realization.FillInTable(emailTable, command);
+                var @email = ParsToEmail(emailTable);
+                return @email;
             }
             catch (Exception exeption)
             {
@@ -125,21 +125,21 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-        public void Update(Phone item)
+        public void Update(Email item)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUserPhone);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUserEmail);
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = item.PhoneId
+                    Value = item.EmailId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "Phone",
-                    Value = item.PhoneNumber
+                    ParameterName = "Email",
+                    Value = item.EmailAddress
                 });
                 command.Parameters.Add(new SqlParameter
                 {
@@ -160,32 +160,36 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-        private Phone ParsToPhone(DataTable table)
+
+
+
+        private Email ParsToEmail(DataTable table)
         {
-            var phone = table.AsEnumerable().Select(m =>
+            var email = table.AsEnumerable().Select(m =>
             {
-                return new Phone()
+                return new Email()
                 {
                     UserId = m.Field<int>("Id"),
-                    PhoneId = m.Field<int>("UserId"),
-                    PhoneNumber = m.Field<string>("Phone")
+                    EmailId = m.Field<int>("UserId"),
+                    EmailAddress = m.Field<string>("Email")
                 };
             }).First();
-            return phone;
+            return email;
         }
 
-        private List<Phone> ParsToPhoneList(DataTable table)
+        private List<Email> ParsToEmailList(DataTable table)
         {
-            var phoneList = table.AsEnumerable().Select(m =>
+            var emailList = table.AsEnumerable().Select(m =>
             {
-                return new Phone()
+                return new Email()
                 {
                     UserId = m.Field<int>("Id"),
-                    PhoneId = m.Field<int>("UserId"),
-                    PhoneNumber = m.Field<string>("Phone")
+                    EmailId = m.Field<int>("UserId"),
+                    EmailAddress = m.Field<string>("Email")
                 };
             }).ToList();
-            return phoneList;
+            return emailList;
         }
+
     }
 }

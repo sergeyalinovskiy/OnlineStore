@@ -406,11 +406,3 @@ D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineS
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.csproj.CopyComplete
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.dll
 D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\obj\Debug\OnlineStore_Epam2018.pdb
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\2.jpg
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\4.jpg
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\5.jpg
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\6.jpg
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\7.jpg
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\8.jpg
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\Content\Images\9.jpg
-D:\11111\OnlineStore\OnlineStore_Epam2018\OnlineStore_Epam2018\bin\app.config

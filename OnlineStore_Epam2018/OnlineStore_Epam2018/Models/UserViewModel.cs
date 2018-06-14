@@ -36,6 +36,7 @@ namespace OnlineStore_Epam2018.Models
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
 
+        public Role Role { get; set; }
         public IEnumerable<Email> Emails { get; set; }
         public IEnumerable<Phone> Phones { get; set; }
         public IEnumerable<Role> Roles { get; set; }

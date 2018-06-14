@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SA.OnlineStore.DataAccess.Service.Implementation
+namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
     public class BasketRepository : IRepository<Basket>
     {

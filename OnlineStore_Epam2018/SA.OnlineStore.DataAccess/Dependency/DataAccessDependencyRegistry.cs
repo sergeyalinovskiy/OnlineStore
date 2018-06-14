@@ -2,10 +2,10 @@
 {
     using SA.OnlineStore.Common.Entity;
     #region Usings
-    using SA.OnlineStore.DataAccess.Components;
+    using SA.OnlineStore.DataAccess.Repositorys;
     using SA.OnlineStore.DataAccess.Implements;
-    using SA.OnlineStore.DataAccess.Service;
-    using SA.OnlineStore.DataAccess.Service.Implementation;
+
+    using SA.OnlineStore.DataAccess.Repositorys.Implementation;
     using StructureMap.Configuration.DSL;
     #endregion
 

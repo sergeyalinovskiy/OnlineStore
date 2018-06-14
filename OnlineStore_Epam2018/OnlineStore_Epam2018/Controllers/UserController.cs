@@ -56,16 +56,12 @@ namespace OnlineStore_Epam2018.Controllers
         [HttpPost]
         public ActionResult Create(UserViewModel model)
         {
-            if (this.ModelState.IsValid)
-            {
+          
                 var user = this.ConvertToBussinesModel(model);
                 _userService.SaveUser(user);
                 return RedirectToAction("GetUserList");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Exception");
-            }
+            
+           
             model.Roles = _roleService.GetRoleList();
             return View(model);
         }
@@ -117,19 +113,24 @@ namespace OnlineStore_Epam2018.Controllers
             return new UserViewModel()
             {
                 UserId = model.UserId,
-                Login=model.Login,
-                Password=model.Password,
-                Name=model.Name,
-                LastName=model.LastName,
-                EmailAddress=model.Email.EmailAddress,
-                PhoneNumber=model.Phone.PhoneNumber,
-                RoleName=role.Name
+                Login = model.Login,
+                Password = model.Password,
+                Name = model.Name,
+                LastName = model.LastName,
+                EmailAddress = model.Email.EmailAddress,
+                PhoneNumber = model.Phone.PhoneNumber,
+                Role = new Role()
+                {
+                    RoleId = role.RoleId,
+                    Name = role.Name
+                },
+                Roles = _roleService.GetRoleList()
             };
         }
 
         public User ConvertToBussinesModel(UserViewModel model)
         {
-            var role = _roleService.GetRoleList().Where(c => c.Name == model.RoleName).FirstOrDefault();
+            var role = _roleService.GetRoleList().Where(c => c.RoleId == model.Role.RoleId).FirstOrDefault();
             return new User()
             {
                 UserId = model.UserId,
@@ -139,7 +140,8 @@ namespace OnlineStore_Epam2018.Controllers
                 LastName = model.LastName,
                 Role = new Role()
                 {
-                    RoleId= role.RoleId
+                    RoleId= role.RoleId,
+                    Name=role.Name
                 },
                 Phone = new Phone()
                 {
@@ -169,20 +171,10 @@ namespace OnlineStore_Epam2018.Controllers
         [HttpPost]
         public ActionResult EditUserAutorithationInfo(UserViewModel model)
         {
-            if (this.ModelState.IsValid)
-            {
-                try
-                {
-                    var user = this.ConvertToBussinesModel(model);
-                    _userService.SaveUser(user);
-                    return RedirectToAction("GetUserAutorithationInfo", new { Id = model.UserId });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
-            }
-            return View();
+            var user = this.ConvertToBussinesModel(model);
+            _userService.SaveUser(user);
+            return RedirectToAction("GetUserAutorithationInfo", new { Id = model.UserId });
+              
         }
 
         public ActionResult Edit(int id)
@@ -194,20 +186,11 @@ namespace OnlineStore_Epam2018.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel model)
         {
-            if (this.ModelState.IsValid)
-            {
-                try
-                {
+           
                     var user = this.ConvertToBussinesModel(model);
                     _userService.SaveUser(user);
                     return RedirectToAction("Details", new { Id = model.UserId });
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
-            }
-            return View();
+     
         }
     }
 }

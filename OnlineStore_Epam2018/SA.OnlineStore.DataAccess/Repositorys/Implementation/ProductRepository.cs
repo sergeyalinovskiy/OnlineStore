@@ -1,11 +1,11 @@
-﻿namespace SA.OnlineStore.DataAccess.Components
+﻿namespace SA.OnlineStore.DataAccess.Repositorys
 {
     #region Usings
     using SA.OnlineStore.Common.Const;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
     using SA.OnlineStore.DataAccess.Implements;
-    using SA.OnlineStore.DataAccess.Service;
+    using SA.OnlineStore.DataAccess.Repositorys;
     using System;
     using System.Collections.Generic;
     using System.Data;

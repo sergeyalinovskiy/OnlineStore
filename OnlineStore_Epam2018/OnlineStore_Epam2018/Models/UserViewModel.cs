@@ -28,12 +28,10 @@ namespace OnlineStore_Epam2018.Models
         [Required(ErrorMessage = "Укажите роль")]
         public string RoleName { get; set; }
         [Display(Name = "Телефон")]
-        [Required(ErrorMessage = "Укажите телефонный номер в формате +(xxx)-xxx-xx-xx")]
-        [DataType(DataType.PhoneNumber)]
+        [RegularExpression("^[+]{1}[(]{1}[0-9]{3}[)]{1}[-]{1}[0-9]{2}[-]{1}[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}$", ErrorMessage = "Укажите телефонный номер в формате +(xxx)-xxx-xx-xx")]
         public string PhoneNumber { get; set; }
         [Display(Name = "Почта")]
-        [Required(ErrorMessage = "Введить почтовый адрес")]
-        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес")]
         public string EmailAddress { get; set; }
 
         public Role Role { get; set; }

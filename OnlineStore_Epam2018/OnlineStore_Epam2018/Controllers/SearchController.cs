@@ -33,13 +33,11 @@
             {
                 throw new ArgumentNullException("searchService");
             }
-       
-             _productService = productService;
+            _productService = productService;
             _seasonService = seasonService;
             _categoryService = categoryService;
             _searchService = searchService;
         }
-        
 
         public ActionResult Index(string category)
         {

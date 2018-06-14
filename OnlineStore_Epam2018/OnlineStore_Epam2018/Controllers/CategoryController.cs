@@ -36,27 +36,31 @@
         [Editor]
         public ActionResult Create()
         {
+
             var viewModel = new CategoryViewModel()
             {
                 CategoryList = _categoryService.GetCategoryList()
             };
             return View(viewModel);
+
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(CategoryViewModel model)
-        {
-                try
-                {
-                    var category = this.ConvertToNewBussinesModel(model);
-                    _categoryService.SaveCategory(category);
-                    return RedirectToAction("Index");
-                }
-                catch (Exception)
-                {
-                    this.ModelState.AddModelError("", "Internal Exceptions");
-                }
-            return View();
+    {
+            if (model.NewCategoryName!=null && model.CategoryName!=null)
+            { 
+                var category = this.ConvertToNewBussinesModel(model);
+                _categoryService.SaveCategory(category);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                this.ModelState.AddModelError("", "Internal Exceptions");
+            }
+            model.CategoryList = _categoryService.GetCategoryList();
+            return View(model);
         }
         [Editor]
         public ActionResult Details(int id)
@@ -79,6 +83,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(CategoryViewModel model)
         {
             try

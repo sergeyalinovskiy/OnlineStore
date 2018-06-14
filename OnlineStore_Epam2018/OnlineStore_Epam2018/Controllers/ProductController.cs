@@ -167,6 +167,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(ProductViewModel model)
         {
             if (this.ModelState.IsValid)
@@ -184,11 +185,11 @@
             return View(model);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int Id)
         {
-            if (id>0)
+            if (Id>0)
             {
-                ProductViewModel product = ConvertToViewModel(_productService.GetProduct(id));
+                ProductViewModel product = ConvertToViewModel(_productService.GetProduct(Id));
                 return View(product);
             }
             else
@@ -212,20 +213,24 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(ProductViewModel model)
         {
-            
-            try
+            if (model.Picture!=null && model.Name!=null && model.Description!=null)
             {
                 var product = this.ConvertToBussinesModel(model);
                 _productService.SaveProduct(product);
                 return RedirectToAction("Details", new { Id = model.Id });
             }
-            catch (Exception)
+            else
             {
-                this.ModelState.AddModelError("", "Internal Exceptions");
+                ModelState.AddModelError("", "Exception");
             }
-            return View();
+            
+            model.CategoryList = _categoryService.GetCategoryList();
+            model.SeasonList = _seasonService.GetSeasonList();
+
+            return View(model);
         }
 
         #region Convertation
@@ -286,28 +291,24 @@
 
         public Product ConvertToBussinesModel(ProductViewModel model)
         {
-            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
-            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
+            //var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
+            //var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
             return new Product()
             {
                 Id = model.Id,
                 Name = model.Name,
                 Category=new Category()
                 {
-                    CategoryId= category.CategoryId,
-                    CategoryName=category.CategoryName,
-                    ParentId=category.ParentId  
+                    CategoryId= model.CategoryId
                 },
                 Season= new Season()
                 {
-                    SeasonId = season.SeasonId,
-                    SeasonName=season.SeasonName
+                    SeasonId = model.SeasonId
                 },
                 Count = model.Count,
                 Picture = model.Picture,
                 Price = model.Price,
                 Description = model.Description
-                
             };
         }
 
@@ -352,10 +353,8 @@
                     prod = item;
                 }
             }
-
-            //int id = HttpContext.Request.Cookies["Name"].Value
-            //COUNToRDERS
-            int countProductInBasket = _orderService.GetOrderList().Where(m => m.User.UserId == userId).Count();
+         
+            int countUserOrders = _orderService.GetOrderList().Where(m => m.User.UserId == userId).Count();
             int trigger = 0;
             foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == userId))
             {
@@ -364,7 +363,7 @@
                     trigger++;
                 }
             }
-            if (countProductInBasket == trigger)
+            if (countUserOrders == trigger)
             {
                 _orderService.SaveDefaultOrder(userId);
             }

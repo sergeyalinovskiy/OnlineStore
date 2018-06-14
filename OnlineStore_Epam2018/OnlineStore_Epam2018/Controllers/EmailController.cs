@@ -22,6 +22,7 @@ namespace OnlineStore_Epam2018.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetEmailsByUserId(int userId)
         {
             var emails = _emailService.GetEmailsByUserId(userId);

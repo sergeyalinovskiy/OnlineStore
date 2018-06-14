@@ -12,7 +12,6 @@
     #endregion
     public class PublicityController : Controller
     {
-
         private readonly IPublicityService _publicityService;
 
         public PublicityController(IPublicityService publicityService)
@@ -71,6 +70,5 @@
                 Text = model.Text
             };
         }
-
     }
 }

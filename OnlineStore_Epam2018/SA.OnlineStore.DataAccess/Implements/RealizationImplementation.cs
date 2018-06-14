@@ -1,5 +1,5 @@
 ﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.DataAccess.Service;
+using SA.OnlineStore.DataAccess.Repositorys;
 using System.Data;
 using System.Data.SqlClient;
 

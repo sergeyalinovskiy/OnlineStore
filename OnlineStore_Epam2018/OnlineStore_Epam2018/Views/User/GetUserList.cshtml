@@ -39,7 +39,7 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoleName)
+                @Html.DisplayFor(modelItem => item.Role.Name)
             </td>
             <td>
                 @Html.RouteLink("Изменить", new { controller = "User", action = "Edit", id = item.UserId }, new { @class = "btn btn-default" })

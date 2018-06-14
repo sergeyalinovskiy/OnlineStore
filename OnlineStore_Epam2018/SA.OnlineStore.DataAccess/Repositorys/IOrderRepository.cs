@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SA.OnlineStore.DataAccess.Service
+namespace SA.OnlineStore.DataAccess.Repositorys
 {
     public interface IOrderRepository : IRepository<Order>
     {

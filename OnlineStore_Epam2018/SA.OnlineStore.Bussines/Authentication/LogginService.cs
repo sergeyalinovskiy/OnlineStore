@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Service;
+using SA.OnlineStore.DataAccess.Repositorys;
 using System;
 using System.Web;
 using System.Web.Security;

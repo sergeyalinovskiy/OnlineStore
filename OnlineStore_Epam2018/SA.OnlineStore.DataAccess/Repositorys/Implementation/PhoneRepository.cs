@@ -1,51 +1,52 @@
-﻿namespace SA.OnlineStore.DataAccess.Components
-{
-    #region Usings
-    using SA.OnlineStore.Common.Const;
-    using SA.OnlineStore.Common.Entity;
-    using SA.OnlineStore.Common.Logger;
-    using SA.OnlineStore.DataAccess.Implements;
-    using SA.OnlineStore.DataAccess.Service;
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.SqlClient;
-    using System.Linq;
-    #endregion
+﻿using SA.OnlineStore.Common.Const;
+using SA.OnlineStore.Common.Entity;
+using SA.OnlineStore.Common.Logger;
+using SA.OnlineStore.DataAccess.Implements;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 
-    public class CategoryRepository : IRepository<Category>
+namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
+{
+    public class PhoneRepository : IRepository<Phone>
     {
+
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
+
         private readonly SqlConnection _connection;
-        public CategoryRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
+
+        public PhoneRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
             _commonLogger = commonLogger;
             _realization = realization;
             _connection = _realization.GetConnection();
         }
 
-        public void Create(Category item)
+        public void Create(Phone item)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveCategory);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUserPhone);
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = item.CategoryId
+                    Value = item.PhoneId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "Name",
-                    Value = item.CategoryName
+                    ParameterName = "Phone",
+                    Value = item.PhoneNumber
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "ParentId",
-                    Value = item.ParentId
+                    ParameterName = "UserId",
+                    Value = item.UserId
                 });
+
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -64,10 +65,9 @@
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteCategoryByCategoryId);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.DeletePhoneByUserId);
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
                 command.ExecuteNonQuery();
-              
             }
             catch (Exception exeption)
             {
@@ -80,16 +80,16 @@
             }
         }
 
-        public IReadOnlyCollection<Category> GetAll()
+        public IReadOnlyCollection<Phone> GetAll()
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetCategoryList);
-                var categorysTable = _realization.CreateTable("Categorys");
-                categorysTable = _realization.FillInTable(categorysTable, command);
-                var list = ParseToCategoryList(categorysTable);
-                return list;
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetPhonesList);
+                var phoneTable = _realization.CreateTable("Phones");
+                phoneTable = _realization.FillInTable(phoneTable, command);
+                var list = ParsToPhoneList(phoneTable);
+                return @list;
             }
             catch (Exception exeption)
             {
@@ -102,17 +102,17 @@
             }
         }
 
-        public Category GetById(int id)
+        public Phone GetById(int id)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetCategoryByCategoryId);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetPhonesByUserId);
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
-                var categoryTable = _realization.CreateTable("Category");
-                categoryTable = _realization.FillInTable(categoryTable, command);
-                var @category= ParseToCategory(categoryTable);
-                return @category;
+                var phoneTable = _realization.CreateTable("Phone");
+                phoneTable = _realization.FillInTable(phoneTable, command);
+                var @phone = ParsToPhone(phoneTable);
+                return @phone;
             }
             catch (Exception exeption)
             {
@@ -125,27 +125,28 @@
             }
         }
 
-        public void Update(Category item)
+        public void Update(Phone item)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveCategory);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUserPhone);
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = item.CategoryId
+                    Value = item.PhoneId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "Name",
-                    Value = item.CategoryName
+                    ParameterName = "Phone",
+                    Value = item.PhoneNumber
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "ParentId",
-                    Value = item.ParentId
+                    ParameterName = "UserId",
+                    Value = item.UserId
                 });
+
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -159,33 +160,32 @@
             }
         }
 
-        private List<Category> ParseToCategoryList(DataTable table)
+        private Phone ParsToPhone(DataTable table)
         {
-            var list = table.AsEnumerable().Select(m =>
+            var phone = table.AsEnumerable().Select(m =>
             {
-                return new Category()
+                return new Phone()
                 {
-                    CategoryId = m.Field<int>("Id"),
-                    CategoryName = m.Field<string>("Name"),
-                    ParentId = m.Field<int>("ParentId")
-                   
-                };
-            }).ToList();
-            return list;
-        }
-
-        private Category ParseToCategory(DataTable table)
-        {
-            var category = table.AsEnumerable().Select(m =>
-            {
-                return new Category()
-                {
-                    CategoryId = m.Field<int>("Id"),
-                    CategoryName = m.Field<string>("Name"),
-                    ParentId = m.Field<int>("ParentId")
+                    UserId = m.Field<int>("Id"),
+                    PhoneId = m.Field<int>("UserId"),
+                    PhoneNumber = m.Field<string>("Phone")
                 };
             }).First();
-            return category;
+            return phone;
+        }
+
+        private List<Phone> ParsToPhoneList(DataTable table)
+        {
+            var phoneList = table.AsEnumerable().Select(m =>
+            {
+                return new Phone()
+                {
+                    UserId = m.Field<int>("Id"),
+                    PhoneId = m.Field<int>("UserId"),
+                    PhoneNumber = m.Field<string>("Phone")
+                };
+            }).ToList();
+            return phoneList;
         }
     }
 }

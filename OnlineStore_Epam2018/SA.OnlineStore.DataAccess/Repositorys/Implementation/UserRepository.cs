@@ -8,7 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace SA.OnlineStore.DataAccess.Service.Implementation
+namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
     internal class UserRepository : IUserRepository
     {

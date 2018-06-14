@@ -1,51 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using SA.OnlineStore.DataAccess.Implements;
-
-namespace SA.OnlineStore.DataAccess.Service.Implementation
+﻿namespace SA.OnlineStore.DataAccess.Repositorys
 {
-    public class EmailRepository : IRepository<Email>
+    #region Usings
+    using SA.OnlineStore.Common.Const;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.Common.Logger;
+    using SA.OnlineStore.DataAccess.Implements;
+    using SA.OnlineStore.DataAccess.Repositorys;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Linq;
+    #endregion
+
+    public class CategoryRepository : IRepository<Category>
     {
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
-
         private readonly SqlConnection _connection;
-
-        public EmailRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
+        public CategoryRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
             _commonLogger = commonLogger;
             _realization = realization;
             _connection = _realization.GetConnection();
         }
 
-        public void Create(Email item)
+        public void Create(Category item)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUserEmail);
+                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveCategory);
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = item.EmailId
+                    Value = item.CategoryId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "Email",
-                    Value = item.EmailAddress
+                    ParameterName = "Name",
+                    Value = item.CategoryName
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "UserId",
-                    Value = item.UserId
+                    ParameterName = "ParentId",
+                    Value = item.ParentId
                 });
-
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -64,9 +64,10 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.DeleteEmailByUserId);
+                var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteCategoryByCategoryId);
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
                 command.ExecuteNonQuery();
+              
             }
             catch (Exception exeption)
             {
@@ -79,17 +80,16 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-        public IReadOnlyCollection<Email> GetAll()
+        public IReadOnlyCollection<Category> GetAll()
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetEmailsList);
-                var emailTable = _realization.CreateTable("Emails");
-                emailTable = _realization.FillInTable(emailTable, command);
-                var list = ParsToEmailList(emailTable);
-                return @list;
-
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetCategoryList);
+                var categorysTable = _realization.CreateTable("Categorys");
+                categorysTable = _realization.FillInTable(categorysTable, command);
+                var list = ParseToCategoryList(categorysTable);
+                return list;
             }
             catch (Exception exeption)
             {
@@ -102,17 +102,17 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-        public Email GetById(int id)
+        public Category GetById(int id)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.GetEmailsByUserId);
+                var command = _realization.GetCommand(_connection, DbConstant.Command.GetCategoryByCategoryId);
                 _realization.AddParametr(command, "Id", id, DbType.Int32);
-                var emailTable = _realization.CreateTable("Email");
-                emailTable = _realization.FillInTable(emailTable, command);
-                var @email = ParsToEmail(emailTable);
-                return @email;
+                var categoryTable = _realization.CreateTable("Category");
+                categoryTable = _realization.FillInTable(categoryTable, command);
+                var @category= ParseToCategory(categoryTable);
+                return @category;
             }
             catch (Exception exeption)
             {
@@ -125,28 +125,27 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-        public void Update(Email item)
+        public void Update(Category item)
         {
             try
             {
                 _connection.Open();
-                var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUserEmail);
+                var command = _realization.GetCommand(_connection,DbConstant.Command.SaveCategory);
                 command.Parameters.Add(new SqlParameter
                 {
                     ParameterName = "Id",
-                    Value = item.EmailId
+                    Value = item.CategoryId
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "Email",
-                    Value = item.EmailAddress
+                    ParameterName = "Name",
+                    Value = item.CategoryName
                 });
                 command.Parameters.Add(new SqlParameter
                 {
-                    ParameterName = "UserId",
-                    Value = item.UserId
+                    ParameterName = "ParentId",
+                    Value = item.ParentId
                 });
-
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -160,36 +159,33 @@ namespace SA.OnlineStore.DataAccess.Service.Implementation
             }
         }
 
-
-
-
-        private Email ParsToEmail(DataTable table)
+        private List<Category> ParseToCategoryList(DataTable table)
         {
-            var email = table.AsEnumerable().Select(m =>
+            var list = table.AsEnumerable().Select(m =>
             {
-                return new Email()
+                return new Category()
                 {
-                    UserId = m.Field<int>("Id"),
-                    EmailId = m.Field<int>("UserId"),
-                    EmailAddress = m.Field<string>("Email")
-                };
-            }).First();
-            return email;
-        }
-
-        private List<Email> ParsToEmailList(DataTable table)
-        {
-            var emailList = table.AsEnumerable().Select(m =>
-            {
-                return new Email()
-                {
-                    UserId = m.Field<int>("Id"),
-                    EmailId = m.Field<int>("UserId"),
-                    EmailAddress = m.Field<string>("Email")
+                    CategoryId = m.Field<int>("Id"),
+                    CategoryName = m.Field<string>("Name"),
+                    ParentId = m.Field<int>("ParentId")
+                   
                 };
             }).ToList();
-            return emailList;
+            return list;
         }
 
+        private Category ParseToCategory(DataTable table)
+        {
+            var category = table.AsEnumerable().Select(m =>
+            {
+                return new Category()
+                {
+                    CategoryId = m.Field<int>("Id"),
+                    CategoryName = m.Field<string>("Name"),
+                    ParentId = m.Field<int>("ParentId")
+                };
+            }).First();
+            return category;
+        }
     }
 }

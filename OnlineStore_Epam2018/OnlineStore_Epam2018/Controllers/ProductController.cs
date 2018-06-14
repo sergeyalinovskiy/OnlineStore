@@ -19,7 +19,6 @@
         private readonly ICategoryService _categoryService;
         private readonly ISeasonService _seasonService;
         private readonly IBasketService _basketService;
-        private readonly ICommonLogger _myLoger;
         private readonly IOrderService _orderService;
         private readonly IUserService _userService;
 

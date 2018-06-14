@@ -41,6 +41,7 @@
             _roleService = roleService;
         }
          [Admin]
+
         public ActionResult Create()
         {
             var viewModel = new UserViewModel()
@@ -53,6 +54,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(UserViewModel model)
         {
             if(this.ModelState.IsValid)
@@ -202,12 +204,13 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditUserAutorithation(UserViewModel model)
         {
-
-            if (this.ModelState.IsValid)
+            if (model.Name != null && model.Password != null && model.LastName != null && model.Login != null)
             {
-                var user = this.ConvertToBussinesModel(model);
+                model.RoleName = model.Role.Name;
+                var user = this.ConvertToBussinesCreateModel(model);
                 _userService.SaveUser(user);
                 return RedirectToAction("GetUserAutorithInfo", new { Id = model.UserId });
             }
@@ -215,7 +218,10 @@
             {
                 ModelState.AddModelError("", "Exception");
             }
+            model.Roles = _roleService.GetRoleList();
             return View(model);
+            
+   
         }
 
         public ActionResult Edit(int id)
@@ -223,13 +229,24 @@
             var user = ConvertToViewModel(this._userService.GetUserById(id));
             return View(user);
         }
-
+            
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(UserViewModel model)
         {
-            var user = this.ConvertToBussinesModel(model);
-            _userService.SaveUser(user);
-            return RedirectToAction("Details", new { Id = model.UserId });
+            if (model.Name!=null && model.Password!=null && model.LastName!=null && model.Login!=null)
+            {
+                model.Roles = _roleService.GetRoleList();
+                var user = this.ConvertToBussinesModel(model);
+                _userService.SaveUser(user);
+                return RedirectToAction("Details", new { Id = model.UserId });
+            }
+            else
+            {
+                ModelState.AddModelError("", "Exception");
+            }
+            model.Roles = _roleService.GetRoleList();
+            return View(model);
         }
     }
 }

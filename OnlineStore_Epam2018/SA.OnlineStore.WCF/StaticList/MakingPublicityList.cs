@@ -1,7 +1,5 @@
 ﻿namespace SA.OnlineStore.Service
 {
-    using SA.OnlineStore.Common.Const;
-    using SA.OnlineStore.Common.Convert;
     using SA.OnlineStore.WCF;
     using System.Drawing;
     using System.Drawing.Imaging;
@@ -27,14 +25,14 @@
                     Id = 1,
                     Name = "Реклама_1",
                     Text = "Текст_1",
-                    Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\4.jpg"))
+                    Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\7.jpg"))
                 },
                 new PublicityService()
         {
                     Id = 2,
                     Name = "Реклама_2",
                     Text = "Текст_2",
-                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\4.jpg"))
+                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\7.jpg"))
                 },
                 new PublicityService()
         {
@@ -48,7 +46,7 @@
                     Id = 4,
                     Name = "Реклама_4",
                     Text = "Текст_4",
-                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\4.jpg"))
+                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\7.jpg"))
                 },
                 new PublicityService()
         {
@@ -62,35 +60,35 @@
                     Id = 6,
                     Name = "Реклама_6",
                     Text = "Текст_6",
-                    Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\8.jpg"))
+                    Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\7.jpg"))
                 },
                 new PublicityService()
         {       
                     Id = 7,
                     Name = "Реклама_7",
                     Text = "Текст_7",
-                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\9.jpg"))
+                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\7.jpg"))
                 },
                 new PublicityService()
         {
                     Id = 8,
                     Name = "Реклама_8",
                     Text = "Текст_8",
-                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\4.jpg"))
+                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\7.jpg"))
                 },
                 new PublicityService()
         {
                     Id = 9,
                     Name = "Реклама_9",
                     Text = "Текст_9",
-                    Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\5.jpg"))
+                    Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\7.jpg"))
                 },
                 new PublicityService()
         {
                     Id = 10,
                     Name = "Реклама_10",
                     Text = "Текст_10",
-                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\2.jpg"))
+                     Picture=ImageToByteArray(GetImg("D:\\11111\\OnlineStore\\OnlineStore_Epam2018\\SA.OnlineStore.WCF\\Content\\Images\\7.jpg"))
                 }
 
             };
@@ -108,6 +106,14 @@
             }
             return resultList;
         }
+
+
+
+
+
+
+
+
         public static Image GetImg(string way)
         {
             Image image = Image.FromFile(way);

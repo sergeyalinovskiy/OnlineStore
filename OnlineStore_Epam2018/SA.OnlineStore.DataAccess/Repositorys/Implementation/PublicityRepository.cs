@@ -31,7 +31,7 @@
            
         private ServiceReferenceWCF.INewWebService CreateChannel()
         {
-            string absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath,"app.config");
+            string absolutePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, "SA.OnlineStore.DataAccess.dll.config");
 
             Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(
                 new ExeConfigurationFileMap { ExeConfigFilename = absolutePath }, ConfigurationUserLevel.None);

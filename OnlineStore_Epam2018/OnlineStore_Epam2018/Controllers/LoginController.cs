@@ -25,6 +25,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Entrance(LoginViewModel model)
         {
             if (_loginService.Login(model.Login, model.Password))

@@ -141,6 +141,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(OrderViewModel model)
         {
             if (this.ModelState.IsValid)
@@ -170,6 +171,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(OrderViewModel model)
         {
             if (this.ModelState.IsValid)
@@ -199,6 +201,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditUserOrder(OrderViewModel model)
         {
             if (this.ModelState.IsValid)

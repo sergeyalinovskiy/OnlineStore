@@ -50,7 +50,7 @@
             @Html.LabelFor(model => model.RoleName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.Role.RoleId, new SelectList(Model.Roles, "RoleId", "Name"), Model.Roles.Where(x => x.RoleId == Model.Role.RoleId).Select(m => m.Name))
-                @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Role.RoleId, "", new { @class = "text-danger" })
             </div>
         </div>
 

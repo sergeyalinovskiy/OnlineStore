@@ -66,6 +66,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(BasketViewModel model)
         {
             if (this.ModelState.IsValid)

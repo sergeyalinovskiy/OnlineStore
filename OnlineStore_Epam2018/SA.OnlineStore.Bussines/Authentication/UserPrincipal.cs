@@ -1,9 +1,10 @@
-﻿using SA.OnlineStore.Common.Entity;
-using System.Linq;
-using System.Security.Principal;
-
-namespace SA.OnlineStore.Bussines.Authentication
+﻿namespace SA.OnlineStore.Bussines.Authentication
 {
+    #region Usings
+        using SA.OnlineStore.Common.Entity;
+        using System.Linq;
+        using System.Security.Principal;
+    #endregion
     public class UserPrincipal : IPrincipal
     {
         public UserPrincipal(User user)

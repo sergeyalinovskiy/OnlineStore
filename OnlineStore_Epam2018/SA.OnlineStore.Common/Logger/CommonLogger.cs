@@ -1,14 +1,12 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Common.Logger
+﻿namespace SA.OnlineStore.Common.Logger
 {
+    #region Usings
+        using log4net;
+        using System;
+        using System.IO;
+        using System.Reflection;
+    #endregion
+
     public class CommonLogger : ICommonLogger
     {
         private readonly ILog _log;

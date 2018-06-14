@@ -14,7 +14,6 @@
             @Html.DisplayFor(model => model.Login)
         </dd>
 
-
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -50,7 +49,7 @@
     </dl>
 </div>
 <p>
-    @Html.RouteLink("Редактировать",  new {controller="User", action= "EditUserAutorithationInfo", id = Model.UserId }, new { @class = "btn btn-default" })
+    @Html.RouteLink("Редактировать",  new {controller="User", action= "EditUserAutorithation", id = Model.UserId }, new { @class = "btn btn-default" })
 
 </p>
 

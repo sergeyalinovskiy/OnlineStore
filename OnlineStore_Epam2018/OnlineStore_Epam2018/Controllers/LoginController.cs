@@ -1,11 +1,12 @@
-﻿using OnlineStore_Epam2018.Models;
-using OnlineStore_Epam2018.RoleAttribut;
-using SA.OnlineStore.Bussines.Authentication;
-using System;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+        using OnlineStore_Epam2018.Models;
+        using OnlineStore_Epam2018.RoleAttribut;
+        using SA.OnlineStore.Bussines.Authentication;
+        using System;
+        using System.Web.Mvc;
+    #endregion
     public class LoginController : Controller
     {
         private readonly ILoginService _loginService;

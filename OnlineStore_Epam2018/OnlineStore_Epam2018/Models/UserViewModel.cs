@@ -29,7 +29,7 @@ namespace OnlineStore_Epam2018.Models
         public string RoleName { get; set; }
         [Display(Name = "Телефон")]
         [Required(ErrorMessage = "Укажите телефонный номер в формате +(xxx)-xxx-xx-xx")]
-        [RegularExpression("^[+]{1}[(]{1}[0-9]{3}[)]{1}[-]{1}[0-9]{2}[-]{1}[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}$")]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         [Display(Name = "Почта")]
         [Required(ErrorMessage = "Введить почтовый адрес")]

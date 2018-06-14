@@ -10,11 +10,8 @@
         void DeleteProductInBoxById(int Id);
         void SaveProductListInBox(Basket model);
         void EditProductListInBox(Basket model);
-        //Basket GetProductInBox(int id);
         Basket GetProductInBox(int OrderId);
         IEnumerable<Basket> GetProductListInBox();
         void AddNewItemInBox(Basket product);
-
     }
-}
-    
+}    

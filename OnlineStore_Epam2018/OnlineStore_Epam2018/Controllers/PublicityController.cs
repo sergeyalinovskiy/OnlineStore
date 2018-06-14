@@ -1,17 +1,15 @@
-﻿using OnlineStore_Epam2018.Models;
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Convert;
-using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+        using OnlineStore_Epam2018.Models;
+        using SA.OnlineStore.Bussines.Service;
+        using SA.OnlineStore.Common.Const;
+        using SA.OnlineStore.Common.Convert;
+        using SA.OnlineStore.Common.Entity;
+        using System;
+        using System.Collections.Generic;
+        using System.Web.Mvc;
+    #endregion
     public class PublicityController : Controller
     {
 
@@ -25,7 +23,6 @@ namespace OnlineStore_Epam2018.Controllers
             }
             _publicityService = publicityService;
         }
-
 
         public ActionResult Index()
         {
@@ -44,15 +41,14 @@ namespace OnlineStore_Epam2018.Controllers
                 List<Publicity> list = new List<Publicity>();
              list.Add(new Publicity()
             {
-            Id = 11,
+                    Id = 11,
                     Name = "Реклама на сайте",
                     Picture = PictureConverter.ImageToByteArray(PictureConverter.GetImg("D:\\" + DbConstant.FolderName + "\\OnlineStore\\OnlineStore_Epam2018\\OnlineStore_Epam2018\\Content\\img\\picture_BelSladkoe.jpg")),
                     Text = "отсутствует"
                 });
                 return PartialView(ConvertToPublicityViewModelList(list));
-    }
-
-}
+            }
+        }
 
         public IEnumerable<PublicityViewModel> ConvertToPublicityViewModelList(IEnumerable<Publicity> modelList)
         {

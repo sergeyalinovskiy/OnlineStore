@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Implements;
-
-namespace SA.OnlineStore.Bussines.Service.Implementation
+﻿namespace SA.OnlineStore.Bussines.Service.Implementation
 {
+    #region Usings
+        using System;
+        using System.Collections.Generic;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.DataAccess.Implements;
+    #endregion
     public class PhoneService : IPhoneService
     {
         private readonly IRepository<Phone> _phoneRepository;

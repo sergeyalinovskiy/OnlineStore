@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Implements;
-
-namespace SA.OnlineStore.Bussines.Service.Implementation
+﻿namespace SA.OnlineStore.Bussines.Service.Implementation
 {
+    #region Usings
+        using System.Collections.Generic;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.DataAccess.Implements;
+    #endregion
     public class RoleService : IRoleService
     {
         private readonly IRepository<Role> _roleRepository;
@@ -21,7 +18,7 @@ namespace SA.OnlineStore.Bussines.Service.Implementation
             {
                 return null;
             }
-                return _roleRepository.GetById(id);
+            return _roleRepository.GetById(id);
         }
 
         public IEnumerable<Role> GetRoleList()

@@ -1,12 +1,9 @@
-﻿using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Common.Cache
+﻿namespace SA.OnlineStore.Common.Cache
 {
+    #region Usings
+        using SA.OnlineStore.Common.Entity;
+        using System.Collections.Generic;
+    #endregion
     public interface IStoreCache
     {
         bool Create(string key, IReadOnlyCollection<Product> item, int minutes);

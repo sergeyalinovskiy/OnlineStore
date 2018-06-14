@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Implements
+﻿namespace SA.OnlineStore.DataAccess.Implements
 {
+    #region Usings
+        using System.Collections.Generic;
+    #endregion
     public interface IRepository<T>
     {
         void Create(T item);

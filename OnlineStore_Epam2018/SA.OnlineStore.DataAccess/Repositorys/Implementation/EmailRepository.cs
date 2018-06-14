@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using SA.OnlineStore.DataAccess.Implements;
-
-namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
+﻿namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
+    #region Usings
+        using System;
+        using System.Collections.Generic;
+        using System.Data;
+        using System.Data.SqlClient;
+        using System.Linq;
+        using SA.OnlineStore.Common.Const;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.Common.Logger;
+        using SA.OnlineStore.DataAccess.Implements;
+    #endregion
+
     public class EmailRepository : IRepository<Email>
     {
         private readonly ICommonLogger _commonLogger;
@@ -45,7 +47,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
                     ParameterName = "UserId",
                     Value = item.UserId
                 });
-
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -65,7 +66,11 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.DeleteEmailByUserId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -108,7 +113,11 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetEmailsByUserId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 var emailTable = _realization.CreateTable("Email");
                 emailTable = _realization.FillInTable(emailTable, command);
                 var @email = ParsToEmail(emailTable);
@@ -146,7 +155,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
                     ParameterName = "UserId",
                     Value = item.UserId
                 });
-
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -159,9 +167,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
                 _connection.Close();
             }
         }
-
-
-
 
         private Email ParsToEmail(DataTable table)
         {

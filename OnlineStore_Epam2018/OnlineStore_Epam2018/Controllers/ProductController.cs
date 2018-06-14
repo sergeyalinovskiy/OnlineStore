@@ -93,7 +93,7 @@
             return View();
         }
 
-        public ActionResult IndexSearch(int id)
+        public ActionResult NavigationIndex(int id)
         {
          IEnumerable<Product> productList = _productService.GetProductLIst();
             if (id != 0)

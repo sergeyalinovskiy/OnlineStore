@@ -1,15 +1,15 @@
-﻿using OnlineStore_Epam2018.Models;
-using OnlineStore_Epam2018.RoleAttribut;
-using SA.OnlineStore.Bussines.Service;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-
-namespace OnlineStore_Epam2018.Controllers
+﻿namespace OnlineStore_Epam2018.Controllers
 {
+    #region Usings
+        using OnlineStore_Epam2018.Models;
+        using OnlineStore_Epam2018.RoleAttribut;
+        using SA.OnlineStore.Bussines.Service;
+        using SA.OnlineStore.Common.Entity;
+        using System;
+        using System.Collections.Generic;
+        using System.Linq;
+        using System.Web.Mvc;
+     #endregion
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -52,18 +52,23 @@ namespace OnlineStore_Epam2018.Controllers
             return View(viewModel);
         }
 
-
         [HttpPost]
         public ActionResult Create(UserViewModel model)
         {
-          
-                var user = this.ConvertToBussinesModel(model);
+            if(this.ModelState.IsValid)
+            {
+                model.Roles = _roleService.GetRoleList();
+                var user = this.ConvertToBussinesCreateModel(model);
                 _userService.SaveUser(user);
                 return RedirectToAction("GetUserList");
-            
-           
+            }
+            else
+            {
+                ModelState.AddModelError("", "Exception");
+            }
             model.Roles = _roleService.GetRoleList();
             return View(model);
+
         }
 
         [Admin]
@@ -76,7 +81,7 @@ namespace OnlineStore_Epam2018.Controllers
             return View();
         }
 
-        public ActionResult GetUserAutorithationInfo()
+        public ActionResult GetUserAutorithInfo()
         {
             var userr = HttpContext.User.Identity.Name;
             int userId = _userService.GetUserByLogin(userr).UserId;
@@ -156,25 +161,61 @@ namespace OnlineStore_Epam2018.Controllers
             };
         }
 
+        public User ConvertToBussinesCreateModel(UserViewModel model)
+        {
+            var role = _roleService.GetRoleList().Where(c => c.Name== model.RoleName).FirstOrDefault();
+            return new User()
+            {
+                UserId = model.UserId,
+                Login = model.Login,
+                Password = model.Password,
+                Name = model.Name,
+                LastName = model.LastName,
+                Role = new Role()
+                {
+                    RoleId = role.RoleId,
+                    Name = role.Name
+                },
+                Phone = new Phone()
+                {
+                    PhoneNumber = model.PhoneNumber,
+                    UserId = model.UserId
+                },
+                Email = new Email()
+                {
+                    EmailAddress = model.EmailAddress,
+                    UserId = model.UserId
+                }
+            };
+        }
+
         public ActionResult Details(int id)
         {
             var user = ConvertToViewModel(this._userService.GetUserById(id));
             return View(user);
         }
 
-        public ActionResult EditUserAutorithationInfo(int id)
+        public ActionResult EditUserAutorithation(int id)
         {
             var user = ConvertToViewModel(this._userService.GetUserById(id));
             return View(user);
         }
 
         [HttpPost]
-        public ActionResult EditUserAutorithationInfo(UserViewModel model)
+        public ActionResult EditUserAutorithation(UserViewModel model)
         {
-            var user = this.ConvertToBussinesModel(model);
-            _userService.SaveUser(user);
-            return RedirectToAction("GetUserAutorithationInfo", new { Id = model.UserId });
-              
+
+            if (this.ModelState.IsValid)
+            {
+                var user = this.ConvertToBussinesModel(model);
+                _userService.SaveUser(user);
+                return RedirectToAction("GetUserAutorithInfo", new { Id = model.UserId });
+            }
+            else
+            {
+                ModelState.AddModelError("", "Exception");
+            }
+            return View(model);
         }
 
         public ActionResult Edit(int id)
@@ -186,11 +227,9 @@ namespace OnlineStore_Epam2018.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel model)
         {
-           
-                    var user = this.ConvertToBussinesModel(model);
-                    _userService.SaveUser(user);
-                    return RedirectToAction("Details", new { Id = model.UserId });
-     
+            var user = this.ConvertToBussinesModel(model);
+            _userService.SaveUser(user);
+            return RedirectToAction("Details", new { Id = model.UserId });
         }
     }
 }

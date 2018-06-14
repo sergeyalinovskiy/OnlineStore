@@ -4,8 +4,6 @@
     using SA.OnlineStore.Common.Const;
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
-    using SA.OnlineStore.DataAccess.Implements;
-    using SA.OnlineStore.DataAccess.Repositorys;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -23,7 +21,6 @@
         public ProductRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
         {
             _commonLogger = commonLogger;
-
             _realization = realization;
             _connection = _realization.GetConnection();
         }
@@ -150,7 +147,11 @@
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductListByProductId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 var productTable = _realization.CreateTable("Products");
                 productTable = _realization.FillInTable(productTable, command);
                 var @product = ParseToEntity(productTable);
@@ -173,13 +174,28 @@
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.SearchProducts);
-                _realization.AddParametr(command, "Name", name, DbType.String);
-                _realization.AddParametr(command, "CategoryId", category, DbType.Int32);
-                _realization.AddParametr(command, "PriceMin", minValue, DbType.Int32);
-                _realization.AddParametr(command, "PriceMax", maxValue, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Name",
+                    Value = name
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "CategoryId",
+                    Value = category
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "PriceMin",
+                    Value = minValue
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "PriceMax",
+                    Value = maxValue
+                });
                 var productTable = _realization.CreateTable("Products");
                 productTable = _realization.FillInTable(productTable, command);
-                //var @product = CreateListFromTable(productTable);
                 var list = productTable.AsEnumerable().Select(m =>
                 {
                     return new Product()
@@ -213,14 +229,17 @@
             }
         }
 
-
         public void Delete(int id)
         {
             try
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.DeleteProductByProductId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -341,6 +360,5 @@
             }).First();
             return product;
         }
-
     }
 }

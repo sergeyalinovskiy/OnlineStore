@@ -1,15 +1,16 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using SA.OnlineStore.DataAccess.Implements;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-
-namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
+﻿namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
+    #region Usings
+        using SA.OnlineStore.Common.Const;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.Common.Logger;
+        using System;
+        using System.Collections.Generic;
+        using System.Data;
+        using System.Data.SqlClient;
+        using System.Linq;
+    #endregion
+
     internal class UserRepository : IUserRepository
     {
         private readonly ICommonLogger _commonLogger;
@@ -88,7 +89,11 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.DeleteUserByUserId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -131,7 +136,11 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetUserByLogin);
-                _realization.AddParametr(command, "Login", login, DbType.String);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "login",
+                    Value = login
+                });
                 var userTable = _realization.CreateTable("User");
                 userTable = _realization.FillInTable(userTable, command);
                 var @user = ParsToUser(userTable);
@@ -154,7 +163,11 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetUserListByUserId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 var userTable = _realization.CreateTable("User");
                 userTable = _realization.FillInTable(userTable, command);
                 var @user = ParsToUser(userTable);

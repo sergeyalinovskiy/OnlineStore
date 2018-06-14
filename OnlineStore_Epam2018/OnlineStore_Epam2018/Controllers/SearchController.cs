@@ -51,39 +51,6 @@
             return View(viewModel);
         }
 
-        //[HttpPost]
-        //public ActionResult OrdersData(ProductViewModel model,string sort)
-        //{
-        //    IEnumerable<ProductViewModel> products = ConvertToProductViewModelList(_productService.GetProductLIst());
-        //    if (!string.IsNullOrEmpty(model.CategoryName))
-        //    {
-        //        products = products.Where(p => p.CategoryName == model.CategoryName);
-        //    }
-
-        //    if (!string.IsNullOrEmpty(model.SeasonName))
-        //    {
-        //        products = products.Where(p => p.SeasonName == model.SeasonName);
-        //    }
-
-        //    if (!string.IsNullOrEmpty(sort))
-        //    {
-        //        if (sort == "цена по убыванию")
-        //        {
-        //            products = products.OrderByDescending(p => p.Price);
-        //        }
-        //        if (sort == "цена по возрастанию")
-        //        {
-        //            products = products.OrderBy(p => p.Price);
-        //        }
-        //    }
-
-        //    if (!String.IsNullOrEmpty(model.Name))
-        //    {
-        //        products = products.Where(p => p.Name.Contains(model.Name));
-        //    }
-        //    return PartialView(products);
-
-
         [HttpGet]
         public ActionResult OrdersData(string searchName,int category, int minValue, int maxValue)
         {

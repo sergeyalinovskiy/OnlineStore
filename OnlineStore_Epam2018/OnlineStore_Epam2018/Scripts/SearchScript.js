@@ -6,22 +6,22 @@
 function GetPageData() {
     $("#searchResult").empty();
 
-    var a = $("#searchName").val();
-    var b = $("select[name='CategoryName'] option:checked").val();
-    var x = $("#minValue").val();
-    var d = $("#maxValue").val();
+    var nameProduct = $("#searchName").val();
+    var categoryId = $("select[name='CategoryName'] option:checked").val();
+    var priceMin = $("#minValue").val();
+    var priceMax = $("#maxValue").val();
 
 
 
-    if (b == null || b == "") {
-        b = 0;
+    if (categoryId == null || categoryId  == "") {
+        categoryId  = 0;
     }
-    if (x == null || x == "") {
-        x = 1;
+    if (priceMin == null || priceMin == "") {
+        priceMin= 1;
     }
 
-    if (d == null || d == "") {
-        d = 100;
+    if (priceMax == null || priceMax == "") {
+        priceMax = 10000;
     }
    
 
@@ -29,10 +29,10 @@ function GetPageData() {
         url: "/Search/OrdersData",
         type: "GET",
         data: {
-            searchName: a,
-            category: b,
-            minValue: x,
-            maxValue: d
+            searchName: nameProduct,
+            category: categoryId ,
+            minValue: priceMin,
+            maxValue: priceMax
         },
         success: function (response) {
             $('#searchResult').append(response);

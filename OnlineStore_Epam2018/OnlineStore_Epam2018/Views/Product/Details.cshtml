@@ -63,7 +63,6 @@
         @Html.RouteLink("Редактировать", new { controller = "Product", action = "Edit", id = Model.Id }, new { @class = "btn btn-default" })
     }
 
-
     <a href="#" onclick="history.go(-1); return false;" class="btn btn-default">Назад</a>
 
     @if (@HttpContext.Current.User.IsInRole("user"))

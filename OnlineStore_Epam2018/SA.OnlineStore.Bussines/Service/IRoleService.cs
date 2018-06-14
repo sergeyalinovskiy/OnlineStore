@@ -1,17 +1,12 @@
-﻿using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Bussines.Service
+﻿namespace SA.OnlineStore.Bussines.Service
 {
-    public  interface IRoleService
+    #region Usings
+        using SA.OnlineStore.Common.Entity;
+        using System.Collections.Generic;
+    #endregion
+    public interface IRoleService
     {
         Role GetRoleById(int id);
-        
         IEnumerable<Role> GetRoleList();
-
     }
 }

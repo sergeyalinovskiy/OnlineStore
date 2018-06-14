@@ -1,12 +1,13 @@
-﻿using Newtonsoft.Json;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Repositorys;
-using System;
-using System.Web;
-using System.Web.Security;
-
-namespace SA.OnlineStore.Bussines.Authentication
+﻿namespace SA.OnlineStore.Bussines.Authentication
 {
+    #region Usings
+        using Newtonsoft.Json;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.DataAccess.Repositorys;
+        using System;
+        using System.Web;
+        using System.Web.Security;
+    #endregion
     public class LogginService : ILoginService
     {
         private readonly IUserRepository _userRepository;

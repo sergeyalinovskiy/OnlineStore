@@ -1,23 +1,21 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using SA.OnlineStore.DataAccess.Implements;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
+﻿namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
+    #region Usings
+        using SA.OnlineStore.Common.Const;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.Common.Logger;
+        using SA.OnlineStore.DataAccess.Implements;
+        using System;
+        using System.Collections.Generic;
+        using System.Data;
+        using System.Data.SqlClient;
+        using System.Linq;
+    #endregion
+
     public class BasketRepository : IRepository<Basket>
     {
-
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
-
         private readonly SqlConnection _connection;
 
         public BasketRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
@@ -26,7 +24,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             _realization = realization;
             _connection = _realization.GetConnection();
         }
-
 
         public void Create(Basket item)
         {
@@ -54,7 +51,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
                     ParameterName = "Count",
                     Value = item.Count
                 });
-
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -67,7 +63,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
                 _connection.Close();
             };
         }
-
 
     public void Delete(int id)
         {
@@ -121,7 +116,11 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetProductsInBasketsByBasketId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 var basketTable = _realization.CreateTable("Basket");
                 basketTable = _realization.FillInTable(basketTable, command);
                 var basket = ParseToBasket(basketTable);
@@ -164,8 +163,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
                     ParameterName = "Count",
                     Value = item.Count
                 });
-
-
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)

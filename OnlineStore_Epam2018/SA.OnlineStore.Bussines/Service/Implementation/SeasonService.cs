@@ -1,12 +1,12 @@
 ﻿namespace SA.OnlineStore.Bussines.Components
 {
     #region Usings
-    using SA.OnlineStore.Bussines.Service;
-    using SA.OnlineStore.Common.Entity;
-    using SA.OnlineStore.DataAccess.Implements;
-    using SA.OnlineStore.DataAccess.Repositorys;
-    using System;
-    using System.Collections.Generic;
+        using SA.OnlineStore.Bussines.Service;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.DataAccess.Implements;
+        using SA.OnlineStore.DataAccess.Repositorys;
+        using System;
+        using System.Collections.Generic;
     #endregion
 
     public class SeasonService : ISeasonService

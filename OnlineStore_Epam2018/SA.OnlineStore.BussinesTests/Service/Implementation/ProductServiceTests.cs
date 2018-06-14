@@ -3,7 +3,7 @@ using Moq;
 using SA.OnlineStore.Common.Cache;
 using SA.OnlineStore.Common.Entity;
 using SA.OnlineStore.DataAccess.Implements;
-using SA.OnlineStore.DataAccess.Service;
+using SA.OnlineStore.DataAccess.Repositorys;
 using System.Collections.Generic;
 
 namespace SA.OnlineStore.Bussines.Components.Tests

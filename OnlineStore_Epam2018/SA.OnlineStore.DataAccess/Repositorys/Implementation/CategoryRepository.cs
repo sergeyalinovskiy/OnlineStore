@@ -5,7 +5,6 @@
     using SA.OnlineStore.Common.Entity;
     using SA.OnlineStore.Common.Logger;
     using SA.OnlineStore.DataAccess.Implements;
-    using SA.OnlineStore.DataAccess.Repositorys;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -65,7 +64,11 @@
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection,DbConstant.Command.DeleteCategoryByCategoryId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 command.ExecuteNonQuery();
               
             }
@@ -108,7 +111,11 @@
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetCategoryByCategoryId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 var categoryTable = _realization.CreateTable("Category");
                 categoryTable = _realization.FillInTable(categoryTable, command);
                 var @category= ParseToCategory(categoryTable);

@@ -1,7 +1,10 @@
-﻿using log4net;
-using log4net.Config;
-namespace SA.OnlineStore.Common.Logger
+﻿namespace SA.OnlineStore.Common.Logger
 {
+    #region Usings
+        using log4net;
+        using log4net.Config;
+    #endregion
+
     public static class Logger 
     {
         private static ILog log = LogManager.GetLogger("LOGGER");

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Implements;
-using SA.OnlineStore.DataAccess.Repositorys;
-
-namespace SA.OnlineStore.Bussines.Service.Implementation
+﻿namespace SA.OnlineStore.Bussines.Service.Implementation
 {
-     public  class UserService : IUserService
+    #region Usings 
+    using System.Collections.Generic;
+    using SA.OnlineStore.Common.Entity;
+    using SA.OnlineStore.DataAccess.Repositorys;
+    #endregion
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         public UserService(IUserRepository userRepository)

@@ -1,13 +1,10 @@
-﻿using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.DataAccess.Implements;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Repositorys
+﻿namespace SA.OnlineStore.DataAccess.Repositorys
 {
+    #region Usings
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.DataAccess.Implements;
+        using System.Collections.Generic;
+    #endregion
     public interface IOrderRepository : IRepository<Order>
     {
         IEnumerable<StatusOrder> GetStatusOrder();

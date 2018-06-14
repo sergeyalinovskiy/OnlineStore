@@ -1,17 +1,15 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using SA.OnlineStore.DataAccess.Implements;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
+﻿namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
+    #region Usings
+        using SA.OnlineStore.Common.Const;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.Common.Logger;
+        using System;
+        using System.Collections.Generic;
+        using System.Data;
+        using System.Data.SqlClient;
+        using System.Linq;
+    #endregion
 
     public class OrderRepository : IOrderRepository
     {
@@ -58,7 +56,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
                     ParameterName = "DateOrder",
                     Value = item.DateOrder
                 });
-               
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -119,8 +116,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             }
         }
 
-
-
         public IReadOnlyCollection<Order> GetAll()
         {
             try
@@ -150,7 +145,11 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetOrdersListById);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 var orderTable = _realization.CreateTable("Order");
                 orderTable = _realization.FillInTable(orderTable, command);
                 var @order = FillEntity(orderTable);

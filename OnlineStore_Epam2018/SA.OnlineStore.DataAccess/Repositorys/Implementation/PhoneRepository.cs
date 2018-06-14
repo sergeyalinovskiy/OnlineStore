@@ -1,21 +1,21 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using SA.OnlineStore.DataAccess.Implements;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-
-namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
+﻿namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
+    #region Usings
+        using SA.OnlineStore.Common.Const;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.Common.Logger;
+        using SA.OnlineStore.DataAccess.Implements;
+        using System;
+        using System.Collections.Generic;
+        using System.Data;
+        using System.Data.SqlClient;
+        using System.Linq;
+    #endregion
+
     public class PhoneRepository : IRepository<Phone>
     {
-
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
-
         private readonly SqlConnection _connection;
 
         public PhoneRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
@@ -66,7 +66,11 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.DeletePhoneByUserId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)
@@ -108,11 +112,15 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             {
                 _connection.Open();
                 var command = _realization.GetCommand(_connection, DbConstant.Command.GetPhonesByUserId);
-                _realization.AddParametr(command, "Id", id, DbType.Int32);
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "Id",
+                    Value = id
+                });
                 var phoneTable = _realization.CreateTable("Phone");
                 phoneTable = _realization.FillInTable(phoneTable, command);
-                var @phone = ParsToPhone(phoneTable);
-                return @phone;
+                var phone = ParsToPhone(phoneTable);
+                return phone;
             }
             catch (Exception exeption)
             {
@@ -146,7 +154,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
                     ParameterName = "UserId",
                     Value = item.UserId
                 });
-
                 command.ExecuteNonQuery();
             }
             catch (Exception exeption)

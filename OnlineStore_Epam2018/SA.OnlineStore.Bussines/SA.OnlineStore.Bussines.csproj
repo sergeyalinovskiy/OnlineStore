@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Authentication\ILoginService.cs" />
     <Compile Include="Authentication\LogginService.cs" />
-    <Compile Include="Authentication\RoleProvider.cs" />
     <Compile Include="Authentication\UserPrincipal.cs" />
     <Compile Include="Dependency\BussinesDependencyRegistry.cs" />
     <Compile Include="Service\IEmailService.cs" />

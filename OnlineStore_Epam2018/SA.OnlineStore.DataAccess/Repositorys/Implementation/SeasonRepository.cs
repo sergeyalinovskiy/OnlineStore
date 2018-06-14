@@ -76,8 +76,7 @@
                 return new Season()
                 {
                     SeasonId = m.Field<int>("Id"),
-                    SeasonName = m.Field<string>("Name"),
-
+                    SeasonName = m.Field<string>("Name")
                 };
             }).ToList();
             return list;

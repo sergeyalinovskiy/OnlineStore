@@ -1,22 +1,21 @@
-﻿using SA.OnlineStore.Common.Const;
-using SA.OnlineStore.Common.Entity;
-using SA.OnlineStore.Common.Logger;
-using SA.OnlineStore.DataAccess.Implements;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
+﻿namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
 {
+    #region Usings
+        using SA.OnlineStore.Common.Const;
+        using SA.OnlineStore.Common.Entity;
+        using SA.OnlineStore.Common.Logger;
+        using SA.OnlineStore.DataAccess.Implements;
+        using System;
+        using System.Collections.Generic;
+        using System.Data;
+        using System.Data.SqlClient;
+        using System.Linq;
+    #endregion
+
     public class RoleRepository : IRepository<Role>
     {
         private readonly ICommonLogger _commonLogger;
         private readonly IRealizationImplementation _realization;
-
         private readonly SqlConnection _connection;
 
         public RoleRepository(ICommonLogger commonLogger, IRealizationImplementation realization)
@@ -26,36 +25,9 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
             _connection = _realization.GetConnection();
         }
 
-
         public void Create(Role item)
         {
-            //try
-            //{
-            //    _connection.Open();
-            //    var command = _realization.GetCommand(_connection, DbConstant.Command.SaveUser);
-            //    command.Parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "Id",
-            //        Value = item.RoleId
-            //    });
-            //    command.Parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "RoleujghfbvcxvbnbId",
-            //        Value = item.Name
-            //    });
-               
-
-            //    command.ExecuteNonQuery();
-            //}
-            //catch (Exception exeption)
-            //{
-            //    _commonLogger.Info(exeption.Message);
-            //    throw new Exception();
-            //}
-            //finally
-            //{
-            //    _connection.Close();
-            //}
+            
         }
 
         public void Delete(int id)
@@ -95,7 +67,6 @@ namespace SA.OnlineStore.DataAccess.Repositorys.Implementation
         {
             throw new NotImplementedException();
         }
-
 
         private List<Role> ParsToRoleList(DataTable table)
         {

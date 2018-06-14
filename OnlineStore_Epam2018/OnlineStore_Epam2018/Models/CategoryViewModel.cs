@@ -18,6 +18,5 @@ namespace OnlineStore_Epam2018.Models
         [Display(Name = "Категория")]
         public string ParentCategoryName { get; set; }
         public IEnumerable<Category> CategoryList { get; set; }
-
     }
 }

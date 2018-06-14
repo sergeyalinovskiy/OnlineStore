@@ -17,8 +17,6 @@ namespace OnlineStore_Epam2018
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -50,7 +48,6 @@ namespace OnlineStore_Epam2018
                     case 401:
                         Response.Redirect("~/Login/Entrance");
                         break;
-
                     default:
                         break;
                 }

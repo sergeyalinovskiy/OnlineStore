@@ -1,13 +1,11 @@
-﻿using SA.OnlineStore.Common.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Caching;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SA.OnlineStore.Common.Cache
+﻿namespace SA.OnlineStore.Common.Cache
 {
+    #region Usings
+        using SA.OnlineStore.Common.Entity;
+        using System;
+        using System.Collections.Generic;
+        using System.Runtime.Caching;
+    #endregion
     public class StoreCache : IStoreCache
     {
         private MemoryCache _cache;

@@ -29,8 +29,38 @@
         [Editor]
         public ActionResult Index()
         {
-            var viewModel = ConvertToListViewModel(_categoryService.GetCategoryList());
+            var listCategory = _categoryService.GetCategoryList();
+            var viewModel = ConvertToListViewModel(listCategory);
             return View(viewModel);
+        }
+
+
+        [Editor]
+        public ActionResult CreateNewCategory()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateNewCategory(CategoryViewModel model)
+        {
+            if (model.CategoryName!= null)
+            {
+                model.CategoryId = 0;
+                model.ParentId = 0;
+                
+                var category = ConvertToBussinesModelNewCategory(model);
+                _categoryService.SaveCategory(category);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                this.ModelState.AddModelError("", "Internal Exceptions");
+            }
+            model.CategoryList = _categoryService.GetCategoryList();
+            return View(model);
         }
 
         [Editor]
@@ -51,7 +81,7 @@
     {
             if (model.NewCategoryName!=null && model.CategoryName!=null)
             { 
-                var category = this.ConvertToNewBussinesModel(model);
+                var category = ConvertToNewBussinesModel(model);
                 _categoryService.SaveCategory(category);
                 return RedirectToAction("Index");
             }
@@ -65,7 +95,8 @@
         [Editor]
         public ActionResult Details(int id)
         {
-            CategoryViewModel category = ConvertToViewModel(_categoryService.GetCategory(id));
+            var categorybussiness = _categoryService.GetCategory(id);
+            CategoryViewModel category = ConvertToViewModel(categorybussiness);
             return View(category);
         }
        
@@ -78,7 +109,8 @@
 
         public ActionResult Edit(int Id)
         {
-            var category = ConvertToViewModel(_categoryService.GetCategory(Id));
+            var categoryBussiness = _categoryService.GetCategory(Id);
+            var category = ConvertToViewModel(categoryBussiness);
             return View(category);
         }
 
@@ -88,8 +120,8 @@
         {
             try
             {
-                var category = this.ConvertToBussinesModel(model);
-                this._categoryService.SaveCategory(category);
+                var category = ConvertToBussinesModel(model);
+                _categoryService.SaveCategory(category);
                 return RedirectToAction("Details", new { Id = model.CategoryId });
             }
             catch (Exception)
@@ -111,19 +143,33 @@
 
         public CategoryViewModel ConvertToViewModel(Category model)
         {
-            var category = _categoryService.GetCategoryList().Where(m => m.ParentId == model.ParentId).FirstOrDefault();
-            return new CategoryViewModel()
+            var category = _categoryService.GetCategoryList();
+            if (model.ParentId != 0)
             {
-                CategoryId= model.CategoryId,
-                CategoryName = model.CategoryName,
-                ParentId= model.ParentId,
-                ParentCategoryName=category.CategoryName
-            };
+                return new CategoryViewModel()
+                {
+                    CategoryId = model.CategoryId,
+                    CategoryName = model.CategoryName,
+                    ParentId = model.ParentId,
+                    ParentCategoryName = category.Where(m => m.CategoryId == model.ParentId).Select(m => m.CategoryName).FirstOrDefault()
+                };
+            }
+            else
+            {
+                return new CategoryViewModel()
+                {
+                    CategoryId = model.CategoryId,
+                    CategoryName = model.CategoryName,
+                    ParentId = model.ParentId,
+                    ParentCategoryName = "------"
+                };
+            }
         }
 
         public Category ConvertToBussinesModel(CategoryViewModel model)
         {
-            var category = _categoryService.GetCategoryList().Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
+            var categoryLIst = _categoryService.GetCategoryList();
+            var category = categoryLIst.Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
             return new Category()
             {
                 CategoryId=model.CategoryId,
@@ -132,9 +178,23 @@
             };
         }
 
+
+        public Category ConvertToBussinesModelNewCategory(CategoryViewModel model)
+        {
+           
+            return new Category()
+            {
+                CategoryId = model.CategoryId,
+                CategoryName = model.CategoryName,
+                ParentId = model.ParentId
+            };
+        }
+
+
         public Category ConvertToNewBussinesModel(CategoryViewModel model)
         {
-            var category = _categoryService.GetCategoryList().Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
+            var categoryLIst = _categoryService.GetCategoryList();
+            var category = categoryLIst.Where(m => m.CategoryName == model.CategoryName).FirstOrDefault();
             return new Category()
             {
                 CategoryName= model.NewCategoryName ,

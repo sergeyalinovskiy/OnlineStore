@@ -7,8 +7,8 @@
 <h2>Категории</h2>
 
 <p>
-    @Html.RouteLink("Добавить новую категорию", new { controller = "Category", action = "Create" }, new { @class = "btn btn-default" })
-
+    @Html.RouteLink("Добавить новую категорию", new { controller = "Category", action = "CreateNewCategory" }, new { @class = "btn btn-default" })
+    @Html.RouteLink("Добавить новую подкатегорию", new { controller = "Category", action = "Create" }, new { @class = "btn btn-default" })
 </p>
 <table class="table">
     <tr>
@@ -19,7 +19,7 @@
             @Html.DisplayNameFor(model => model.CategoryName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ParentId)
+            @Html.DisplayNameFor(model => model.ParentCategoryName)
         </th>
         <th></th>
     </tr>
@@ -34,14 +34,9 @@
                 @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
             <td>
-                @*@if (item.ParentId != 0)
-                    {
-                    @Html.DisplayFor(modelItem => item.CategoryList.Where(m => m.CategoryId == item.ParentId).Select(m => m.CategoryName));
-                    }
-                    else
-                    {*@
-                @Html.DisplayFor(modelItem => item.ParentId)
-                @*}*@
+             
+                @Html.DisplayFor(modelItem => item.ParentCategoryName)
+               
             </td>
             <td>
                 @Html.RouteLink("Изменить", new { controller = "Category", action = "Edit", id = item.CategoryId }, new { @class = "btn btn-default" })

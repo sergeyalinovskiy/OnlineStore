@@ -14,7 +14,8 @@
         {
             var path = new DirectoryInfo(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath)).FullName + @"\Log.config";
             log4net.Config.XmlConfigurator.Configure(new FileInfo(path));
-            _log = log4net.LogManager.GetLogger("LOGGER");
+          
+            _log = LogManager.GetLogger("LOGGER");
         }
         public void Info(string info)
         {

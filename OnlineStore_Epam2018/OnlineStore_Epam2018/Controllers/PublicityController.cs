@@ -32,7 +32,8 @@
         {
             try
             {
-                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(_publicityService.GetPublicityList());
+                var publicityList = _publicityService.GetPublicityList();
+                IEnumerable<PublicityViewModel> publicity = ConvertToPublicityViewModelList(publicityList);
                 return PartialView(publicity);
              }
             catch

@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList.Where(m => m.ParentId!=0), "CategoryId", "CategoryName"), Model.CategoryList.Where(x => x.CategoryId == Model.Category.CategoryId).Select(m => m.CategoryName))
+                @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList.Where(m => m.ParentId!=0), "CategoryId", "CategoryName"), Model.CategoryList.Where(x => x.CategoryId == Model.CategoryId).Select(m => m.CategoryName))
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SeasonName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.SeasonId, new SelectList(Model.SeasonList, "SeasonId", "SeasonName"), Model.SeasonList.Where(x => x.SeasonId == Model.Season.SeasonId).Select(m => m.SeasonName))
+                @Html.DropDownListFor(m => m.SeasonId, new SelectList(Model.SeasonList, "SeasonId", "SeasonName"), Model.SeasonList.Where(x => x.SeasonId == Model.SeasonId).Select(m => m.SeasonName))
                 @Html.ValidationMessageFor(model => model.SeasonId, "", new { @class = "text-danger" })
             </div>
         </div>

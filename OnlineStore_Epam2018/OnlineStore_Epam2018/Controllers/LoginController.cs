@@ -21,21 +21,28 @@
 
         public ActionResult Entrance()
         {
-            return View();
+            var model = new LoginViewModel();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Entrance(LoginViewModel model)
         {
-            if (_loginService.Login(model.Login, model.Password))
+            if (ModelState.IsValid)
             {
                 _loginService.Login(model.Login, model.Password);
+                
+                if (!_loginService.Login(model.Login, model.Password))
+                {
+                    this.ModelState.AddModelError("", "Логин или пароль не верны");
+                    return View(model);
+                }
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                this.ModelState.AddModelError("", "Internal Exceptions");
+                this.ModelState.AddModelError("", "Ошибка");
             }
             return View(model);
         }

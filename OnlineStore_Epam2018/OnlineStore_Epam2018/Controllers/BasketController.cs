@@ -61,7 +61,8 @@
 
         public ActionResult Edit(int Id)
         {
-            var product = this.ConvertToProductViewModel(_basketService.GetProductInBox(Id));
+            var productsInBox = _basketService.GetProductInBox(Id);
+            var product = this.ConvertToProductViewModel(productsInBox);
             return View(product);
         }
 
@@ -74,7 +75,7 @@
                 var prod = ConvertToProductListModel(model);
                 _basketService.EditProductListInBox(prod);
                    
-                return RedirectToAction("Details", new { Id = model.Id });
+                return RedirectToAction("Order", "OrderDetails", new { Id = model.OrderId });
                
             }
             this.ModelState.AddModelError("", "Internal Exceptions");
@@ -83,13 +84,15 @@
 
         public ActionResult Details(int id)
         {
-            BasketViewModel product = this.ConvertToProductViewModel(_basketService.GetProductInBox(id));
+            var prodInBox = _basketService.GetProductInBox(id);
+            BasketViewModel product = ConvertToProductViewModel(prodInBox);
             return View(product);
         }
 
         public ActionResult Index()
         {
-            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox());
+            var prodLIstInBox = _basketService.GetProductListInBox();
+            var products = ConvertToProductListViewModelList(prodLIstInBox);
             return View(products);
         }
 
@@ -125,7 +128,8 @@
                         CategoryName=model.Category
                     }
                 },
-                Count = model.Count
+                Count = model.Count,
+
             };
         }
 

@@ -52,7 +52,8 @@
         [HttpGet]
         public ActionResult OrdersData(string searchName,int category, int minValue, int maxValue)
         {
-            List<ProductViewModel> products = ConvertToProductViewModelList(_productService.SearchProducts(searchName, category,minValue,maxValue));
+            var searchProducts = _productService.SearchProducts(searchName, category, minValue, maxValue);
+            List<ProductViewModel> products = ConvertToProductViewModelList(searchProducts);
            
             return PartialView(products);
         }
@@ -81,8 +82,11 @@
 
         public ProductViewModel ConvertToViewModel(Product model)
         {
-            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
-            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
+
+            var seasonBussinessList = _seasonService.GetSeasonList();
+            var categoryBussinessList = _categoryService.GetCategoryList();
+            var season = seasonBussinessList.Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
+            var category = categoryBussinessList.Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
             return new ProductViewModel()
             {
                 Id = model.Id,

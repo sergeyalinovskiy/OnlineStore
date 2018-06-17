@@ -143,8 +143,8 @@
                 });
                 var userTable = _realization.CreateTable("User");
                 userTable = _realization.FillInTable(userTable, command);
-                var @user = ParsToUser(userTable);
-                return @user;
+                var user = ParsToUser(userTable);
+                return user;
             }
             catch (Exception exeption)
             {
@@ -273,7 +273,7 @@
                         UserId = m.Field<int>("Id")
                     }
                 };
-            }).First();
+            }).FirstOrDefault();
             return user;
         }
 

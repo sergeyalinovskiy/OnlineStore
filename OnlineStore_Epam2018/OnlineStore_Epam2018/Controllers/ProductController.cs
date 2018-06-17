@@ -100,36 +100,36 @@
             {
                 productList = productList.Where(m => m.Category.CategoryId == id);
 
-                List<Product> p = new List<Product>();
-                List<int> c = new List<int>();
-                int n = productList.Count();
-                if (n <= 1)
+                List<Product> products = new List<Product>();
+                List<int> categorys = new List<int>();
+                int countProd = productList.Count();
+                if (countProd <= 1)
                 {
                     foreach (Category item in _categoryService.GetCategoryList())
                     {
                         if (item.ParentId == id)
                         {
-                            c.Add(item.CategoryId);
+                            categorys.Add(item.CategoryId);
                         }
                         else
                         {
-                            if (c.Count == 0)
+                            if (categorys.Count == 0)
                             {
-                                c.Add(id);
+                                categorys.Add(id);
                             }
                         }
                     }
-                    foreach (int i in c)
+                    foreach (int i in categorys)
                     {
                         foreach (Product item2 in _productService.GetProductLIst())
                         {
                             if (item2.Category.CategoryId == i)
                             {
-                                p.Add(item2);
+                                products.Add(item2);
                             }
                         }
                     }
-                    IEnumerable<ProductViewModel> list = ConvertListToViewModel(p);
+                    IEnumerable<ProductViewModel> list = ConvertListToViewModel(products);
                     return View("Index", list);
                 }
                 else
@@ -144,13 +144,17 @@
 
         public ActionResult CategoryList()
         {
-            var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m=>m.ParentId==0));
+            var categoryBussiness = _categoryService.GetCategoryList();
+            var categoryList = _categoryService.GetCategoryList().Where(m => m.ParentId == 0);
+            var categorys = ConvertListToViewModel(categoryList);
             return PartialView(categorys);
         }
 
         public ActionResult SubCategoryList(int id)
         {
-            var categorys = ConvertListToViewModel(_categoryService.GetCategoryList().Where(m => m.ParentId == id));
+            var categoryBussiness = _categoryService.GetCategoryList();
+            var categoryList = categoryBussiness.Where(m => m.ParentId == id);
+            var categorys = ConvertListToViewModel(categoryList);
             return PartialView("SubCategoryList",categorys);
         }
         
@@ -189,7 +193,8 @@
         {
             if (Id>0)
             {
-                ProductViewModel product = ConvertToViewModel(_productService.GetProduct(Id));
+                var prodBussines = _productService.GetProduct(Id);
+                ProductViewModel product = ConvertToViewModel(prodBussines);
                 return View(product);
             }
             else
@@ -208,7 +213,8 @@
         [Editor]
         public ActionResult Edit(int id)
         {
-            var product = this.ConvertToViewModel(this._productService.GetProduct(id));
+            var prodBussines = _productService.GetProduct(id);
+            var product = this.ConvertToViewModel(prodBussines);
             return View(product);
         }
 
@@ -218,7 +224,7 @@
         {
             if (model.Picture!=null && model.Name!=null && model.Description!=null)
             {
-                var product = this.ConvertToBussinesModel(model);
+                var product = ConvertToBussinesModel(model);
                 _productService.SaveProduct(product);
                 return RedirectToAction("Details", new { Id = model.Id });
             }
@@ -226,10 +232,8 @@
             {
                 ModelState.AddModelError("", "Exception");
             }
-            
             model.CategoryList = _categoryService.GetCategoryList();
             model.SeasonList = _seasonService.GetSeasonList();
-
             return View(model);
         }
 
@@ -256,7 +260,8 @@
 
         public CategoryViewModel ConvertToViewModel(Category model)
         {
-            var category = _categoryService.GetCategoryList().Where(c => c.ParentId == model.CategoryId).FirstOrDefault();
+            var categoryBussiness = _categoryService.GetCategoryList();
+            var category = categoryBussiness.Where(c => c.ParentId == model.CategoryId).FirstOrDefault();
             return new CategoryViewModel()
             {
                 CategoryId = model.CategoryId,
@@ -268,8 +273,10 @@
 
         public ProductViewModel ConvertToViewModel(Product model)
         {
-            var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
-            var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
+            var seasonBussinessList = _seasonService.GetSeasonList();
+            var categoryBussinessList = _categoryService.GetCategoryList();
+            var season = seasonBussinessList.Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
+            var category = categoryBussinessList.Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
             return new ProductViewModel()
             {
                 Id = model.Id,
@@ -291,8 +298,6 @@
 
         public Product ConvertToBussinesModel(ProductViewModel model)
         {
-            //var season = _seasonService.GetSeasonList().Where(s => s.SeasonId == model.Season.SeasonId).FirstOrDefault();
-            //var category = _categoryService.GetCategoryList().Where(c => c.CategoryId == model.Category.CategoryId).FirstOrDefault();
             return new Product()
             {
                 Id = model.Id,
@@ -314,8 +319,10 @@
 
         public Product ConvertToBussinesCreateModel(ProductViewModel model)
         {
-            var season = _seasonService.GetSeasonList().Where(s => s.SeasonName == model.SeasonName).FirstOrDefault();
-            var category = _categoryService.GetCategoryList().Where(c => c.CategoryName == model.CategoryName).FirstOrDefault();
+            var seasonBussinessList = _seasonService.GetSeasonList();
+            var categoryBussinessList = _categoryService.GetCategoryList();
+            var season = seasonBussinessList.Where(s => s.SeasonName == model.SeasonName).FirstOrDefault();
+            var category = categoryBussinessList.Where(c => c.CategoryName == model.CategoryName).FirstOrDefault();
             return new Product()
             {
                 Id = model.Id,
@@ -353,10 +360,10 @@
                     prod = item;
                 }
             }
-         
-            int countUserOrders = _orderService.GetOrderList().Where(m => m.User.UserId == userId).Count();
+            var ordersList = _orderService.GetOrderList();
+            int countUserOrders = ordersList.Where(m => m.User.UserId == userId).Count();
             int trigger = 0;
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == userId))
+            foreach (Order order in ordersList.Where(m => m.User.UserId == userId))
             {
                 if (order.StatusOrder.Id != 1)
                 {
@@ -367,10 +374,9 @@
             {
                 _orderService.SaveDefaultOrder(userId);
             }
-
             int orderId = 1;
-
-            foreach (Order order in _orderService.GetOrderList().Where(m => m.User.UserId == userId))
+            var ordersList2 = _orderService.GetOrderList();
+            foreach (Order order in ordersList2.Where(m => m.User.UserId == userId))
             {
                 if (order.StatusOrder.Id == 1)
                 {

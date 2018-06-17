@@ -91,7 +91,8 @@
                 Count = model.Count,
                 Price = model.Product.Price,
                 Picture = model.Product.Picture,
-                Category=model.Category.CategoryName
+                Category=model.Category.CategoryName,
+                Status=_orderService.GetOrderList().Where(m=>m.Id==model.Order.Id).Select(m=>m.StatusOrder.StatusOrderName).FirstOrDefault()
             };
         }
 

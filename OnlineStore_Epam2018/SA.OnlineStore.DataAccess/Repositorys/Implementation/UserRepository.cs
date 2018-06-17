@@ -273,7 +273,7 @@
                         UserId = m.Field<int>("Id")
                     }
                 };
-            }).First();
+            }).FirstOrDefault();
             return user;
         }
 

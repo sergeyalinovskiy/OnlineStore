@@ -30,8 +30,8 @@ namespace OnlineStore_Epam2018.Models
         [Display(Name = "Телефон")]
         [RegularExpression("^[+]{1}[(]{1}[0-9]{3}[)]{1}[-]{1}[0-9]{2}[-]{1}[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}$", ErrorMessage = "Укажите телефонный номер в формате +(xxx)-xxx-xx-xx")]
         public string PhoneNumber { get; set; }
-        [Display(Name = "Почта")]
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес")]
+        [ Display(Name = "Почта")]
+        [  RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес")]
         public string EmailAddress { get; set; }
 
         public Role Role { get; set; }

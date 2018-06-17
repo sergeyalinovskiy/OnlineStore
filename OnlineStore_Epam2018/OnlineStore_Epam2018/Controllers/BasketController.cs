@@ -74,7 +74,7 @@
                 var prod = ConvertToProductListModel(model);
                 _basketService.EditProductListInBox(prod);
                    
-                return RedirectToAction("Details", new { Id = model.Id });
+                return RedirectToAction("OrderDetails", "Order",new { id = model.OrderId });
                
             }
             this.ModelState.AddModelError("", "Internal Exceptions");

@@ -118,17 +118,20 @@
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CategoryViewModel model)
         {
-            try
+            
+            if (model.CategoryName != null )
             {
                 var category = ConvertToBussinesModel(model);
                 _categoryService.SaveCategory(category);
                 return RedirectToAction("Details", new { Id = model.CategoryId });
             }
-            catch (Exception)
+            else
             {
-                this.ModelState.AddModelError("", "Internal Exceptions");
+                ModelState.AddModelError("", "Exception");
             }
-        return View();
+            model.CategoryList = _categoryService.GetCategoryList();
+            return View(model);
+
         }
 
         public List<CategoryViewModel> ConvertToListViewModel(IEnumerable<Category> modelList)
@@ -174,7 +177,7 @@
             {
                 CategoryId=model.CategoryId,
                 CategoryName = model.CategoryName,
-                ParentId = category.ParentId
+                ParentId = model.ParentId
             };
         }
 

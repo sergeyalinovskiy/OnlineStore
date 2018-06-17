@@ -51,11 +51,15 @@
             </td>
             @if (@HttpContext.Current.User.IsInRole("user") || @HttpContext.Current.User.IsInRole("admin"))
             {
-                <td>
-                    @Html.RouteLink("Открыть", new { controller = "Product", action = "Details", id = item.ProductId }, new { @class = "btn btn-default" }) |
-                    @Html.RouteLink("Изменить количество", new { controller = "Basket", action = "Edit", id = item.Id }, new { @class = "btn btn-default" }) |
-                    @Html.RouteLink("Убрать из заказа", new { controller = "Basket", action = "Delete", id = item.Id }, new { @class = "btn btn-default" })
-                </td>
+                if (item.Status == "добавление товаров")
+                {
+                    <td>
+                        @Html.RouteLink("Открыть", new { controller = "Product", action = "Details", id = item.ProductId }, new { @class = "btn btn-default" }) |
+                        @Html.RouteLink("Изменить количество", new { controller = "Basket", action = "Edit", id = item.Id }, new { @class = "btn btn-default" }) |
+                        @Html.RouteLink("Убрать из заказа", new { controller = "Basket", action = "Delete", id = item.Id }, new { @class = "btn btn-default" })
+                    </td>
+                }
+
             }
         </tr>
     }

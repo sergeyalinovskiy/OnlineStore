@@ -374,10 +374,12 @@
             {
                 _orderService.SaveDefaultOrder(userId);
             }
+
             int orderId = 1;
-            foreach (Order order in ordersList.Where(m => m.User.UserId == userId))
+            var ordersList2 = _orderService.GetOrderList();
+            foreach (Order order in ordersList2.Where(m => m.User.UserId == userId))
             {
-                if (order.StatusOrder.Id == 1)
+                if (order.StatusOrder.Id != 2 && order.StatusOrder.Id != 3 && order.StatusOrder.Id != 4)
                 {
                     orderId = order.Id;
                 }

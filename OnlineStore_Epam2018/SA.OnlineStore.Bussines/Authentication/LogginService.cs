@@ -38,7 +38,7 @@
         private bool IsValidUser(string login, string password)
         {
             var user = GetUser(login);
-            if (user.Password==password && user!=null)
+            if (user!=null && user.Password == password)
             {
                 return true;
             }

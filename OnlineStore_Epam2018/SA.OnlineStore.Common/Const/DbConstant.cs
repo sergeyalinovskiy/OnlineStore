@@ -40,6 +40,7 @@
 
 
             public const string GetStatusOrder = "GetStatusOrder";
+            public const string GetStatusOrderByOrderId = "GetStatusOrderByOrderId";
 
             public const string GetOrdersListById = "GetOrdersListById";
             public const string GetOrdersList = "GetOrdersList";

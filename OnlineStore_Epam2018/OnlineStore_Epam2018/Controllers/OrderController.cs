@@ -52,27 +52,31 @@
         {
             var user = HttpContext.User.Identity.Name;
             int userId = _userService.GetUserByLogin(user).UserId;
-            var ordersList = _orderService.GetOrderList().Select(o => this.ConvertToViewModel(o)).Where(m=>m.UserId==userId);
+            var orders = _orderService.GetOrderList();
+            var ordersList = orders.Select(m => this.ConvertToViewModel(m)).Where(m=>m.UserId==userId);
             return View(ordersList);
         }
         [Editor]
         public ActionResult GetAllOrders()
         {
-           
-            var ordersList = ConvertToViewModelList(_orderService.GetOrderList());
+            var ordersLIst = _orderService.GetOrderList();
+            var ordersList = ConvertToViewModelList(ordersLIst);
             return View(ordersList);
         }
         [UserFilter]
         public ActionResult Details(int Id)
         {
-            var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
+            var orderBussines = _orderService.GetOrder(Id);
+            var order = this.ConvertToViewModel(orderBussines);
             return View(order);
         }
 
         [UserFilter]
         public ActionResult OrderDetails(int id)
         {
-            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox().Where(m => m.Order.Id == id));
+            var productsBussiness = _basketService.GetProductListInBox();
+            var productsSearch = productsBussiness.Where(m => m.Order.Id == id);
+            var products = ConvertToProductListViewModelList(productsSearch);
 
             return View(products);
         }
@@ -104,8 +108,9 @@
         [UserFilter]
         public ActionResult OrderInfo(int id)
         {
-            var product = ConvertToViewModel(_orderService.GetOrder(id));
-            return PartialView(product);
+            var orderBussiness = _orderService.GetOrder(id);
+            var order = ConvertToViewModel(orderBussiness);
+            return PartialView(order);
         }
         [UserFilter]
         public ActionResult UserInfo(int id)
@@ -149,13 +154,13 @@
                 try
                 {
                     var order = this.ConvertToBusinesModel(model);
-                    this._orderService.SaveOrder(order);
+                    _orderService.SaveOrder(order);
                     
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
-                    this.ModelState.AddModelError("", "Internal Errors");
+                    ModelState.AddModelError("", "Internal Errors");
                 }
             }
             return View();
@@ -165,7 +170,6 @@
 
         public ActionResult Edit(int Id)
         {
-
             var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
             return View(order);
         }
@@ -194,8 +198,8 @@
 
         public ActionResult EditUserOrder(int Id)
         {
-
-            var order = this.ConvertToViewModel(this._orderService.GetOrder(Id));
+            var orderBussiess = _orderService.GetOrder(Id);
+            var order = this.ConvertToViewModel(orderBussiess);
             
             return View(order);
         }
@@ -226,7 +230,7 @@
 
         public ActionResult Delete(int Id)
         {
-            this._orderService.DeleteOrderByOrderId(Id);
+            _orderService.DeleteOrderByOrderId(Id);
             return RedirectToAction("Index");
         }
 
@@ -250,6 +254,7 @@
 
         private OrderViewModel ConvertToViewModel(Order model)
         {
+            var orderStatuses = _orderService.GetStatusOrders();
             return new OrderViewModel()
             {
                 Id = model.Id,
@@ -261,7 +266,7 @@
                     StatusOrderName = model.StatusOrder.StatusOrderName
                 },
                 DateOrder = model.DateOrder,
-                StatusOrders = ConvertToViewModelList(_orderService.GetStatusOrders())
+                StatusOrders = ConvertToViewModelList(orderStatuses)
             };
         }
 

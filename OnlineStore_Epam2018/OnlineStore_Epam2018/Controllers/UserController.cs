@@ -60,7 +60,7 @@
             if(this.ModelState.IsValid)
             {
                 model.Roles = _roleService.GetRoleList();
-                var user = this.ConvertToBussinesCreateModel(model);
+                var user = ConvertToBussinesCreateModel(model);
                 _userService.SaveUser(user);
                 return RedirectToAction("GetUserList");
             }
@@ -85,16 +85,18 @@
 
         public ActionResult GetUserAutorithInfo()
         {
-            var userr = HttpContext.User.Identity.Name;
-            int userId = _userService.GetUserByLogin(userr).UserId;
-            var user = ConvertToViewModel(_userService.GetUserById(userId));
+            var userAutorith = HttpContext.User.Identity.Name;
+            int userAutorithId = _userService.GetUserByLogin(userAutorith).UserId;
+            var userBussiness = _userService.GetUserById(userAutorithId);
+            var user = ConvertToViewModel(userBussiness);
 
             return View(user);
         }
         [Admin]
         public ActionResult GetUserList()
         {
-            var users = ConvertListToViewModel(_userService.GetUsersList());
+            var userBussinessList = _userService.GetUsersList();
+            var users = ConvertListToViewModel(userBussinessList);
             return View(users);
         }
         [Admin]
@@ -116,7 +118,8 @@
 
         public UserViewModel ConvertToViewModel(User model)
         {
-            var role = _roleService.GetRoleList().Where(c => c.RoleId == model.Role.RoleId).FirstOrDefault();
+            var roleBussinessList = _roleService.GetRoleList();
+            var role = roleBussinessList.Where(c => c.RoleId == model.Role.RoleId).FirstOrDefault();
             return new UserViewModel()
             {
                 UserId = model.UserId,
@@ -137,7 +140,8 @@
 
         public User ConvertToBussinesModel(UserViewModel model)
         {
-            var role = _roleService.GetRoleList().Where(c => c.RoleId == model.Role.RoleId).FirstOrDefault();
+            var roleBussinessList = _roleService.GetRoleList();
+            var role = roleBussinessList.Where(c => c.RoleId == model.Role.RoleId).FirstOrDefault();
             return new User()
             {
                 UserId = model.UserId,
@@ -165,7 +169,8 @@
 
         public User ConvertToBussinesCreateModel(UserViewModel model)
         {
-            var role = _roleService.GetRoleList().Where(c => c.Name== model.RoleName).FirstOrDefault();
+            var roleBussinessList = _roleService.GetRoleList();
+            var role = roleBussinessList.Where(c => c.Name== model.RoleName).FirstOrDefault();
             return new User()
             {
                 UserId = model.UserId,
@@ -193,13 +198,15 @@
 
         public ActionResult Details(int id)
         {
-            var user = ConvertToViewModel(this._userService.GetUserById(id));
+            var userBussiness = _userService.GetUserById(id);
+            var user = ConvertToViewModel(userBussiness);
             return View(user);
         }
 
         public ActionResult EditUserAutorithation(int id)
         {
-            var user = ConvertToViewModel(this._userService.GetUserById(id));
+            var userBussiness = _userService.GetUserById(id);
+            var user = ConvertToViewModel(userBussiness);
             return View(user);
         }
 
@@ -226,7 +233,8 @@
 
         public ActionResult Edit(int id)
         {
-            var user = ConvertToViewModel(this._userService.GetUserById(id));
+            var userBussiness = _userService.GetUserById(id);
+            var user = ConvertToViewModel(userBussiness);
             return View(user);
         }
             
@@ -245,7 +253,8 @@
             {
                 ModelState.AddModelError("", "Exception");
             }
-            model.Roles = _roleService.GetRoleList();
+            var roleBussinessList = _roleService.GetRoleList();
+            model.Roles = roleBussinessList;
             return View(model);
         }
     }

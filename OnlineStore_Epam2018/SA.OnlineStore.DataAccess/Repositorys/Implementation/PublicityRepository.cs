@@ -25,9 +25,6 @@
             _realization = realization;
         }
 
-        //private ChannelFactory<INewWebService> _channel = new
-        //       ChannelFactory<INewWebService>(new BasicHttpBinding(), new EndpointAddress("http://localhost:51702/NewWebService.svc"));
-        //private readonly INewWebService _service;
            
         private ServiceReferenceWCF.INewWebService CreateChannel()
         {

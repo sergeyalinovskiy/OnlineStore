@@ -83,13 +83,15 @@
 
         public ActionResult Details(int id)
         {
-            BasketViewModel product = this.ConvertToProductViewModel(_basketService.GetProductInBox(id));
+            var prodInBox = _basketService.GetProductInBox(id);
+            BasketViewModel product = ConvertToProductViewModel(prodInBox);
             return View(product);
         }
 
         public ActionResult Index()
         {
-            var products = ConvertToProductListViewModelList(_basketService.GetProductListInBox());
+            var prodLIstInBox = _basketService.GetProductListInBox();
+            var products = ConvertToProductListViewModelList(prodLIstInBox);
             return View(products);
         }
 

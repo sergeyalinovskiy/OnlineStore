@@ -228,6 +228,7 @@
     <Content Include="Views\Order\GetAllOrders.cshtml" />
     <Content Include="Views\Order\Edit.cshtml" />
     <Content Include="Views\Order\EditUserOrder.cshtml" />
+    <Content Include="Views\Category\CreateNewCategory.cshtml" />
     <None Include="Views\Product\SubCategoryList.cshtml" />
     <Content Include="Views\User\GetUserList.cshtml" />
     <Content Include="Views\User\Create.cshtml" />

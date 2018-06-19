@@ -120,7 +120,7 @@
         {
             try
             {
-                var category = ConvertToBussinesModel(model);
+                var category = ConvertToBussinesModelNewCategory(model);
                 _categoryService.SaveCategory(category);
                 return RedirectToAction("Details", new { Id = model.CategoryId });
             }

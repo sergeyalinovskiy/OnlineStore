@@ -89,7 +89,7 @@
                 ProductId = model.Product.Id,
                 ProductName = model.Product.Name,
                 Count = model.Count,
-                Price = model.Product.Price,
+                Price = model.Product.Price * model.Count,
                 Picture = model.Product.Picture,
                 Category=model.Category.CategoryName,
                 Status=_orderService.GetOrderList().Where(m=>m.Id==model.Order.Id).Select(m=>m.StatusOrder.StatusOrderName).FirstOrDefault()
